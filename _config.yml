@@ -11,7 +11,7 @@ url:              //aziflaj.github.io
 owner:
   name:           Aldo Ziflaj
   avatar:         aziflaj.jpg
-  bio:            "My name is Aldo, and I'm trying to create a blog using Jekyll"
+  #bio:            "My name is Aldo, and I'm trying to create a blog using Jekyll"
   email:          aldoziflaj95@gmail.com
   # Social networking links used in footer. Update and remove as you like.
   twitter:        aziflaj
@@ -22,7 +22,7 @@ owner:
   google_plus:    +AldoZiflaj
 
 # Background image to be tiled on all pages
-background: 
+background:       triangular.png
 
 # Analytics and webmaster tools stuff goes here
 google_analytics:   
