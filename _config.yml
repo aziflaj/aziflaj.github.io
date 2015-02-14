@@ -14,12 +14,12 @@ owner:
   #bio:            "My name is Aldo, and I'm trying to create a blog using Jekyll"
   email:          aldoziflaj95@gmail.com
   # Social networking links used in footer. Update and remove as you like.
-  twitter:        aziflaj
-  facebook:       aldo.ziflaj
   github:         aziflaj
   linkedin:       aziflaj
+  facebook:       aldo.ziflaj
   # google plus id, include the '+', eg +mmistakes
   google_plus:    +AldoZiflaj
+  twitter:        aziflaj
 
 # Background image to be tiled on all pages
 background:       triangular.png
