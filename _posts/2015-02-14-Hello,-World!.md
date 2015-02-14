@@ -8,7 +8,7 @@ tags: [Blogging]
 
 Hello, World! This is my first blogpost
 
-```html
+{% highlight html %}
 <!DOCTYPE html>
 <html>
 
@@ -21,4 +21,4 @@ Hello, World! This is my first blogpost
 </body>
 
 </html>
-```
+{% endhighlight %}
