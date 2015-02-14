@@ -2,7 +2,7 @@
 layout:     post
 title:      Aldo.speak("Hello, World!");
 date:       2015-02-14
-summary:    My first blog post ever
+summary:    Hello, World! This is my first blogpost @ <a href="http://aziflaj.github.io/">aziflaj.github.io</a>.
 tags:       [Blogging]
 ---
 
