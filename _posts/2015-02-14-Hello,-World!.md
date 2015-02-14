@@ -25,5 +25,5 @@ If you want to see any of my posts online, I usually write programming-related a
 </p>
 
 <p>
-So that's it as a first blogpost (I guess). If you have any question or any other thing to say, feel free to <a hef="mailto:aldoziflaj95@gmail.com">ping me</a>.
+So that's it as a first blogpost (I guess). If you have any question or any other thing to say, feel free to ping me. You will find contact info at the <a href="http://aziflaj.github.io/about/">about page</a>.
 </p>
