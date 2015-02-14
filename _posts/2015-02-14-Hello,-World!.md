@@ -1,9 +1,9 @@
 ---
-layout:post
-title:Aldo.speak("Hello, World!");
-date:2015-02-14
-summary:My first blog post ever
-tags:[Blogging]
+layout:     post
+title:      Aldo.speak("Hello, World!");
+date:       2015-02-14
+summary:    My first blog post ever
+tags:       [Blogging]
 ---
 
 <p>
