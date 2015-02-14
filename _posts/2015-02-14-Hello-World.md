@@ -2,12 +2,12 @@
 layout:     post
 title:      Aldo.speak("Hello, World!");
 date:       2015-02-14
-summary:    Hello, World! This is my first blogpost @ <a href="http://aziflaj.github.io/">aziflaj.github.io</a>.
+summary:    Hello, World! This is my first blogpost @ aziflaj.github.io. I decided to use Jekyll since it's simple to set up and it's given for free by GitHub (and I <3 GitHub).
 tags:       [Blogging]
 ---
 
 <p>
-Hello, World! This is my first blogpost @ <a href="http://aziflaj.github.io/">aziflaj.github.io</a>. I decided to use <a href="http://jekyllrb.com/">Jekyll</a> after I read <a href="http://goo.gl/2TY3e5" target="_blank">this post</a> from Dashamir Hoxha. It is simple to set up and its given for free by GitHub (and I <3 GitHub).
+Hello, World! This is my first blogpost @ <a href="http://aziflaj.github.io/">aziflaj.github.io</a>. I decided to use <a href="http://jekyllrb.com/">Jekyll</a> after I read <a href="http://goo.gl/2TY3e5" target="_blank">this post</a> from Dashamir Hoxha. It is simple to set up and it's given for free by GitHub (and I <3 GitHub).
 </p>
 
 <p>
