@@ -7,3 +7,18 @@ tags: [Blogging]
 ---
 
 Hello, World! This is my first blogpost
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Halo</title>
+</head>
+
+<body>
+<p>This is a paragraph</p>
+</body>
+
+</html>
+```
