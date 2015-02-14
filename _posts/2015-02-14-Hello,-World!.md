@@ -2,7 +2,7 @@
 layout:     post
 title:      Hello, World!
 date:       2015-02-14
-summary:    Halo
+summary:    My first blog post ever!
 tags: [Blogging]
 ---
 
