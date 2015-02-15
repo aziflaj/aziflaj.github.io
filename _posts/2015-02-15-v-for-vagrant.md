@@ -7,7 +7,7 @@ tags:       [Vagrant, Provision, Puppet, PuPHPet]
 ---
 
 <p>
-It has been almost one year since I firstly heard of <a href="https://www.vagrantup.com/">Vagrant</a>, and maybe 7-8 months since I firstly used it. Vagrant is a provision tool; it provides you a full development environment with all the tools you require. 
+It has been almost one year since I first heard of <a href="https://www.vagrantup.com/">Vagrant</a>, and maybe 7-8 months since I first used it. Vagrant is a provision tool; it provides you a full development environment with all the tools you require. 
 </p>
 
 You can find it on <a href="https://github.com/mitchellh/vagrant">GitHub</a> and after reading through its readme, you will figure out it's really simple to set it up. After installing Vagrant, all you have to do is execute this at your command-line:
@@ -18,7 +18,7 @@ $ vagrant up
 {% endhighlight %}
 
 ## Why should you use Vagrant?
-Next time you develop a web application, probably your development environment (your machine) and the production environment (the deployment server) won't be the same. You can still develop your application and test it in your environment, but some things might not go very well when you deploy to the production server. You may try to mimic the production environment by changing your development environment, but are you willing to do that for each project? What if you are working on multiple projects on the same time?
+Next time you develop a web application, probably your development environment (your machine) and the production environment (the deployment server) won't be the same. You can still develop your application and test it in your environment, but some things might not go very well when you deploy to the production server. You may try to mimic the production environment by changing your development environment, but are you willing to do that for each project? What if you are working on multiple projects at the same time?
 
 This is where Vagrant comes into play. It allows you to create a virtual machine that will be the same as the production environment. If you are working on a team and everyone has a different environment, you can all sync into the same environment as the production environment, and be sure that the code **will** work. You can finally get rid of the most famous excuse in the developer's vocabulary: _"It works on my machine..."_
 
@@ -30,7 +30,7 @@ The first thing you have to do is to <a href="https://docs.vagrantup.com/v2/vagr
 $ vagrant up
 {% endhighlight %}
 
-This will make Vagrant to start creating the environment. 
+This will make Vagrant start creating the environment. 
 <p>
 <i>Keep in mind that this environment that is being created is nothing more than a virtual machine, so it needs a software such as <a href="https://www.virtualbox.org/">VirtualBox</a> or any other similar to work.</i>
 </p>
@@ -46,7 +46,7 @@ $ vagrant ssh
 <i>On Windows, to execute SSH you need to have an SSH client installed, such as PuTTY. Also, you can use the SSH service that comes with Git command-line.</i>
 </p>
 
-After SSH-ing, you are free to use the development environmnent as you wish. Normally, you would create a shared folder, called `synced folder` between your host system and the virtual one. Usually, this folder is the same folder that `Vagrantfile` is but you can change it as well. This means that the source code is accessed by the host and the guest system **at the same time**, and you can still use your favorite IDE/text editor.
+After SSH-ing, you are free to use the development environment as you wish. Normally, you would create a shared folder, called `synced folder` between your host system and the virtual one. Usually, this folder is the same folder as `Vagrantfile` is, but you can change it as well. This means that the source code is accessed by the host and the guest system **at the same time**, and you can still use your favorite IDE/text editor.
 
 When you end your work, all you have to do is execute:
 
@@ -55,7 +55,7 @@ $ exit              # to exit from the VM
 $ vagrant halt      # to stop the VM
 {% endhighlight %}
 
-Also if you finished with the project and want to get rid of the whole Vagrant files, all you have to add to this is `vagrant destroy`. It will delete all Vagrant - related files and leave only the source code behind.
+Also if you finished with the project and want to get rid of the whole Vagrant files, all you have to do is add `vagrant destroy`. It will delete all Vagrant-related files and leave only the source code behind.
 
 ## Last words
 You can choose from a long list of virtual machines at <a href="https://vagrantcloud.com/">Vagrantcloud.com</a> and pick the one that suits you best. If you need help configuring your Vagrant system, there are many GUI configuration tools online which you can use for free. I wrote an article called <a href="http://www.sitepoint.com/5-easy-ways-getting-started-php-vagrant/">5 Easy Ways to Get Started with PHP on Vagrant</a> which you may find useful if you are thinking of using Vagrant for PHP development. 
