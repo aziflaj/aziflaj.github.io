@@ -43,8 +43,15 @@ vagrant ssh
 {% endhighlight %}
 
 <p>
-<i>On Windows, executing `ssh` needs to have an SSH client installed, such as PuTTY. Also, you can use the `ssh` service that comes with `git` command-line.</i>
+<i>On Windows, executing SSH needs to have an SSH client installed, such as PuTTY. Also, you can use the SSH service that comes with Git command-line.</i>
 </p>
 
 After SSH-ing, you are free to use the development environmnent as you wish. Even though you are not using your host system for deployment, you can still access your code. Normally, you would create a shared folder (called `synced folder`) between your host system and the virtual one. This means that the source code is accessed by the host and the guest system **at the same time**, and you can still use your favorite IDE/text editor.
 
+When you end your work, all you have to do is execute:
+
+{% highlight bash %}
+exit              # to exit from the VM
+vagrant halt      # to stop the VM
+{% endhighlight %}
+You can choose from a long list of virtual machines at <a href="https://vagrantcloud.com/"Vagrantcloud.com</a> and pick the one that suits you best. Also, if you want for help 
