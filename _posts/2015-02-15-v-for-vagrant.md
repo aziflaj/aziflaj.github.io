@@ -31,5 +31,6 @@ vagrant up
 {% endhighlight %}
 
 This will start to create the environment. 
-> Keep in mind that this environment that is being created is nothing more than a virtual machine, so it needs a software such as <a href="https://www.virtualbox.org/">VirtualBox</a> or any other similar.
-
+<p>
+_Keep in mind that this environment that is being created is nothing more than a virtual machine, so it needs a software such as <a href="https://www.virtualbox.org/">VirtualBox</a> or any other similar._
+</p>
