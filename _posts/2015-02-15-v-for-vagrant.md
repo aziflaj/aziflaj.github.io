@@ -34,3 +34,17 @@ This will start to create the environment.
 <p>
 <i>Keep in mind that this environment that is being created is nothing more than a virtual machine, so it needs a software such as <a href="https://www.virtualbox.org/">VirtualBox</a> or any other similar.</i>
 </p>
+
+When you run `vagrant up` for the first time, it will start downloading the virtual machine, so be patient. This will happen only once per virtual machine type, so this means next time you go on working on the project or even use the same operating system with Vagrant, it won't have to re-download from the beginning.
+
+After the process, you can log into the newborn system by executing:
+{% highlight bash %}
+vagrant ssh
+{% endhighlight %}
+
+<p>
+<i>On Windows, executing `ssh` needs to have an SSH client installed, such as PuTTY. Also, you can use the `ssh` service that comes with `git` command-line.</i>
+</p>
+
+After SSH-ing, you are free to use the development environmnent as you wish. Even though you are not using your host system for deployment, you can still access your code. Normally, you would create a shared folder (called `synced folder`) between your host system and the virtual one. This means that the source code is accessed by the host and the guest system **at the same time**, and you can still use your favorite IDE/text editor.
+
