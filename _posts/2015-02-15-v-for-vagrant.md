@@ -17,7 +17,12 @@ vagrant init hashicorp/precise32  # or any other virtual system you want
 vagrant up
 {% endhighlight %}
 
-###Why should you use Vagrant?
+```bash
+vagrant init hashicorp/precise32    # or any other virtual system you want
+vagrant up
+```
+
+##Why should you use Vagrant?
 Next time you develop a web application, probably your development environment (your machine) and the production environment (the deployment server) won't be the same. You can still develop your application and test it in your environment, but some things might not go as well when you deploy on the production server. You may try to mimic the production environment by changing your development environment, but are you willing to do that for each project? 
 
-This is where Vagrant comes in. It allows you to create a virtual machine that will be the same as the production environment. If you are working on a team and everyone has a different environment, you can all sync into the same environment as the production environment, and be sure that the code *will* <strong>will</strong> work.
+This is where Vagrant comes in. It allows you to create a virtual machine that will be the same as the production environment. If you are working on a team and everyone has a different environment, you can all sync into the same environment as the production environment, and be sure that the code **will** work.
