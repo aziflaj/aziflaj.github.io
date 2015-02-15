@@ -54,4 +54,10 @@ When you end your work, all you have to do is execute:
 exit              # to exit from the VM
 vagrant halt      # to stop the VM
 {% endhighlight %}
-You can choose from a long list of virtual machines at <a href="https://vagrantcloud.com/"Vagrantcloud.com</a> and pick the one that suits you best. Also, if you want for help 
+
+Also if you finished with the project and want to get rid of the whole Vagrant files, all you have to add to this is `vagrant destroy`. It will delete all Vagrant - related files and leave only the source code behind.
+
+## Last words
+You can choose from a long list of virtual machines at <a href="https://vagrantcloud.com/">Vagrantcloud.com</a> and pick the one that suits you best. Also, if you want for help configuring a Vagrant system, there are many GUI configuration tools online which you can use for free. I wrote an article called <a href="http://www.sitepoint.com/5-easy-ways-getting-started-php-vagrant/">5 Easy Ways to Get Started with PHP on Vagrant</a> which you may find useful if you are thinking of using Vagrant for PHP development. 
+
+Also, if you have any other question, feel free to ping me anytime.
