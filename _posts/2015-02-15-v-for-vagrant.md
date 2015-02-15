@@ -7,7 +7,7 @@ tags:       [Vagrant, Provision, Puppet, PuPHPet]
 ---
 
 <p>
-It has been almost one year since I first heard of <a href="https://www.vagrantup.com/">Vagrant</a>, and maybe 7-8 months since I first used it. Vagrant is a provision tool; it provides you a full development environment with all the tools you require. 
+It has been almost one year since I first heard of <a href="https://www.vagrantup.com/">Vagrant</a>, and maybe 7-8 months since I first used it. Vagrant is a provision tool; it provides you a full development environment with all the tools required.
 </p>
 
 You can find it on <a href="https://github.com/mitchellh/vagrant">GitHub</a> and after reading through its readme, you will figure out it's really simple to set it up. After installing Vagrant, all you have to do is execute this at your command-line:
