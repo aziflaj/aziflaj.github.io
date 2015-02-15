@@ -17,12 +17,19 @@ vagrant init hashicorp/precise32  # or any other virtual system you want
 vagrant up
 {% endhighlight %}
 
-```bash
-vagrant init hashicorp/precise32    # or any other virtual system you want
-vagrant up
-```
-
-##Why should you use Vagrant?
+## Why should you use Vagrant?
 Next time you develop a web application, probably your development environment (your machine) and the production environment (the deployment server) won't be the same. You can still develop your application and test it in your environment, but some things might not go as well when you deploy on the production server. You may try to mimic the production environment by changing your development environment, but are you willing to do that for each project? 
 
-This is where Vagrant comes in. It allows you to create a virtual machine that will be the same as the production environment. If you are working on a team and everyone has a different environment, you can all sync into the same environment as the production environment, and be sure that the code **will** work.
+This is where Vagrant comes into play. It allows you to create a virtual machine that will be the same as the production environment. If you are working on a team and everyone has a different environment, you can all sync into the same environment as the production environment, and be sure that the code **will** work. You can finally get rid of the most famous excuse in the developer's vocabulary: _"It works on my machine..."_
+
+## How to use Vagrant
+Vagrant comes with a simple-to-use CLI and using that you can create a new environment, start working into the environment, change its features if you have to, destroy the environment, and so on.
+
+The first thing you have to do is to <a href="https://docs.vagrantup.com/v2/vagrantfile/">create a Vagrantfile</a>, which is everything Vagrant needs to know about the environment that is about to create. Next, you have to execute
+{% highlight bash %}
+vagrant up
+{% endhighlight %}
+
+This will start to create the environment. 
+> Keep in mind that this environment that is being created is nothing more than a virtual machine, so it needs a software such as <a href="https://www.virtualbox.org/">VirtualBox</a> or any other similar.
+
