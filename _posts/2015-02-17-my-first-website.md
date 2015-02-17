@@ -12,7 +12,7 @@ Yesterday I finished a <a href="http://goo.gl/6PuJD4">short course</a> on Learna
 
 The best thing with this course was its practicality: in the end you would have to build a website just like <a href="http://www.buildyourfirst.website/#">this one</a>. I finally learned why people use `meta` tags on HTML and why this piece of code is everwhere:
 
-{% highlight js %}
+{% highlight html %}
 <!-- [if il IE 9]>
   <script src="assets/js/html5.js"></script>
   <script src="assets/js/respond.js"></script>
