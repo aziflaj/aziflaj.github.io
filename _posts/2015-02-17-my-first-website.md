@@ -23,10 +23,10 @@ Also I learned what <a href="https://smacss.com/" target="_blank">SMACSS</a> (Sc
 
 <ul>
 <li>Base - <code>base.css</code> is used for the default, base rules of CSS.</li>
-<li>Layout - 'layout.css' is used to divide the view into sections, such as rows and/or columns.</li>
-<li>Modules - 'modules.css' holds the CSS for the modules of the view, such as features of a product, social media links, etc.</li>
-<li>State - 'state.css' defines how the modules or layouts will look when in a particular state.</li>
-<li>Theme - 'theme.css' defines how modules or layouts might look</li>
+<li>Layout - <code>layout.css</code> is used to divide the view into sections, such as rows and/or columns.</li>
+<li>Modules - <code>modules.css</code> holds the CSS for the modules of the view, such as features of a product, social media links, etc.</li>
+<li>State - <code>state.css</code> defines how the modules or layouts will look when in a particular state.</li>
+<li>Theme - <code>theme.css</code> defines how modules or layouts might look</li>
 </ul>
 
 Though, only 3 of them were used in this course: Base, Layout and Modules. Also, there is a 4th CSS file, called `normalize.css`. <a href="http://necolas.github.io/normalize.css/" target="_blank">Normalize.css</a> makes browsers render all elements more consistently and in line with modern standards. It precisely targets only the styles that need normalizing.
