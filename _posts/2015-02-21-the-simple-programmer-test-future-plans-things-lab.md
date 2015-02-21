@@ -7,7 +7,7 @@ tags:       [coder, characteristics, programmer, things, lab, git, php, unit, te
 ---
 
 <p>
-A couple of days ago I came across this nice post titled <a href="http://simpleprogrammer.com/2015/02/16/joel-test-programmers-simple-programmer-test/" target="_blank">The Joel Test For Programmers</a> which was stating some characteristics that make a good software developer, but of course not all of them. This test is based on 12 criteria, which are simple questions that one should answer honestly in order to realize what kind of software developer/programmer/coder is. Score above 8 is great, but even below 8 is not a big deal. This things <strong>can</strong> be learned.
+A couple of days ago I came across this nice post titled <a href="http://simpleprogrammer.com/2015/02/16/joel-test-programmers-simple-programmer-test/" target="_blank">The Joel Test For Programmers</a> which was stating some characteristics that make a good software developer, but of course not all of them. This test is based on 12 criteria, which are simple questions that one should answer honestly in order to realize what kind of software developer/programmer/coder is. Score above 8 is great, but even below 8 is not a big deal. These things <strong>can</strong> be learned.
 </p>
 
 The 12 questions of The Simple Programmer Test are these:
