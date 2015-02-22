@@ -7,7 +7,7 @@ tags:       [Numberoid, Python, Unit, Test]
 ---
 
 <p>
-When I finished high school and I was spiritually preparing to go to an Engineering College, I knew that too many calculations were ahead. During the first year, I had to follow 5 Math-related courses (or should I say <strong>curses<strong>?). That's why when I discovered the simplicity of Python, I started using it to solve math problems.
+When I finished high school and I was spiritually preparing to go to an Engineering College, I knew that too many calculations were ahead. During the first year, I had to follow 5 Math-related courses (or should I say <strong>curses</strong>?). That's why when I discovered the simplicity of Python, I started using it to solve math problems.
 </p>
 
 Now probably the ones who use Python as a general-purpose programming language every day are cursing me and saying things such as _"Python is way more than a mathematical tool for you!"_ or _"Go on with Matlab, fool! Python is for other things!"_. I know that, but back then I had never heard of MatLab or any other math-related program. Before, I tried to use Java for solving some mathematical problems, but for small problems, writing Java is boring when compared to Python. So what I loved about Python was its simplicity in both writing and reading the code, something I still consider as one of the best features of Python. But still, Python is not my programming language of choice, except when solving math problems (<a href="http://cdn2.cdnme.se/cdn/8-1/2159399/images/2011/u_mad_bro_picture_challenge_3-s469x428-160564-535_161009110.jpg" target="_blank">UMAD, Python-lover?</a>).
