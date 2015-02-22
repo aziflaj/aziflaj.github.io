@@ -23,7 +23,7 @@ Another nice thing I learned was Unit Testing using a module called `unittest`, 
 So what I require for now is:
 <ol>
 
-<li>A helper (not a <a href="https://s-media-cache-ak0.pinimg.com/736x/94/6c/c7/946cc7383075dc6f3e645a5e27b0d794.jpg" target="_blank">minion<a/>, even though I love minions) to write Python.</li>
+<li>A helper (not a <a href="https://s-media-cache-ak0.pinimg.com/736x/94/6c/c7/946cc7383075dc6f3e645a5e27b0d794.jpg" target="_blank">minion</a>, even though I love minions) to write Python.</li>
 
 <li>Someone who has a bit (or even a <i>byte</i>) of experience with numerical analysis and nymerical methods, but if the not-minion helper has this kind of skill it'd be great.</li>
 
