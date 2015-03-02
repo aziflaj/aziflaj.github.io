@@ -42,3 +42,10 @@ int choice=(int) random;
 {% endhighlight %}
 
 So the variable <code>choice</code> was the random index that I could use to get a random item from the array (keep in mind that Math.random() returns a **double** between 0.0 and 1.0)
+
+So after choosing 3 random items, I just printed them out at the console, saying whether there were none, two or three matches, and calculating the amount of money won, if there was any, with the given coefficient. It was a good start; I had only to think of the UI, and I suck at UI design. But for this one, all that I needed was a really simple design which I managed to code it as I was planning. 
+
+For the items to show at slots, I just googled them and found 12 of them in a single sprite. I downloaded the sprite and started my old photo editing software which sometimes can be really magical; **Microsoft Paint**! I started cropping images from the sprite, paying attention to their dimensions that should be the same, 122px by 114px. Why these magical values? Because!
+
+What was left to do, was the UI. I could use the really-helpful drag-and-drop UI builder that ships with NetBeans, but I wanted to do it myself. I had a really hard time figuring out which kind of layout to use, since the only one I really knew was <a href="http://docs.oracle.com/javase/7/docs/api/java/awt/GridLayout.html" target="_blank"><code>GridLayout</code></a>. Anyway beside that, I managed to use <code>FlowLayout</code> and <code>BorderLayout</code>. There is a difference between them, but I'm not really capable of pointing that out, so you can check the online JavaDoc for them.
+
