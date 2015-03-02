@@ -49,3 +49,59 @@ For the items to show at slots, I just googled them and found 12 of them in a si
 
 What was left to do, was the UI. I could use the really-helpful drag-and-drop UI builder that ships with NetBeans, but I wanted to do it myself. I had a really hard time figuring out which kind of layout to use, since the only one I really knew was <a href="http://docs.oracle.com/javase/7/docs/api/java/awt/GridLayout.html" target="_blank"><code>GridLayout</code></a>. Anyway beside that, I managed to use <code>FlowLayout</code> and <code>BorderLayout</code>. There is a difference between them, but I'm not really capable of pointing that out, so you can check the online JavaDoc for them.
 
+I managed to build the game, and started to play it. I figured out that the coefficients for multiplying the bet were too damn high, but I didn't care as long as I knew that the game worked. 
+
+## My bad practices
+As you can see, the <a href="https://github.com/aziflaj/slots" target="_blank">source code</a> of this simple game is in only one file. This is something that I don't like to do anymore. A better way to do it is by making the code as modular as it can be. By building small modular elements, dividing the UI from the logic of the application, you help yourself during the testing and debugging phase. So the first thing that I would like to change, is dividing the whole <code>class Slots extends JFrame</code> from the class that calls it. 
+
+This is done by firstly creating a file called <code>Slots.java</code> that will contain only the code for the UI. Then, creating an <code>ActionListener</code> that will listen to different button clicks (there are 5 different buttons). Finally, creating a class called <code>App.java</code> that will only create a <code>Slots</code> instance and make it run.
+
+Basically, the <code>App.java</code> would look like this:
+
+{% highlight java %}
+public class App {
+  public static void main(String[] args) {
+    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+      @Override
+      public void run() {
+        try {
+          Slots gameWindow = new Slots();
+          gameWindow.setVisible(true);
+        } catch (Exception ex) {
+          javax.swing.JOptionPane.showMessageDialog(null,
+              ex, 
+              "Error", 
+              javax.swing.JOptionPane.ERROR_MESSAGE);
+          System.exit(1);   
+        }
+      }
+  });
+  }
+}
+{% endhighlight %}
+
+As I remember, <code>SwingUtilities.invokeLater()</code> is used to divide the UI thread from other threads, so if any UI changes are needed, they won't stall the application.
+
+The Listener class, which might be called something like <code>SlotButtonListener</code>, might be something like this:
+
+{% highlight java %}
+public class SlotButtonListener implements ActionListener {
+  @Override
+  public void actionPerformed(ActionEvent ae) {
+    if (ae.getSource() == button1) {
+      //do something if button1 is clicked
+    } else if (ae.getSource() == button2) {
+      //do something if button1 is clicked
+    } 
+    //...
+    
+    //and so on
+  }
+}
+{% endhighlight %}
+
+And finally, in the <code>Slots</code> class there would be only the code for defining the UI of the game. All the buttons would have <code>SlotButtonListener</code> as action listener. 
+
+Anyone who wants to change the code following these advices is free to do it. You can <a href="https://github.com/aziflaj/slots/fork" target="_blank">fork it</a> anytime you want.
+
+_Do you have any Java programming advice for me? Feel free to comment below_
