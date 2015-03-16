@@ -1,0 +1,42 @@
+@import url(http://fonts.googleapis.com/css?family=Ubuntu);
+
+.url {
+	text-transform: none;
+}
+
+.url-black:hover,
+.url-black:active,
+.url-black:visited,
+.url-black:link {
+	color: black;
+}
+
+.url-white:hover,
+.url-white:active,
+.url-white:visited,
+.url-white:link {
+	color: white;
+}
+
+
+#php {
+	text-transform: lowercase;
+	font-family: 'Ubuntu', sans-serif;
+	font-style: italic;
+	font-weight: bolder;
+	text-shadow: 
+	-1px -1px 0 #fff,
+    1px -1px 0 #fff,
+    -1px 1px 0 #fff,
+    1px 1px 0 #fff;
+}
+
+
+i#git {
+	color: #413932;
+}
+
+#git-logo {
+	height: 1em;
+	color: #F74E27;
+}

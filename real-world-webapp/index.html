@@ -4,9 +4,9 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Testing Reveal.JS</title>
+		<title>Developing a Real World application</title>
 
-		<meta name="description" content="A test of Reveal.JS for HTML presentations">
+		<meta name="description" content="Developing a Real World application">
 		<meta name="author" content="Aldo Ziflaj">
 
 		<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -19,6 +19,9 @@
 
 		<!-- Code syntax highlighting -->
 		<link rel="stylesheet" href="../assets/reveal/lib/css/zenburn.css">
+		<link rel="stylesheet" href="style.css">
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
 
 		<!-- Printing and PDF exports -->
 		<script>
@@ -41,26 +44,402 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h1>Testing Reveal.JS</h1>
-					<h3>The HTML Presentation Framework</h3>
+					<h2>Developing a Real World application</h2>
+					<h3><a href="http://thingslab.cc/" target="_blank">&gt;_ Things Lab</a></h3>
 					<p>
-						<small>This presentation is a test by <a href="http://aziflaj.github.io/">Aldo Ziflaj</a> / <a href="http://twitter.com/aziflaj">@aziflaj</a></small>
+						<small>Introducing modern techniques of software engineering through <strong>PRACTICE</strong></small>
 					</p>
 				</section>
 
+				<section data-background="#8892BF" data-background-transition="zoom">
+					<section>
+						<pre height="10000"><code data-trim contenteditable>
+&lt;?php
+try {
+  $conn = new PDO("mysql:host=127.0.0.1;dbname=DragonBallZ",
+  	                        $username, $password);
+} catch (PDOException $ex) {
+  print "Error!" . $ex->getMessage() ;
+  exit();
+}
+
+$select = "SELECT character_name FROM super_saiyan WHERE power > 9000;";
+$resultSet = $conn->query($select);
+
+foreach ($resultSet as $result) // this should print Goku!
+  print $result['character_name'];
+?>
+						</code></pre>
+					</section>
+
+					<section>
+						<h2 id="php">PHP: Hypertext Preprocessor</h2>
+						<p class="fragment">Suited to web development</p>
+						<p class="fragment">Easy to learn</p>
+						<p class="fragment">Massive online community</p>
+					</section>
+					
+					<section>
+						<h2>There are plenty of PHP Frameworks</h2>
+						<ul>
+							<li><a href="http://laravel.com/" target="_blank" class="url url-black">Laravel</a></li>
+							<li><a href="http://phalconphp.com/en/" target="_blank" class="url url-black">Phalcon</a></li>
+							<li><a href="http://symfony.com/" target="_blank" class="url url-black">Symfony</a></li>
+							<li><a href="http://framework.zend.com/" target="_blank" class="url url-black">Zend Framework 2</a></li>
+							<li><a href="http://www.phpframeworks.com/" target="_blank" class="url url-black">etc.</a></li>
+							<li> </li>
+							<li> </li>
+							<li><strike><a href="http://www.codeigniter.com/" target="_blank" class="url url-black">CodeIgniter</a></strike></li>
+						</ul>
+					</section>
+
+					<section>
+						<h2 style="text-transform: none">Managing PHP Dependencies with Composer</h2>
+						<pre class="fragment"><code>
+{
+  "require": {
+    "vendor/dependency": "version",
+    "monolog/monolog": "1.2.*",
+    "fzaninotto/faker": "1.4.0"
+  }
+}
+						</code></pre>
+						<pre class="fragment"><code>$ composer install</code></pre>
+					</section>
+
+				</section>
+
+				
 				<section>
-					<h1>Header1</h1>
-					<h2>Header2</h2>
-					<h3>Header3</h3>
-					<h4>Header4</h4>
-					<h5>Header5</h5>
-					<h6>Header6</h6>
+					<section style="font-family: consolas; color: #F26651; font-size: 80px">
+						&lt;client-side/&gt;
+					</section>
+					
+					<section>
+						<h2><span style="color: #E44D26;">&lt;html5/&gt;</span> + <span style="color: #1758A7">{CSS3}</span> + <span style="color: #F8DC3D">JS</span></h2>
+						<img width="500" data-src="../images/real-world-webapp-presentation/5-3-js.png">
+					</section>
+					
+					<section>
+						<h2>CSS frameworks</h2>
+						<ul>
+							<li><a href="http://foundation.zurb.com/" target="_blank" class="url">Foundation</a></li>
+							<li><a href="http://getbootstrap.com/" target="_blank" class="url">Bootstrap</a></li>
+							<li><a href="http://html5up.net/" target="_blank" class="url">HTML5 UP</a></li>
+							<li><a href="https://html5boilerplate.com/" target="_blank" class="url">HTML5 Boilerplate</a></li>
+							<li><a href="http://getskeleton.com/" target="_blank" class="url">Skeleton</a></li>
+						</ul>
+					</section>
+					
+					<section>
+						<h2>JS frameworks</h2>
+						<ul>
+							<li><a href="https://angularjs.org/" target="_blank" class="url">AngularJS</a></li>
+							<li><a href="http://emberjs.com/" target="_blank" class="url">Ember.js</a></li>
+							<li><a href="http://backbonejs.org/" target="_blank" class="url">Backbone.js</a></li>
+							<li><a href="http://jquery.com/" target="_blank" class="url">jQuery</a></li>
+							<li>A lot more...</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2 style="text-transform: none">Bower: composer for JS</h2>
+						<p class="fragment">A package manager for the web</p>
+						<p class="fragment">Simple installation of JS libraries</p>
+						<ul class="fragment">
+							<li>$ bower init</li>
+							<li>add packages into <code>bower.json</code></li>
+							<li>$ bower install</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Automate with Grunt or Gulp</h2>
+						<p class="fragment">Automate minification, compilation, testing, etc.</p>
+						<p class="fragment">Get to know <a href="http://gruntjs.com/" target="_blank">Grunt</a></p>
+						<p class="fragment">Get to know <a href="http://gulpjs.com/" target="_blank">Gulp</a></p>
+						<p class="fragment">Check <a href="http://markdalgleish.github.io/presentation-build-wars-gulp-vs-grunt/" target="_blank">this presentation</a> for the difference</p>
+					</section>
+
+					<section>
+						<h2>Yeoman for generator</h2>
+						<ul>
+							<li>Helps kickstarting new projects</li>
+							<li>Forces the usage of best practices and tools</li>
+							<li>A LOT of generators</li>
+						</ul>
+					</section>
+
+				</section>
+
+
+				<section data-background="#2C3E50">
+					<section>
+						<h2>Databases</h2>
+						<img height="400" data-src="../images/real-world-webapp-presentation/bobby-tables.png">
+					</section>
+
+					<section>
+						<h2 style="text-transform: none;">Structured Query Language - SQL</h2>
+						<ul>
+							<li><a href="https://www.oracle.com/database/index.html" target="_blank" class="url url-white">Oracle Database</a></li>
+							<li><a href="http://www.microsoft.com/en-us/server-cloud/products/sql-server/" target="_blank" class="url url-white">SQL Server</a></li>
+							<li><a href="http://www.mysql.com/" target="_blank" class="url url-white">MySQL</a></li>
+							<li><a href="http://www.postgresql.org/" target="_blank" class="url url-white">PostgreSQL</a></li>
+							<li><a href="http://www-01.ibm.com/software/data/db2/" target="_blank" class="url url-white">DB2</a></li>
+							<li>A lot more...</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2 style="text-transform: none;">An SQL database</h2>
+						<img width="750" data-src="../images/real-world-webapp-presentation/sql-db.gif">
+					</section>
+
+					<section>
+						<h2 style="text-transform: none;">NoSQL</h2>
+						<ul>
+							<li><a href="http://www.mongodb.org/" target="_blank" class="url url-white">Document type -- MongoDB</a></li>
+							<li><a href="http://redis.io/" target="_blank" class="url url-white">Key-Value -- Redis</a></li>
+							<li><a href="http://neo4j.com/" target="_blank" class="url url-white">Graph -- Neo4J</a></li>
+						</ul>
+					</section>
+
+					<section refference="http://media.mongodb.org/zips.json">
+						<h2>Document Type</h2>
+						<pre><code data-trim contenteditable>
+{ "_id" : "1", "username" : "thingslab", "website": "www.thingslab.cc" }
+
+{ "_id" : "2", "username" : "google", "website": "www.google.al" }
+
+{ "_id" : "3", "username" : "facebook", "website": "www.facebook.com" }
+
+{ "_id" : "4", "username" : "twitter", "website": "www.twitter.com" }
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Key-Value</h2>
+						<pre><code data-trim contenteditable>
+{
+	"Harry Potter and the Chamber of Secrets": "J. K. Rowling",
+
+	"De motu corporum": "Isaac Newton",
+	
+	"Love in the Time of Cholera": "Gabriel Garcia Marquez",
+	
+	"The Castle": "Ismail Kadare"
+}
+						</code></pre>
+					</section>
+					
+					<section>
+						<h2>Graph</h2>
+						<img width="750" data-src="../images/real-world-webapp-presentation/graph-db.png">
+					</section>
+
+				</section>
+				
+
+				<section>
+					<section>
+						<h2>Search Engines</h2>
+						<img width="750" data-src="../images/real-world-webapp-presentation/g-can-jes-best.jpg">
+					</section>
+
+					<section>
+						<h2>What does a Search Engine</h2>
+						<ul>
+							<li>Efficient data indexing</li>
+							<li>Text Search</li>
+							<li>Filtering</li>
+							<li>Word Stemming</li>
+							<li>Quality Scoring</li>
+							<li>Location-based search</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Lucene</h2>
+						<p class="fragment">Information Retrieval Software Library</p>
+						<p class="fragment">Read more <a href="http://lucene.apache.org/" target="_blank">here</a></p>
+					</section>
+
+					<section>
+						<h2>Elastic Search</h2>
+						<p class="fragment">Search server built on top of Lucene</p>
+						<p class="fragment">Free and Open Source</p>	
+						<p class="fragment">Built in Java == cross-platform</p>	
+						<p class="fragment">JSON-based REST API</p>	
+					</section>
+
+					<section>
+						<h2 style="text-transform: none;">From MySQL to Elastic Search</h2>
+						<img width="750" data-src="../images/real-world-webapp-presentation/mysql2es.jpg">
+					</section>
+
+					<section>
+						<h2>Solr</h2>
+						<p class="fragment">Also built on top of Lucene</p>
+						<p class="fragment">Also written in Java</p>	
+						<p class="fragment">Extensible through plugins</p>	
+					</section>
+
+					<section>
+						<h2 style="text-transform: none;">Solr vs ES</h2>
+						<a href="http://solr-vs-elasticsearch.com/" target="_blank">http://solr-vs-elasticsearch.com/</a>
+					</section>
+				</section>
+
+
+				<section data-background="#2C3E50">
+					<section>
+						<h2>Virtualized Environments</h2>
+						<p class="fragment"><strike>Works on my machine...</strike></p>
+						<p class="fragment">Easy to configure</p>
+						<p class="fragment">Development environment == production environment</p>
+						<p class="fragment">Code that Works!</p>
+					</section>
+					
+						
+					<section>
+						<h2>Configs made simpler</h2>
+						<ul>
+							<li><a href="http://puphpet.com/" target="_blank">PuPHPet</a></li>
+							<li><a href="http://getprotobox.com/" target="_blank">Protobox</a></li>
+							<li><a href="http://phansible.com/" target="_blank">Phansible</a></li>
+							<li><a href="http://rove.io/" target="_blank">Rove</a></li>
+						</ul>
+					</section>
+					
+					<section>
+						<h2>How to do it?</h2>
+						<pre class="fragment"><code>$ vagrant init hashicorp/precise32</code></pre>
+						<pre class="fragment"><code>$ vagrant up</code></pre>
+						<p class="fragment">Grab a coffee and let <span style="color: #48B4FB;">V</span>agrant do the work</p>
+					</section>
+					
 				</section>
 				
 				<section>
-					<h1>This is slide nr 3</h1>
+					<section>
+						<h2>Version control</h2>
+						<blockquote cite="http://git-scm.com/book/en/v2/Getting-Started-About-Version-Control">
+							Version control is a system that records changes to a file or set of files over time so that you can recall specific versions later. For the examples in this book you will use software source code as the files being version controlled, though in reality you can do this with nearly any type of file on a computer.
+						</blockquote>
+					</section>
+
+
+					<section>
+						<h2>Our choice: <span style="text-transform: lowercase;">git</span></h2> <!---->
+						<!-- <h2>Our choice: <object type="image/svg+xml" data="git.svg" id="git-logo">Your browser does not support SVG</object></h2> <!---->
+						<p class="fragment">Git is Fast</p>
+						<p class="fragment">Git is Small</p>
+						<p class="fragment">Git is Distributed</p>
+						<p class="fragment">Git is Easy to learn</p>
+						<p class="fragment">Git is The new standard</p>
+					</section>
+					
+					<section>
+						<h2>Where to learn Git?</h2>
+						<ul>
+							<li><a href="http://www.slideshare.net/thingslab/source-code-management-with-git" target="_blank">Our old presentation</a></li>
+							<li><a href="http://try.github.com" target="_blank">try.github.com</a></li>
+							<li><a href="http://www.git-tower.com/learn/" target="_blank">Git tower</a></li>
+							<li><a href="https://www.atlassian.com/git/" target="_blank">Atlassian tutorial</a></li>
+							<li>A lot of practice</li>
+						</ul>
+					</section>
+					
+				</section>
+				
+				<section data-background="#bdc3c7">
+					<section>
+						<h2>Software Development Methods <span style="text-transform: none;">(SDMs)</span></h2>
+						<img data-src="../images/real-world-webapp-presentation/soft-dev-methods.png">
+					</section>
+					
+					<section>
+						<h2>Waterfall Model</h2>
+						<img data-src="../images/real-world-webapp-presentation/waterfall.png">
+					</section>
+					
+					<section>
+						<h2>Rapid Application Prototyping (RAD)</h2>
+						<p class="fragment">Creating small, uncomplete prototypes</p>
+						<p class="fragment">Brakes the whole project in smaller mini-projects</p>
+						<p class="fragment">User involved in the development process</p>
+					</section>
+					
+					<section>
+						<h2>Extreme Programming (XP)</h2>
+						<img data-src="../images/real-world-webapp-presentation/xp.png" width="60%">
+					</section>
+					
+				</section>
+				
+				<section data-background="#34495E">
+					<section>
+						<h2>Test Automation</h2>
+						A way to make sure that your code <strong>will always</strong> work. 
+					</section>
+
+					<section>
+						<h2>What to test?</h2>
+						<ul>
+							<li>Platform and OS independence</li>
+							<li>Use cases</li>
+							<li>User Interface (browser automation)</li>
+							<li>Heavy load performance</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Unit Testing</h2>
+						<p class="fragment">Automated testing of small units of code</p>
+						<p class="fragment">Locate problems early (TDD in XP and Scrum)</p>
+						<p class="fragment">Simplifies refactoring</p>
+					</section>
+
+					<section>
+						<h2>Testing tools</h2>
+						<ul>
+							<li><a href="http://karma-runner.github.io/0.12/index.html" target="_blank">Karma (test runner - JS)</a></li>
+							<li><a href="http://angular.github.io/protractor/#/" target="_blank">Protractor (e2e - JS)</a></li>
+							<li><a href="https://phpunit.de/" target="_blank">PHPUnit</a></li>
+							<li><a href="http://www.seleniumhq.org/" target="_blank">Selenium</a></li>
+						</ul>
+					</section>
 				</section>
 
+				<section>
+					<section>
+						<h2>Continuous Integration</h2>
+						<!-- <img data-src="../images/real-world-webapp-presentation/continuous-integration.png"> -->
+						<img width="690" data-src="../images/real-world-webapp-presentation/ci.jpg">
+					</section>
+
+					<section>
+						<h2 style="text-transform: none;">Best CI practices</h2>
+						<ul source="http://en.wikipedia.org/wiki/Continuous_integration#Best_practices">
+							<li>Maintaining a code repository</li>
+							<li>Build automation</li>
+							<li>Self-testing builts</li>
+							<li>Regular, frequent commits</li>
+							<li>Build every commit</li>
+							<li>Fast builds</li>
+							<li>Test in a clone of the production environment</li>
+							<li>The results of the latest build are visible</li>
+							<li>Deployment automation</li>
+						</ul>
+
+					</section>
+				</section>
+				
+				<section>
+					<h2>let's code!</h2>
+				</section>
+				
 			</div>
 
 		</div>
