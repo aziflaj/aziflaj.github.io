@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Present with Reveal.JS
-description: "If you think using HTML, CSS and Javascript can't be used for making presentations better than PowerPoint, think again! Reveal.JS is the framework that makes PowerPoint irrelevant."
+summary: If you think using HTML, CSS and Javascript can't be used for making presentations better than PowerPoint, think again! Reveal.JS is the framework that makes PowerPoint irrelevant.
 tags: [reveal, js, presentation]
 ---
 
