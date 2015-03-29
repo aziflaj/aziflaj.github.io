@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Old programming jokes and what is wrong with them
-summary: 
+summary: While browsing some old pictures on my computer and some old posts on social media, I stumbled upon some used-to-be-funny stuff that I used to say, write and believe. Well, not all of them are true, my opinions about them have changed with the time, and I don't believe or support them anymore. Some of them are n00b thoughts (don't judge, we all start as n00bs). Here I am giving a list of some of them, hopefully any young programmer doesn't make the same mistakes.
 tags: [c++, java, c#, javascript, programming, jokes, visual basic]
 ---
 
