@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Using Makefiles for build automation
-summary: 
+summary: In my last presentation at Things Lab, I mentioned build automation as one of the best practices used in Continuous Integration (CI). But build automation goes even beyond CI; you not neccessarily have to use CI to use automated builds. Actually, build automation dates even before CI was mentioned for the first time.
 tags: [makefile, c, c++, make, mingw]
 ---
 
@@ -15,7 +15,7 @@ The first build automation tool I've been using is probably the oldest I've been
 
 So far, I've been using `Makefile`-s for C and C++ programs (see [here](https://github.com/fzaninotto/Faker/blob/master/Makefile) a `Makefile` used for PHP). When you are working on large projects, it is a good idea to use header files. What you do is group all commonly used definitions inside one header file. These definitions might be structures and functions used to manipulate these structures (in both C & C++ ), definitions of one or more classes (in C++ using Object Orientation), global constants or macros definitions (like `EOF` in `<stdio.h>`), etc. Then, you write the `Makefile` with different (or only one) build targets. I am giving here the last `Makefile` I wrote for a small homework:
 
-```
+{% highlight Makefile %}
 CC = gcc 
 FLAGS = -std=c99 -Ilibs -Isrc
 MAIN_FILES = src/app.c src/text.c
@@ -54,7 +54,7 @@ clean:
 
 .SILENT: all test clean
 .PHONY: all test clean
-```
+{% endhighlight %}
 
 I'm trying to explain some of it, even though I'm not a `Makefile` master. It begins with some macro definitions such as:
 
