@@ -5,7 +5,7 @@ summary: In my last presentation at Things Lab, I mentioned build automation as 
 tags: [makefile, c, c++, make, mingw]
 ---
 
-In my [last presentation](http://aziflaj.github.io/real-world-webapp/) at Things Lab, I mentioned **build automation** as one of the best practices used in Continuous Integration (CI). But build automation goes even beyond CI; you not neccessarily have to use CI to use automated builds. Actually, build automation dates even before CI was mentioned for the first time.
+In my [last presentation](http://aziflaj.github.io/real-world-webapp/) at Things Lab, I mentioned **build automation** as one of the best practices used in Continuous Integration (CI). But build automation goes even beyond CI; you don't neccessarily have to use CI to use automated builds. Actually, build automation dates even before CI was mentioned for the first time.
 
 There are different utilities that help you automate the build process. If you ever programmed in Java you probably have heard of tools such as [Apache Ant](http://ant.apache.org/), [Maven](https://maven.apache.org/) or [Gradle](https://gradle.org/). All three of them are build tools that help you automate the compiling and building process when you develop a software. And that's not all. These tools also help you deploy the WAR (**W**eb **AR**chive) into the development/production server; or obtain all the dependencies of your application; or building the APK (Android Package) file for different Android versions; etc. But compared with a utility called [`make`](https://www.gnu.org/software/make/manual/make.html#Introduction), these tools are new and with a lot more features.
 
