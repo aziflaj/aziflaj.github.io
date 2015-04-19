@@ -69,16 +69,16 @@ To create a build target, all you have to do is firstly define the name of the b
 
 A couple of targets you would want to use are the `clean` and the `install` target. Check [this `Makefile`](https://github.com/aziflaj/ffos-cli/blob/master/Makefile) I wrote for FFOS-CLI. The `clean` target is used to clean the project directory from different files that might be generated while running the application or testing it. By calling:
 
-```bash
+{% highlight bash %}
 make clean
-```
+{% endhighlight %}
 
 you make sure to remove all these files, since they are not necessary for the project itself. So you run that target anytime you want to share all your code directory with the others. The `install` target does what you are thinking of; installs the application. Referring to the FFOS-CLI's `Makefile`, you install it by executing:
 
-```bash
+{% highlight bash %}
 make
 sudo make install
-```
+{% endhighlight %}
 
 It firstly compiles the application based on the first target (which in that case is `ffos`) and then adds it into the `/usr/local/bin` directory so it can be called at any other directory by that user.
 
