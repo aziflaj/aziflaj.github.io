@@ -59,6 +59,7 @@
 						<li>Vibratoret</li>
 						<li>Sistemi optik</li>
 						<li>Mekanizmi i zberthimit ne kohe</li>
+						<li>Shenuesi ne kohe</li>
 					</ul>
 				</section>
 
@@ -73,6 +74,30 @@
 						<h2>Vibratori</h2>
 						<img src="../images/oshilografi-elektromekanik/vibratori.png">
 					</section>
+
+					<section>
+						<h2>Ne rryme alternative</h2>
+						<p>Momenti i Rrotullimit: $$ M_{r} = B \times S \times i \times cos(\beta) $$</p>
+						<br>
+						<p class="fragment">Momenti i Kunderveprimit: $$ M_{k} = \sigma \times \alpha $$</p>
+					</section>
+
+					<section>
+						<h2>Ne rregjimin e stabilizuar</h2>
+						<p>$$ M_{r} = M_{k} $$</p>
+						<br>
+						<p class="fragment">$$ B \times S \times i \times cos(\beta) = \sigma \times \alpha $$</p>
+						<br>
+						<p class="fragment">$$ \alpha = \tfrac{BS}{\sigma}i = N_{i} \times i $$</p>
+					</section>
+
+					<section>
+						<h2>Vibratori ferrodinamik: vibrator fuqie</h2>
+						<p>Momenti i Rrotullimit: $$ M_{r} = C_{i} \times i_{i} \times i_{u} $$</p>
+						<br>
+						<p class="fragment">Rryma ne lakun e levizshem: $$ i_{u} = \tfrac{u}{r_{u} + r_{s}} $$</p>
+					</section>
+
 				</section>
 
 				<section>
@@ -86,18 +111,17 @@
 					<section>
 						<h2>Zberthimi ne kohe</h2>
 						<p>Zberthimi ne kohe kryhet kur:</p>
-						<ul>
-							<li>Filmi zhvendoset me shpejtesi te njetrajtshme</li>
-							<li>Zhvendosja te jete perpendikulare me drejtimin e zhvendosjes se rrezes</li>
-						</ul>
+						<p class="fragment">&rarr; Filmi zhvendoset me shpejtesi te njetrajtshme</p>
+						<p class="fragment">&rarr; Zhvendosja te jete perpendikulare me drejtimin e zhvendosjes se rrezes</p>
+						
 					</section>
 
 					<section>
 						<h3>Per te plotesuar kushtet, duhen:</h3>
 						<ul>
 							<li>Motor i vogel, i cili rrotullon si kaseten ku mblidhet filmi ose letra, ashtu edhe prizmin me shume faqe</li>
-							<li>Perioda e zberthimi: Tz = 1/a * n</li>
-							<li>Perioda e kurbes: T = Tz/m</li>
+							<li>Perioda e zberthimi: <br> $$ T_{Z} = \tfrac{1}{a \times n} $$ <br></li>
+							<li>Perioda e kurbes: <br> $$ T = \tfrac{T_{Z}}{m} | m \in \mathbb{Z} $$ <br></li>
 						</ul>
 					</section>
 				</section>
@@ -118,19 +142,29 @@
 						<ul>
 							<li>Regjistrim direkt (boje mbi leter)</li>
 							<li>Regjistrim termoelektrik (dyll mbi leter)</li>
-							<li>Regjistrim optik</li>
+							<li>Regjistrim optik (UV mbi leter fotografike)</li>
 							<li>Regjistrim ne leter gjysmepercjellese</li>
 						</ul>
+						<p class="fragment">Parimi i punes: i njejte</p>
 					</section>
 				</section>
 
 				<section>
 					<h2>Perfundime</h2>
-					<ul>
-						<li class="fragment">Ne baze menyres se si funksionojne   metodat e regjistrimit te oshilografeve themi se ato nuk ndikojne ne principin e punes se vibratoreve si element mates, prandaj edhe teoria e levizjes, mbetet e njejte edhe per keta oshilografe.</li>
-						<li class="fragment">Oshilografet perdoren gjeresisht  jo vetem ne tekniken e matjeve por edhe ne shume fusha te tjera te shkences dhe teknikes per studimin e konstruksioneve mekanike dhe te ndertimit te tj.</li>
-						<li class="fragment">Vibratori manjetoelektrik perdoret perdoret per matjen e rrymes dhe tensionit, ndersa per matjen e fuqise perdoret vibratori ferrodinamik</li>
-					</ul>
+					<ol>
+						<li class="fragment">Vibratori manjetoelektrik perdoret per matjen e rrymes dhe tensionit, ndersa per matjen e fuqise perdoret vibratori ferrodinamik</li>
+
+						<li class="fragment">Metodat e regjistrimit te oshilografeve nuk ndikojne ne principin e punes se vibratoreve.</li>
+
+						<li class="fragment">Teoria e levizjes per oshilografin mbetet e njejte pavaresisht vibratorit.</li>
+
+						<li class="fragment">Oshilografet perdoren gjeresisht jo vetem ne tekniken e matjeve por edhe ne shume fusha te tjera te shkences dhe teknikes per studimin e konstruksioneve mekanike.</li>
+						
+					</ol>
+				</section>
+
+				<section>
+					<h1>Faleminderit per pjesemarrjen</h1>
 				</section>
 			</div>
 
@@ -138,6 +172,7 @@
 
 		<script src="../assets/reveal/lib/js/head.min.js"></script>
 		<script src="../assets/reveal/js/reveal.js"></script>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 		<script>
 
