@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>404</title>
+    <link rel="stylesheet" href="assets/css/404.css">
+    <link rel="stylesheet" href="bower_components/cssConsole/cssConsole.css">
+</head>
+<body>
+
+<div class="error-404">
+    <div id="typo"></div>
+    <div id="corrector"></div>
+    <div id="yes"></div>
+</div>
+
+
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/theaterjs/build/theater.min.js"></script>
+<script>
+
+    var theater = new TheaterJS();
+
+    //set actors
+    theater
+        .describe("ThingsLab", 1, "#typo")
+        .describe("InnocentUser", 1, "#corrector")
+        .describe("y-sir", .6 , "#yes")
+        .describe("Redirecter", 1, "#redirecter");
+
+    //scenario
+    theater
+        .write("ThingsLab:It looks like you made a tpyo.", 600)
+        .write("InnocentUser:You mean,", 600, " \"a typo\"?")
+        .write("y-sir:", 200, "Yes...")
+
+</script>
+</body>
+</html>

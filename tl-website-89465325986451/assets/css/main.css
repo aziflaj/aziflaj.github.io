@@ -1,0 +1,147 @@
+body {
+    text-align: center;
+    font-size: 16px;
+    position: absolute;
+    font-family: helvetica, arial, sans-serif;
+}
+
+.main {
+    background-color: #2c3e50;
+    height: 90vh;
+}
+
+.nav-item-list {
+    font-size: 1.113em;
+    margin-top: 2em;
+    list-style: none;
+}
+
+.nav-item-list li {
+    margin-left: 0.2em;
+    padding: 0 .3em;
+    display: inline-block;
+}
+
+.nav-item-list li:hover {
+    border-bottom: 3px solid #ececec;
+}
+
+a.nav-item {
+    text-decoration: none !important;
+    color: #ececec;
+}
+
+
+/***************************\
+|   'Things Lab' section    |
+\***************************/
+.thingslab {
+    position: absolute;
+    margin: 0 3em;
+    top: 10em;
+    color: #ececec;
+}
+
+.thingslab__title {
+    font-size: 3em;
+}
+
+.thingslab__motto {
+    font-size: 2em;
+}
+
+.thingslab__description {
+    padding-top: 2em;
+    font-size: 1.5em;
+}
+
+.down {
+    margin-top: 4em;
+}
+
+a.down {
+    color: #ececec;
+    font-size: 3em;
+}
+
+/***************************\
+|       Moto  section       |
+\***************************/
+.motto-explained {
+    background-color: #6FBEDA;
+    padding: 2em 6em;
+}
+
+.motto__learn-descr,
+.motto__make-descr,
+.motto__share-descr
+{ text-align: left; }
+
+.learn-icon > i,
+.make-icon > i,
+.share-icon > i
+{ margin-top: 1em }
+
+
+/***************************\
+|   Testimonials  section   |
+\***************************/
+
+.testimonials {
+    padding: 2em 6em;
+}
+
+.testimonials h1 {
+    font-size: 2.8em;
+}
+
+.item.testimonial {
+    padding-bottom: 2em;
+}
+
+.item.testimonial > q {
+    font-size: 1.6em;
+    font-style: italic;
+}
+
+.carousel-indicators li {
+    background-color: #999;
+    background-color: rgba(70,70,70,.25);
+}
+
+.carousel-indicators .active {
+    background-color: #444;
+}
+
+.carousel-caption {
+    position: absolute;
+}
+
+/***************************\
+|          Footer           |
+\***************************/
+footer {
+    background-color: #282E37;
+    color: #777;
+    text-align: left;
+    padding-bottom: 1em;
+}
+
+.subscription-form {
+    margin-top: 1em;
+    padding-bottom: 1em;
+}
+
+.social-footer {
+    margin-top: .2em;
+    list-style: none;
+    font-size: 1.6em;
+    padding-bottom: 1em;
+    text-align: right;
+    padding-right: 1em;
+}
+
+.social-footer li {
+    display: inline-block;
+    padding: 0 .1em;
+}

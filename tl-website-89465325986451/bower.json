@@ -1,0 +1,19 @@
+{
+  "name": "thingslab-website",
+  "version": "0.0.0",
+  "authors": [
+    "aziflaj <aldoziflaj95@gmail.com>"
+  ],
+  "description": "The HTML5 version of Things Lab website (www.thingslab.cc)",
+  "main": "index.html",
+  "license": "MIT",
+  "homepage": "www.thingslab.cc",
+  "dependencies": {
+    "jquery": "~2.1.3",
+    "bootstrap": "~3.3.4",
+    "fontawesome": "~4.3.0",
+    "smooth-scroll": "https://github.com/cferdinandi/smooth-scroll.git",
+    "theaterjs": "~1.4.2",
+    "ionicons": "~2.0.1",
+  }
+}

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Things Lab</title>
+
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="bower_components/ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+
+</head>
+<body>
+
+<section class="main">
+    <nav class="tl-navbar">
+        <div class="container">
+            <ul class="pull-right nav-item-list">
+                <li><a class="nav-item active" href="#">Home</a></li>
+                <li><a class="nav-item" href="#">Mission & Vision</a></li>
+                <li><a class="nav-item" href="#">Projects</a></li>
+                <li><a class="nav-item" href="#">News</a></li>
+                <li><a class="nav-item" href="#">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="thingslab">
+        <h1 class="thingslab__title">Things Lab</h1>
+        <div class="thingslab__motto">Learn | Make | Share</div>
+        <p class="thingslab__description">
+            We seek to build an active community of developers and technicians by encouraging <strong>practical learning</strong> by building useful products, which can be shared with everyone.
+        </p>
+        <a data-scroll href="#motto" class="down">
+            <img src="assets/img/down.png">
+        </a>
+    </section>
+</section>
+
+<section id="motto" class="motto-explained">
+    <section class="motto__learn row">
+        <div class="pull-left col-md-8">
+            <h1 class="motto__learn-title">Learn</h1>
+            <p class="motto__learn-descr">If you want to make something new or hack something existent, you are in the right place. Nobody is born genius, so first, you get to learn how to do stuff. Here we don’t learn in the conventional way... Instead, you can participate in brief and catchy presentations, interactive discussions and debates, live workshops and profit from peer-to-peer support. At the end, you will know how to proceed with making your idea a reality, but also learn how to teach.</p>
+        </div>
+        <div class="pull-right col-md-4 learn-icon">
+            <i class="fa fa-book fa-4x"></i>
+        </div>
+    </section>
+
+    <section class="motto__make row">
+        <div class="pull-right col-md-8">
+            <h1 class="motto__make-title">Make</h1>
+            <p class="motto__make-descr">Learned some new stuff? Now it’s time to put it into practice and make some real Things. Short after base concepts are explained by workshops or presentations, we can start immediately to try and make Things together. If you are stuck somewhere between wires or code, you can get help in an instant. If you have some experience, your help to others is always needed.</p>
+        </div>
+        <div class="pull-left col-md-4 make-icon">
+            <i class="fa fa-cogs fa-4x"></i>
+        </div>
+    </section>
+
+    <section class="motto__share row">
+        <div class="pull-left col-md-8">
+            <h1 class="motto__share-title">Share</h1>
+            <p class="motto__share-descr">Let your friends know what cool and crazy Things you’ve made here. You can use our social media accounts to share your work, get support and feedback, as well as have more friends to join and profit from the Lab's activities. Sharing knowledge is not like sharing pizza. Instead, you enter with your whole pizza and everyone comes out with an even bigger pizza. So let’s share pizza... um, knowledge!</p>
+        </div>
+        <div class="pull-right col-md-4 share-icon">
+            <i class="fa fa-share fa-4x"></i>
+        </div>
+    </section>
+</section>
+
+<section class="testimonials">
+    <h1>What they say about us</h1>
+
+    <div id="carousel-testimonials" class="carousel slide" data-interval="3000">
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-testimonials" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-testimonials" data-slide-to="1"></li>
+            <li data-target="#carousel-testimonials" data-slide-to="2"></li>
+        </ol>
+
+        <div class="carousel-inner">
+            <blockquote class="item testimonial active">
+                <q class="quote">The best place to Learn</q>
+                <h3 class="name">- Foo Bar</h3>
+            </blockquote>
+            <blockquote class="item testimonial">
+                <q>The best place to Make</q>
+                <h3 class="name">- Baz Bar</h3>
+            </blockquote>
+            <blockquote class="item testimonial">
+                <q>Hashurrullalla</q>
+                <h3 class="name">- Zue Bats</h3>
+            </blockquote>
+        </div>
+    </div>
+
+</section>
+
+<footer>
+    <section class="footer-connect">
+        <form class="subscription-form col-md-8">
+            <input type="text" placeholder="Your email">
+            <button type="submit">Subscribe</button>
+        </form>
+
+        <ul class="social-footer col-md-4">
+            <li><a href="https://github.com/thingslab/"><i class="social-icon ion-social-github"></i></a></li>
+            <li><a href="https://twitter.com/thingslabtirana"><i class="social-icon ion-social-twitter"></i></a></li>
+            <li><a href="https://www.facebook.com/ThingsLabTirana"><i class="social-icon ion-social-facebook"></i></a></li>
+            <li><a href="https://plus.google.com/+ThingsLabTirana"><i class="social-icon ion-social-googleplus"></i></a></li>
+        </ul>
+    </section>
+
+    <section style="text-align: center;">
+        &copy; Things Lab
+    </section>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="bower_components/smooth-scroll/dist/js/smooth-scroll.min.js"></script>
+<script>
+    //initialize smoothscroll.js
+    smoothScroll.init();
+
+    //start the carousels
+    $('.carousel').carousel();
+</script>
+</body>
+</html>

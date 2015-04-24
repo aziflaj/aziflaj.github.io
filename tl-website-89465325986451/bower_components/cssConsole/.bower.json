@@ -1,0 +1,13 @@
+{
+  "name": "cssConsole",
+  "homepage": "https://github.com/michalkow/cssConsole",
+  "_release": "37e078e512",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "37e078e5127321a6346970ae9565c8e19fdb88c3"
+  },
+  "_source": "https://github.com/michalkow/cssConsole.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/michalkow/cssConsole.git"
+}
