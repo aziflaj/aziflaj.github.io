@@ -30,6 +30,10 @@ body {
     color: #F62459;
 }
 
+a.nav-item.active {
+    color: #F62459;
+}
+
 a.nav-item {
     text-decoration: none;
     color: #ececec;
@@ -136,6 +140,7 @@ footer {
     padding-bottom: 1em;
 }
 
+
 .social-footer {
     margin-top: .2em;
     list-style: none;
@@ -149,3 +154,12 @@ footer {
     display: inline-block;
     padding: 0 .1em;
 }
+
+.social-icon {
+    color: #D2D7D3;
+}
+
+.social-icon.ion-social-github:hover { color: #000; }
+.social-icon.ion-social-twitter:hover { color: #28ABDB; }
+.social-icon.ion-social-facebook:hover { color: #2D3A8B; }
+.social-icon.ion-social-googleplus:hover { color: #DB483E; }

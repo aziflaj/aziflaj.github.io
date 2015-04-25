@@ -2,6 +2,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale-1">
     <title>Things Lab</title>
 
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -13,15 +14,17 @@
 <body>
 
 <section class="main">
-    <nav class="tl-navbar">
+    <nav class="navbar tl-navbar">
         <div class="container">
-            <ul class="pull-right nav-item-list">
-                <li><a class="nav-item active" href="#">Home</a></li>
-                <li><a class="nav-item" href="#">Mission & Vision</a></li>
-                <li><a class="nav-item" href="#">Projects</a></li>
-                <li><a class="nav-item" href="#">News</a></li>
-                <li><a class="nav-item" href="#">Contact</a></li>
-            </ul>
+            <div class="collapse navbar-collapse">
+                <ul class="pull-right nav-item-list">
+                    <li><a class="nav-item active" href="#">Home</a></li>
+                    <li><a class="nav-item" href="#">Mission & Vision</a></li>
+                    <li><a class="nav-item" href="#">Projects</a></li>
+                    <li><a class="nav-item" href="#">News</a></li>
+                    <li><a class="nav-item" href="#">Contact</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 
@@ -99,9 +102,9 @@
 
 <footer>
     <section class="footer-connect">
-        <form class="subscription-form col-md-8">
+        <form class="subscription-form col-md-8" action="#" method="post">
             <input type="text" placeholder="Your email">
-            <button type="submit">Subscribe</button>
+            <button class="submit-btn" type="submit">Subscribe</button>
         </form>
 
         <ul class="social-footer col-md-4">
@@ -121,12 +124,6 @@
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="bower_components/smooth-scroll/dist/js/smooth-scroll.min.js"></script>
-<script>
-    //initialize smoothscroll.js
-    smoothScroll.init();
-
-    //start the carousels
-    $('.carousel').carousel();
-</script>
+<script src="assets/js/main.js"></script>
 </body>
 </html>
