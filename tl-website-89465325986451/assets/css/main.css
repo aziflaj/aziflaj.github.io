@@ -23,11 +23,15 @@ body {
 }
 
 .nav-item-list li:hover {
-    border-bottom: 3px solid #ececec;
+    border-bottom: 3px solid #F62459;
+}
+
+.nav-item-list li:hover > a {
+    color: #F62459;
 }
 
 a.nav-item {
-    text-decoration: none !important;
+    text-decoration: none;
     color: #ececec;
 }
 
