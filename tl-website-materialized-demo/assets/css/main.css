@@ -150,13 +150,13 @@ footer {
     padding-right: 1em;
 }
 
-.social-footer li {
-    display: inline-block;
-    padding: 0 .1em;
+.social-footer-item {
+    margin: 2rem 0;
 }
 
 .social-icon {
     color: #D2D7D3;
+    font-size: 1em;
 }
 
 .social-icon.ion-social-github:hover { color: #000; }
