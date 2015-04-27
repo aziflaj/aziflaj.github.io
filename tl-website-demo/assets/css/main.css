@@ -46,7 +46,6 @@ a.nav-item {
 .thingslab {
     position: absolute;
     margin: 0 3em;
-    top: 10em;
     color: #ececec;
 }
 
@@ -72,6 +71,22 @@ a.down {
     font-size: 3em;
 }
 
+@media screen
+and (max-width: 600px)
+{
+    .thingslab__title {
+        font-size: 2em;
+    }
+
+    .thingslab__motto {
+        font-size: 1.4em;
+    }
+
+    .thingslab__description {
+        font-size: 1em;
+    }
+}
+
 /***************************\
 |       Moto  section       |
 \***************************/
@@ -83,7 +98,10 @@ a.down {
 .motto__learn-descr,
 .motto__make-descr,
 .motto__share-descr
-{ text-align: left; }
+{
+    text-align: left;
+    font-size: 1em;
+}
 
 .learn-icon > i,
 .make-icon > i,
@@ -150,13 +168,13 @@ footer {
     padding-right: 1em;
 }
 
-.social-footer li {
-    display: inline-block;
-    padding: 0 .1em;
+.social-footer-item {
+    margin: 2rem 0;
 }
 
 .social-icon {
     color: #D2D7D3;
+    font-size: 1em;
 }
 
 .social-icon.ion-social-github:hover { color: #000; }

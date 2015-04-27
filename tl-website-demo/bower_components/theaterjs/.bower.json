@@ -41,6 +41,5 @@
   },
   "_source": "git://github.com/Zhouzi/TheaterJS.git",
   "_target": "~1.4.2",
-  "_originalSource": "theaterjs",
-  "_direct": true
+  "_originalSource": "theaterjs"
 }
