@@ -19,22 +19,16 @@ body {
     color: #ececec;
 }
 
-.thingslab__title {
-    font-size: 3em;
-}
+.thingslab__title { font-size: 3em; }
 
-.thingslab__motto {
-    font-size: 2em;
-}
+.thingslab__motto { font-size: 2em; }
 
 .thingslab__description {
     padding-top: 2em;
     font-size: 1.5em;
 }
 
-.down {
-    margin-top: 4em;
-}
+.down { margin-top: 4em; }
 
 a.down {
     color: #ececec;
@@ -44,17 +38,11 @@ a.down {
 @media screen
 and (max-width: 600px)
 {
-    .thingslab__title {
-        font-size: 2em;
-    }
+    .thingslab__title { font-size: 2em; }
 
-    .thingslab__motto {
-        font-size: 1.4em;
-    }
+    .thingslab__motto { font-size: 1.4em; }
 
-    .thingslab__description {
-        font-size: 1em;
-    }
+    .thingslab__description { font-size: 1em; }
 }
 
 /***************************\
@@ -65,35 +53,43 @@ and (max-width: 600px)
     padding: 2em 6em;
 }
 
-.motto__learn-descr,
-.motto__make-descr,
-.motto__share-descr
-{
+.motto__learn-title, .motto__make-title, .motto__share-title {
+    font-size: 2em;
+}
+
+.motto__learn-descr, .motto__make-descr, .motto__share-descr {
     text-align: left;
     font-size: 1em;
 }
 
-.learn-icon > i,
-.make-icon > i,
-.share-icon > i
-{ margin-top: 1em }
+.learn-icon, .make-icon, .share-icon {
+    margin-top: 1em;
+}
+
+.icon_book_alt, .icon_tools, .icon_globe {
+    font-size: 6em;
+
+}
+
+@media screen
+and (max-width: 600px)
+{
+    .motto-explained {
+        background-color: #6FBEDA;
+        padding: 2em;
+    }
+}
 
 
 /***************************\
 |   Testimonials  section   |
 \***************************/
 
-.testimonials {
-    padding: 2em 6em;
-}
+.testimonials { padding: 2em 6em; }
 
-.testimonials h1 {
-    font-size: 2.8em;
-}
+.testimonials h1 { font-size: 2.8em; }
 
-.testimonial {
-    padding-bottom: 2em;
-}
+.testimonial { padding-bottom: 2em; }
 
 .testimonial > q {
     font-size: 1.6em;
@@ -129,9 +125,7 @@ and (max-width: 600px)
         display: none; /* remove text for social media */
     }
 
-    .social-icon {
-        font-size: 2em;
-    }
+    .social-icon { font-size: 2em; }
 
     .social-icon.ion-social-github { color: #000; }
     .social-icon.ion-social-twitter { color: #28ABDB; }
