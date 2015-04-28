@@ -10,36 +10,6 @@ body {
     height: 90vh;
 }
 
-.nav-item-list {
-    font-size: 1.113em;
-    margin-top: 2em;
-    list-style: none;
-}
-
-.nav-item-list li {
-    margin-left: 0.2em;
-    padding: 0 .3em;
-    display: inline-block;
-}
-
-.nav-item-list li:hover {
-    border-bottom: 3px solid #F62459;
-}
-
-.nav-item-list li:hover > a {
-    color: #F62459;
-}
-
-a.nav-item.active {
-    color: #F62459;
-}
-
-a.nav-item {
-    text-decoration: none;
-    color: #ececec;
-}
-
-
 /***************************\
 |   'Things Lab' section    |
 \***************************/
@@ -121,26 +91,13 @@ and (max-width: 600px)
     font-size: 2.8em;
 }
 
-.item.testimonial {
+.testimonial {
     padding-bottom: 2em;
 }
 
-.item.testimonial > q {
+.testimonial > q {
     font-size: 1.6em;
     font-style: italic;
-}
-
-.carousel-indicators li {
-    background-color: #999;
-    background-color: rgba(70,70,70,.25);
-}
-
-.carousel-indicators .active {
-    background-color: #444;
-}
-
-.carousel-caption {
-    position: absolute;
 }
 
 /***************************\
