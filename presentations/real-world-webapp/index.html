@@ -14,11 +14,11 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
-		<link rel="stylesheet" href="../assets/reveal/css/reveal.css">
-		<link rel="stylesheet" href="../assets/reveal/css/theme/black.css" id="theme">
+		<link rel="stylesheet" href="../../assets/reveal/css/reveal.css">
+		<link rel="stylesheet" href="../../assets/reveal/css/theme/black.css" id="theme">
 
 		<!-- Code syntax highlighting -->
-		<link rel="stylesheet" href="../assets/reveal/lib/css/zenburn.css">
+		<link rel="stylesheet" href="../../assets/reveal/lib/css/zenburn.css">
 		<link rel="stylesheet" href="style.css">
 
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
@@ -28,7 +28,7 @@
 			var link = document.createElement( 'link' );
 			link.rel = 'stylesheet';
 			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? '../assets/reveal/css/print/pdf.css' : '../assets/reveal/css/print/paper.css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../../assets/reveal/css/print/pdf.css' : '../../assets/reveal/css/print/paper.css';
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
 		</script>
 
@@ -446,8 +446,8 @@ foreach ($resultSet as $result) // this should print Goku!
 
 		</div>
 
-		<script src="../assets/reveal/lib/js/head.min.js"></script>
-		<script src="../assets/reveal/js/reveal.js"></script>
+		<script src="../../assets/reveal/lib/js/head.min.js"></script>
+		<script src="../../assets/reveal/js/reveal.js"></script>
 
 		<script>
 
@@ -463,12 +463,12 @@ foreach ($resultSet as $result) // this should print Goku!
 
 				// Optional reveal.js plugins
 				dependencies: [
-					{ src: '../assets/reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: '../assets/reveal/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: '../assets/reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: '../assets/reveal/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: '../assets/reveal/plugin/zoom-js/zoom.js', async: true },
-					{ src: '../assets/reveal/plugin/notes/notes.js', async: true }
+					{ src: '../../assets/reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../../assets/reveal/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../assets/reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../assets/reveal/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../../assets/reveal/plugin/zoom-js/zoom.js', async: true },
+					{ src: '../../assets/reveal/plugin/notes/notes.js', async: true }
 				]
 			});
 
