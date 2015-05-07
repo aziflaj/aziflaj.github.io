@@ -7,5 +7,7 @@ share: false
 ---  
 
 A list of all my presentations:
- - Developing a Real World application
- - Oshilografi Elektromekanik
+<ul>
+	<li><a href="/real-world-webapp">Developing a Real World application</a></li>
+	<li><a href="/oshilografi-elektromekanik">Oshilografi Elektromekanik</a></li>
+</ul>	
