@@ -1,0 +1,11 @@
+body {
+	background-color: #2C3E50;
+}
+
+.me-social > li {
+	 list-style: none;
+}
+
+.fa-twitter {
+	color: #33ADAD;
+}
