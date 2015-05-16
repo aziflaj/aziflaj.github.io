@@ -6,10 +6,6 @@ body {
 	 list-style: none;
 }
 
-.fa-twitter {
-	color: #33ADAD;
-}
-
-.fa-github {
-	color: #000;
+.fa {
+	color: #fff;
 }
