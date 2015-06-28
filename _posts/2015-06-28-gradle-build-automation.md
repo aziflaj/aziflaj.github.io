@@ -55,7 +55,7 @@ public class Greeter {
 
 Gradle requires a project strucure like:
 
-{% highlight %}
+{% highlight bash %}
 [project-name]
   +----src
   |     +---- main
@@ -71,7 +71,7 @@ The `src/main/java` directory is the one where you put the source files. So ther
 
 In the `build.gradle` file, you can simply put:
 
-{% highlight gradle %}
+{% highlight groovy %}
 // compile java
 apply plugin: 'java'
 
@@ -86,7 +86,7 @@ This one says to Gradle to build the application and to use the `App.java` file 
 ## Resolve dependencies
 If your app is using third-party libraries (a.k.a dependencies), you can get them using Gradle (check the [02 branch](https://github.com/aziflaj/gradle-basics/tree/02)). I am appending these lines in the `build.gradle` file:
 
-{% highlight gradle %}
+{% highlight groovy %}
 repositories {
   mavenCentral()
 }
@@ -101,7 +101,7 @@ You can now use the Joda Time library in your app. By adding `mavenCentral()` at
 ## Create the wrapper
 when you are working on a team, maybe not all of the members will have Gradle installed, and not all of them must have it installed in order to use it. Instead, one of the members can create a Gradle wrapper which can then be used as a legit Gradle build tool. Append this task in the `build.gradle` file:
 
-{% highlight gradle %}
+{% highlight groovy %}
 task wrapper(type: Wrapper) {
     gradleVersion = '2.3'
 }
