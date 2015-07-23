@@ -64,7 +64,7 @@ Gradle requires a project strucure like:
   |     `----tests
   |            `---- java
   |
-  `---- build.gradle            
+  `---- build.gradle
 {% endhighlight %}
 
 The `src/main/java` directory is the one where you put the source files. So there I put the `demo` package with the code.
