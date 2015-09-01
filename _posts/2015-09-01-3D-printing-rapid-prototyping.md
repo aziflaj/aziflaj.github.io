@@ -42,21 +42,7 @@ The software that prepares the layers from a given 3D model is called "a **slice
 
 Now what is this G-code that the slicer software should produce? Nothing more than a list of instructions, readable by the 3D printer microcontroller, that tell the mechanical parts what to do, how to do it, and when to do it. The G-code for the above Eiffel tower model is **30820** lines of code long, and a small sample of it is given below (quite like Assembly, isn't it?):
 
-```gcode
-M107
-M104 S200 ; set temperature
-G28 ; home all axes
-G1 Z5 F5000 ; lift nozzle
-M109 S200 ; wait for temperature to be reached
-G21 ; set units to millimeters
-G90 ; use absolute coordinates
-M82 ; use absolute distances for extrusion
-G92 E0
-G1 Z0.350 F7800.000
-G1 E-2.00000 F2400.00000
-; ...
-; The rest of the code
-```
+{% gist aziflaj/fded60e1f05f1a8f2e2b %}
 
 This G-code is the input of the second software. After you generated the G-code of the model, you use a software to send this G-code to the microcontroller of the 3D printer. For this stage, we used [Printrun](http://reprap.org/wiki/Printrun). Printrun is an [open-source](https://github.com/kliment/Printrun) G-code sender that consists of **Printcore** (dumb G-code sender), **Pronsole** (command line G-code sender), **Pronterface** (G-code sender with GUI), and a small collection of helpful scripts. 
 
@@ -108,20 +94,21 @@ If the 1st test doesn't pass, you should rethink of the print bed. You may have 
 
 If the 2nd and/or the 3rd test don't pass, you have to change a line of code (the same for both problems) in the configuration file. If you check [our configuration](https://github.com/thingslab/Marlin/blob/thingslab-config/Marlin/Configuration.h) at line 403, you can see:
 
-```c
+{% highlight c %}
 #define DEFAULT_AXIS_STEPS_PER_UNIT   {80, 80, 731.43, 900}
-```
+{% endhighlight %}
 
 The first three values tell the steppers of the printer how much should they move in order to achieve the exact dimensions of the 3D model. The fourth value belongs to the stepper that controls the flow rate of the filament. You might be asking yourself _"Why the magic values?"_. Well, we calculated them using a simple formula known by every 7th grader, the [rule of three](http://en.wikipedia.org/wiki/Cross-multiplication#Rule_of_Three). For the first three values we can write:
-```
+
+{% highlight c %}
 needed_value = (actual_value * distance) / actual_distance
-```
+{% endhighlight %}
 
 Initially, the first three values at that line of code above will have a default value (the `actual_value` of the formula). Using Pronterface (or any other G-code sender) you move one axis by a specified distance (the `distance` of the formula). Then, you measure the actual distance (the `actual_distance` of the formula). By using the formula above, you can calculate the value you should put there (the `needed_value` of the printer). On the same way, for the last value, you can use the formula:
 
-```
+{% highlight c %}
 needed_value = (actual_value * needed_consume) / actual_consume
-```
+{% endhighlight %}
 
 Now you "order" the printer to extrude an amount of filament (the `needed_consume`) and you measure how much it actually printed (the `actual_consume`). 
 
