@@ -2,13 +2,11 @@
 layout:     post
 title:      "Week #2 report: AngularJS + Gulp"
 date:       2015-10-17
-summary:    "On the second week of my 52 weeks, 52 projects, I went back to re-learning my favorite JavaScript framework, AngularJS."
+summary:    "On the second week of my \"52 weeks, 52 projects\" challenge, I went back to re-learning my favorite JavaScript framework, AngularJS."
 tags:       [challenge, javascript, angular, angularjs, sass, gulp, build, automation]
 ---
 
-On the second week of my [**52 weeks, 52 projects**](http://aziflaj.github.io/52-weeks-52-projects/), I went back to re-learning my favorite JavaScript framework, AngularJS.
-
-On the second week of my 52 weeks, 52 projects, I went back to re-learning my favorite JavaScript framework, AngularJS.
+On the second week of my [**52 weeks, 52 projects**](http://aziflaj.github.io/52-weeks-52-projects/) challenge, I went back to re-learning my favorite JavaScript framework, AngularJS.
 
 This week, I thought of making a simple invoice application, that lets the user to create an invoice, add items to the invoice and creates a PDF version of that. It is not something new in the market. In fact, I tried to remake [this invoice generator](http://invoice-generator.com/), trying to make the UI as similar as that. It is not a copycat though; I'm not that good at CSS. Instead, I focused on the Angular part and another tool called **Gulp.js**.
 
@@ -32,8 +30,9 @@ I used it for tasks like minifying and concatenating JavaScript files, and also 
 
 {% gist aziflaj/778511eeaecfcda1a3f1 %}
 
-This is one of the tasks I wrote, that helps me follow some [JavaScript Coding Style](http://jscs.info/) (JSCS), minify/uglify the files and then concatenate them into one single, minified file called `build/app.js`. Is this file which is included in the HTML page. The same thing applies to SASS.
+This is one of the tasks I wrote, that helps me follow some [JavaScript Coding Style](http://jscs.info/) (JSCS), minify/uglify the files and then concatenate them into one single, minified file called `build/app.js`. Is this file which is included in the HTML page. The same thing applies to SASS. Also, I used Gulp to create a live-reload service for the application: whenever I changed anything in the JS or SASS files, the page is automatically refreshed and the view is updated. It can be very helpful when developing with more than one screen: one for writing code and the other one for actually seeing the application running.
 
 Probably later I will add a back-end service to this UI. Right now, I'm thinking about using Node.js or maybe Rails (or any other Ruby framework), but even Java might be an alternative, with [Spring Framework](https://spring.io/) or [Spark](http://sparkjava.com/). 
 
-And that’s it for the second week! If you want to ask me anything, leave a comment below.
+And that’s it for the second week! You can find the source code in [this GitHub repository](https://github.com/aziflaj/simple-invoices-frontend), you can fork it and change anything if you want to. 
+If you want to ask me anything, leave a comment below.
