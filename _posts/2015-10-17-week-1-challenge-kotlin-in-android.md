@@ -19,3 +19,5 @@ It is a part of the Content Provider I wrote for the application. It is simple, 
 > If you're interested to see a workaround with Kotlin and Dagger, check this project: [damianpetla/kotlin-dagger-example](https://github.com/damianpetla/kotlin-dagger-example)
 
 And that's it for the first week! If you have anything to ask me about Kotlin or this project, let me know in the comment section below. I will also write an article on [SitePoint](http://www.sitepoint.com/) about how to create a Kotlin application in Android, so stay tuned.
+
+**UPDATE:** You can now read my tutorial on how to build the application on SitePoint: [Streamline Android Java Code with Kotlin](http://www.sitepoint.com/streamline-android-java-code-with-kotlin/)
