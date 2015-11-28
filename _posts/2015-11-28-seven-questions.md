@@ -37,7 +37,7 @@ end
 
 or the same thing in Laravel:
 
-{% highlight php %}
+{% highlight php startinline=true %}
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model 
@@ -59,7 +59,7 @@ You don't have to write getters or setters; the Active Record pattern doesn't re
 
 The other camp, Data Mapper, can be represented by other powerful ORMs such as Hibernate for Java and Doctrine for PHP. In this pattern, the model classes are just plain classes that don't have to inherit or extend anything. The persistence is then handled by a separate mechanism. When using Doctrine ORM in a Symfony2 application, you create a simple class with the table columns as fields:
 
-{% highlight php %}
+{% highlight php startinline=true %}
 // The User model
 class User
 {
