@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "Week #7: 7 questions"
+title:      "Week #7: 7 questions answered"
 date:       2015-11-28
 summary:    "This is the 7th week of my challenge, and it has been good so far. I have been learning a lot and I intend to learn a lot more, maybe even get back to the same technologies and explore them more deeply. I learned a new JVM language called Kotlin, I learned provisioning with Chef, I did some Node.js development using Sails.js and I also made a simplified IRC in Java. I decided to take this week off from developing. Instead, I picked 7 interesting questions over time and I intend to answer them as good as I can."
 tags:       [challenge, questions, c#, java, python, orm, javascript, nodejs, artificial, intelligence, neural, networks]
