@@ -90,7 +90,7 @@ class User
 
 Storing a user will be like:
 
-{% highlight php %}
+{% highlight php startinline=true %}
 // Create a user
 $user = new User();
 $user->setLastName("Bond");
