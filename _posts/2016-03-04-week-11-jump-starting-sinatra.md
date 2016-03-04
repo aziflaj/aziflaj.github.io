@@ -69,6 +69,7 @@ $ vagrant up && vagrant ssh
 {% endhighlight %}
 
 Some of the ports are forwarded (host => guest):
+
 - 3000 => 3000
 - 5000 => 5000
 - 8000 => 80
