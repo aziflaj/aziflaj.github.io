@@ -1,6 +1,7 @@
 ---
 layout: post
 title: When do the minute and hour hands of a clock overlap?
+comments:   true
 summary: "A really nice logical question is “How many times a day do the minute and hour hands of a clock overlap?”. Well that’s easy, 22 times. During the first half of the day, they overlap 11 times: 00:00, ~01:05, ~02:10, and so on, but not ~11:55 (since they overlap at 00:00). In 24 hours, that would be 22 times. I’m not trying to find out how many times, but when does this happen."
 tags: [clock, time, python, overlap]
 ---
