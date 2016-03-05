@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Ruby and card tricks
+comments: true
 summary: "Magic is not real, but card tricks are. Most of the card tricks I know are based on doing something without the other guy watching, such as manipulating the cards, seeing them in one way or another, etc. But I know a card trick that is highly mathematical rather than a real ‘trick’. Hence, it would work with any kind of object that is stackable on other peers."
 tags: [ruby, magic, cards, rails, math, mathematics]
 ---
