@@ -2,6 +2,7 @@
 layout:     post
 title:      "Week #2 report: AngularJS + Gulp"
 date:       2015-10-24
+comments:   true
 summary:    "On the second week of my \"52 weeks, 52 projects\" challenge, I went back to re-learning my favorite JavaScript framework, AngularJS."
 tags:       [challenge, javascript, angular, angularjs, sass, gulp, build, automation]
 ---
