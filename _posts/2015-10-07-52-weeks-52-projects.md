@@ -2,6 +2,7 @@
 layout:     post
 title:      New Year's resolution... in October
 date:       2015-10-07
+comments:   true
 summary:    "I am late on this one. New Year's eve happened long time ago, and the next New Year's eve is happening two and a half months later. But I can't wait until then, and I shouldn't wait until then. My New Year's resolution is: 52 weeks, 52 projects. I want to develop a small to medium scale project every week for the next 52 weeks (52 weeks = 1 year), and put it online in the weekend."
 tags:       [challenge, projects, java, ruby, devops, android, javascript, python, open, source]
 ---
