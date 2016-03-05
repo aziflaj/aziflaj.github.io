@@ -2,6 +2,7 @@
 layout:     post
 title:      Building a Slot Game in Java 
 date:       2015-03-02
+comments:   true
 summary:    "A couple of years ago, when I was learning Java programming, I thought of testing myself and my programming skills by writing a game in Java. Now, I'm not going to call it game programming, since game programming is way more than what I did. In fact, what I did was just a test for me. So I decided to write a game I was playing on my old Nokia E50 phone, a Slot Game."
 tags:       [java, slot, slots, game]
 ---
