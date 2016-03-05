@@ -1,65 +1,76 @@
+# Site wide configuration
+
 title:            Aldo Ziflaj
-description:      A blog from a code lover
-disqus_shortname: aldoziflaj
-#reading_time:     true
-words_per_minute: 200
-# Your site's domain goes here (eg: //mmistakes.github.io, http://mademistakes.com, etc)
-# When testing locally leave blank or use http://localhost:4000
-url:              //aziflaj.github.io
+locale:           en_US
+url:
 
-# Owner/author information
-owner:
-  name:           Aldo Ziflaj
-  avatar:         aziflaj.png
-  #bio:            "My name is Aldo, and I'm trying to create a blog using Jekyll"
-  email:          aldoziflaj95@gmail.com
-  # Social networking links used in footer. Update and remove as you like.
-  github:         aziflaj
-  linkedin:       aziflaj
-  facebook:       aldo.ziflaj
-  # google plus id, include the '+', eg +mmistakes
-  google_plus:    +AldoZiflaj
-  twitter:        aziflaj
 
-# Background image to be tiled on all pages
-background:       triangular.png
+# Jekyll configuration
 
-# Analytics and webmaster tools stuff goes here
-google_analytics:   UA-57656825-2
-google_verify:
-# https://ssl.bing.com/webmaster/configure/verify/ownership Option 2 content= goes here
-bing_verify:
-
-# http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-timezone:    Europe/Tirane
-future:      true
-highlighter: rouge
+permalink:   /:categories/:title/
 markdown:    kramdown
-gems:
-  - jekyll-sitemap
+highlighter: rouge
 sass:
   sass_dir: _sass
   style: compressed
-
-# https://github.com/mojombo/jekyll/wiki/Permalinks
-permalink:   /:categories/:title/
-
-# Amount of post to show on home page
-paginate: 5
+gems:
+  - jekyll-sitemap
+  - jekyll-gist
 
 kramdown:
   auto_ids: true
   footnote_nr: 1
   entity_output: as_char
   toc_levels: 1..6
-  use_coderay: true
+  enable_coderay: false
 
-  coderay:
-    coderay_line_numbers: nil
-    coderay_line_numbers_start: 1
-    coderay_tab_width: 4
-    coderay_bold_every: 10
-    coderay_css: class
+
+# Octopress
+
+# Default extensions
+post_ext: md
+page_ext: md
+
+# Found in _templates/
+post_layout: post
+page_layout: page
+
+# Format titles with titlecase?
+titlecase: true
+
+
+# Site owner
+owner:
+  name: Aldo Ziflaj
+  avatar: aziflaj.png
+  bio: "Just another programming addict, with a sweet tooth for software development and cutting-edge technologies"
+  email: aldoziflaj95@gmail.com
+  disqus-shortname: aldoziflaj
+  twitter: aziflaj
+  facebook: aldo.ziflaj
+  google:
+    plus: +AldoZiflaj
+    analytics: UA-57656825-2
+    verify:
+    ad-client:
+    ad-slot:
+  bing-verify:
+  github: aziflaj
+  stackoverflow: #123456/username   from a "http://stackoverflow.com/users/123456/username" link
+  linkedin: aziflaj
+  xing: #username
+  instagram: #username
+  lastfm: #username
+  tumblr: #username
+  pinterest: #username
+  foursquare: #username
+  steam: #username
+  dribbble: #username
+  youtube: #username
+  soundcloud: #username
+  weibo: #username
+  flickr: #username
+  codepen: #username
 
 include: [".htaccess"]
-exclude: ["lib", "config.rb", "Capfile", "config", "Gemfile", "Gemfile.lock", "README.md", "LICENSE", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "*.sublime-project", "*.sublime-workspace", "test", "spec", "Gruntfile.js", "package.json", "node_modules"]
+exclude: ["lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "*.sublime-project", "*.sublime-workspace", "test", "spec", "Gruntfile.js", "package.json", "node_modules", "Gemfile", "Gemfile.lock", "LICENSE", "README.md"]
