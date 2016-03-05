@@ -2,6 +2,7 @@
 layout:     post
 title:      "Week #10 extends Week #9"
 date:       2016-01-22
+comments:   true
 summary:    "It has been almost a month since the last blog post. School requires a lot of my time so I haven't been playing around starting from December 20. Now that I finished all of my school projects (and I'm getting ready for the exams season) I think it is better to write a blog post about what I've been doing lately."
 tags:       [challenge, java, php, android, parse, mobile, native]
 ---
