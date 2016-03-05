@@ -2,6 +2,7 @@
 layout:     post
 title:      Bulding my first website with HTML and CSS
 date:       2015-02-17
+comments:   true
 summary:    Yesterday I finished a short course at Learnable titled Build Your First Website - HTML & CSS
 tags:       [html, css, learnable, website]
 ---
