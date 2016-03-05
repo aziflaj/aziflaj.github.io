@@ -2,6 +2,7 @@
 layout:     post
 title:      "Week #6: An IRC-like Application in Java"
 date:       2015-11-21
+comments:   true
 summary:    "A couple of times during the Software Engineering class, the professor has been saying \"Don't think Apache2 is Rocket Science! Even you can build your own server\". You don't have to get that for granted, but keep in mind that the Internet Protocol (and also UDP and TCP) is built upon network sockets, so building a server basically means using sockets everywhere. That being said, he started showing how to use sockets with a simple PHP program, explaining what sockets are, how do they work, how PHP actually uses C in the background to achieve InterProcess Communication (IPC), etc. One of the things he mentioned was that of using multiple threads for serving more than one clients, and I actually took that as a challenge; to use Java Threads and [Server]Sockets in order to create a client-server application that allows clients communicate with each other."
 tags:       [challenge, java, irc, socket, client, server]
 ---
