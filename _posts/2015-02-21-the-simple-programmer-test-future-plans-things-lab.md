@@ -2,6 +2,7 @@
 layout:     post
 title:      The Simple Programmer Test and future plans at Things Lab
 date:       2015-02-21
+comments:   true
 summary:    While reading The Joel Test For Programmers which was stating some characteristics that make a good software developer, I was thinking about something nice that is going to happen at Things Lab. The moto is Learn | Make | Share, and we are going to Learn by Making a real-world application, and in the end, we'll Share it with everyone!
 tags:       [coder, characteristics, programmer, things, lab, git, php, unit, testing, front, back, end]
 ---
