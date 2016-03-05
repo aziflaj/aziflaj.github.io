@@ -2,6 +2,7 @@
 layout:     post
 title:      Aldo.speak("Hello, World!");
 date:       2015-02-14
+comments:   true
 summary:    Hello, World! This is my first blogpost @ aziflaj.github.io. I decided to use Jekyll since it's simple to set up and it's given for free by GitHub (and I <3 GitHub).
 tags:       [blogging]
 ---
