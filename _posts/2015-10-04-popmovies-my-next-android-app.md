@@ -2,6 +2,7 @@
 layout:     post
 title:      PopMovies - my next Android app
 date:       2015-10-04
+comments:   true
 summary:    A couple of months ago I took a course in Udacity called "Developing Android Apps". It is developed by Google and it's the first part of the Android Nanodegree at Udacity. The final project was building a cloud-connected app to allow users to discover the most popular movies playing, a really good experience.
 tags:       [android, ionic, kotlin, google, udacity]
 ---
