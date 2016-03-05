@@ -2,6 +2,7 @@
 layout:     post
 title:      "Week #4 challenge: Server-side JavaScript"
 date:       2015-11-08
+comments:   true
 summary:    "This week on my 52 weeks, 52 projects challenge I tried a back-end JavaScript framework called Sails.js. Sails is an MVC framework based on Express.js and socket.io that resembles the MVC behavior of frameworks like Ruby on Rails. I also used MongoDB, a NoSQL database, to store the data."
 tags:       [challenge, node, javascript, mvc, framework, mongo, mongodb]
 ---
