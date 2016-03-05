@@ -2,6 +2,7 @@
 layout:     post
 title:      Crunching numbers in Python
 date:       2015-02-22
+comments:   true
 summary:    When I finished high school and I was spiritually preparing to go to an Engineering College, I knew that too many calculations were ahead. During the first year, I had to follow 5 mathematical courses (or should I say curses?). That is when I discovered the simplicity of Python, and using it to solve math problems seemed the simplest thing to do.
 tags:       [numberoid, python, unit, test]
 ---
