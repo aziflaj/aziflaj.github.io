@@ -2,6 +2,7 @@
 layout:     post
 title:      "Week #3 challenge: Cooking Virtual Machines with Chef"
 date:       2015-10-31
+comments:   true
 summary:    "A long time ago in a galaxy far, far away (and probably in a parallel universe) Han Solo decided to open a restaurant, becoming Chef Solo and one of the best in the business. His specialty was a dish including Automation, Servers, Data centers, and some \"secret formula\" which we're given to believe its a Ruby DSL... Star Wars jokes aside, this week on my 52 weeks, 52 projects challenge I tried to provision a virtual server using chef solo."
 tags:       [challenge, automation, provision, devops, ruby, vagrant, chef, solo]
 ---
