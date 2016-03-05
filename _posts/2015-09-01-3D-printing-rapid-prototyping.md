@@ -2,6 +2,7 @@
 layout:     post
 title:      3D printing and Rapid Prototyping
 date:       2015-09-01
+comments:   true
 summary:    It has been a while since Things Lab finished working with its 3D printer. This is a small introduction to 3D printers and a guide to building up your own 3D printer. 
 tags:       [things, lab, printer, 3D, gcode]
 ---
