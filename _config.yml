@@ -26,7 +26,7 @@ urls:
 
 author_logo: aziflaj.png
 author: Aldo Ziflaj
-author_bio: Just another programming addict, with a sweet tooth for software development and cutting-edge technologies
+# author_bio: 
 author_email: "aldoziflaj95@gmail.com"
 author_location: Berlin, DE
 author_website_url: "https://aziflaj.github.io"
@@ -34,40 +34,115 @@ typewrite-text: typewrite text goes here
 
 # Experiences
 author_work_experiences:
-  - company_name: Google
-    company_logo: google.png
-    company_url: https://google.com
-    designation: Software Engineer
-    description: Worked on various Google Products
+  - company_name: PAIR Finance
+    company_logo: workexp/pair.jpeg
+    company_url: https://www.pairfinance.com
+    designation: Ruby on Rails Developer
+    description: "PAIR Finance is an AI-backed debt collecting agency, 
+                  which focuses on collecting overdue payments without 
+                  breaking the customer-to-business relationship.
+                  <br /> <br />
+                  As a Ruby on Rails developer, my tasks included 
+                  fixing existing bugs and implementing new features 
+                  which streamline the operators' communication with debtors, 
+                  as well as building a mediary module for Courts communications."
     visibility: true
-  - company_name: Microsoft
-    company_logo: microsoft.png
-    company_url: https://microsoft.com
-    designation: Azure Developer
-    description: Worked on various Azure Cloud Products
+  - company_name: Catapult
+    company_logo: workexp/catapult.jpeg
+    company_url: https://www.catapult.com/
+    designation: Software Engineer
+    description: "Catapult is an On-Demand Workforce provider that uses 
+                  machine learning and a unique pairing algorithm to match 
+                  people with shifts that suit their skills and experience.
+                  <br /> <br />
+                  My tasks included new feature implementation, bug fixing 
+                  and integrations with third party services, developing 
+                  software in React, Ruby on Rails and Elixir."
+    visibility: true
+
+  - company_name: Publer
+    company_logo: workexp/publer.jpeg
+    company_url: https://publer.io/
+    designation: Software Engineer
+    description: "Publer is a social media manager and post scheduler. The 
+                  first version, developed in PHP, included only Facebook support.
+                  <br /> <br />
+                  My first task was to re-design the database schema and the 
+                  back-end architecture of the existing application, and then 
+                  implement the necessary changes to migrate the existing 
+                  application (jQuery, PHP, MySQL, shared hosting) into a modern 
+                  one (React.js, Ruby on Rails, MongoDB, hosted on AWS).
+                  <br /> <br />
+                  My other responsibilities included implementing new features 
+                  (e.g. post scheduling for LinkedIn and Twitter via Sidekiq), 
+                  bug fixing, writing automated tests (using RSpec, Capybara and 
+                  Cucumber), provisioning virtual machines and development 
+                  environment (using Chef, Vagrant and Docker) and managing 
+                  Continuous Integration pipelines (hosted on AWS and Gitlab)."
+    visibility: true
+
+  - company_name: Softlab Albania
+    company_logo: workexp/softlab.png
+    company_url: 
+    designation: Lead Software Engineer
+    description: "As the Lead Engineer, I was responsible designing and maintaining 
+                  the whole software workflow adopted by Softlab. I negotiated 
+                  features and solutions with the customers, designed the software 
+                  architecture of the applications, implemented features and managed 
+                  automated deployment pipelines.
+                  <br /> <br />
+                  Our software stack included the following technologies: <br />
+                  - On the back-end we were using Ruby on Rails (TDD using Rspec 
+                  and Capybara) and Node.js <br />
+                  - On the front-end, React.js/React Native and AngularJS/Ionic 
+                  Framework <br />
+                  - The data stores used included both SQL (PostgreSQL, PostGIS) 
+                  and NoSQL (Redis, MongoDB, Firebase) <br />
+                  - Automatic deployment was done through Capistrano on AWS 
+                  EC2 instance(s), running Amazon Linux <br />
+                  <br /> <br />
+                  My work was focused on all the above, except React/React Native"
+    visibility: true
+
+  - company_name: Independent Consultant
+    company_logo: 
+    company_url: 
+    designation: Software Engineer
+    description: "Designed and developed an email marketing service for a 
+                  US-based company using PHP and Laravel Framework. The 
+                  application, deployed on a CentOS instance, could send up to 
+                  100K emails without breaking the workflow of the operator 
+                  using the application."
     visibility: true
 
 # Education
 author_education_details:
-  - college_logo: mit.png
-    college_name: MIT
-    college_url: https://mit.org
-    college_degree: CS Engineer
-    description: Bachelor of Technology
+  - college_logo: edu/upt.png
+    college_name: Polytechnic University of Tirana
+    college_url: http://upt.al/
+    college_degree: M.Sc. in Computer Engineering
+    description: Master of Science in Computer Engineering. My thesis was titled "Designing a Modular Architecture for Large Scale Recommender Systems"
+    visibility: true
+
+  - college_logo: edu/upt.png
+    college_name: Polytechnic University of Tirana
+    college_url: http://upt.al/
+    college_degree: Bach. in Computer Engineering
+    description: Bachelor in Computer Engineering. My thesis was titled "Implementing the MVP Architecture on Data-Driven Android Applications"
     visibility: true
 
 # Projects
-author_project_details:
-  - project_thumbnail: gamershub.png
-    project_title: Gamers Hub
-    project_description: A Platform built for Gamers and Game Devs
-    project_url: https://gamershub.in
-    visibility: true
-  - project_thumbnail: hack4r.PNG
-    project_title: Hack4r
-    project_description: A Platform built for Hackers and Penetration Testers
-    project_url: https://hack4r.com
-    visibility: true
+# author_project_details:
+#   - project_thumbnail: gamershub.png
+#     project_title: Gamers Hub
+#     project_description: A Platform built for Gamers and Game Devs
+#     project_url: https://gamershub.in
+#     visibility: true
+#   - project_thumbnail: hack4r.PNG
+#     project_title: Hack4r
+#     project_description: A Platform built for Hackers and Penetration Testers
+#     project_url: https://hack4r.com
+#     visibility: true
 
 # social links
 twitter_username: aziflaj
@@ -104,7 +179,7 @@ permalink: /:categories/:title/
 # Choose what to show ( can be true or false)
 show_author_work_experiences: true
 show_author_education_details: true
-show_author_project_details: true
+show_author_project_details: false
 
 # pagination of posts
 paginate: 4
