@@ -159,9 +159,11 @@ pre {
 
 blockquote {
   margin: 2rem 1rem 1rem;
-  padding: 3px;
+  padding: 3px 1em;
+  font-size: 1.4em;
+  font-style: italic;
   background: var(--main-background-color) !important;
-  border: 1px solid;
+  border-left: 3px solid;
   color: var(--bold-color);
 }
 
@@ -644,6 +646,14 @@ header {
 
 #blog-posts-container {
   margin-left: 20px !important;
+}
+
+.article-content {
+  font-size: 1.2em;
+
+  img {
+    width: 100%;
+  }
 }
 
 #article-container {
