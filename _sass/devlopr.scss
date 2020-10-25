@@ -12,7 +12,7 @@ html[data-theme="dark"] {
     --highlight-color: hsl(0, 0%, 60%);
     --light-border-color: hsl(0, 0%, 30%);
     --light-text-color: rgb(199, 199, 204);
-    --link-color: #f69801;
+    --link-color: #FF5F5F;
     --link-color-visited: hsl(250, 100%, 60%);
     --main-background-color: rgb(28, 28, 30);
     --main-text-color: rgb(139, 139, 139);
@@ -53,9 +53,9 @@ html[data-theme="light"] {
         --highlight-color: hsl(0, 0%, 60%);
         --light-border-color: hsl(0, 0%, 30%);
         --light-text-color: rgb(199, 199, 204);
-        --link-color: #f69801;
+        --link-color: #FF5F5F;
         --nav-color: #131313;
-        --search-color: #FF7901;
+        --search-color: #FF5F5F;
         --nav-link-color: rgba(255, 255, 255, .5);
         --link-color-visited: hsl(250, 100%, 60%);
         --main-background-color: rgb(28, 28, 30);
@@ -75,7 +75,7 @@ html[data-theme="light"] {
         --highlight-color: hsl(0, 0%, 80%);
         --light-border-color: rgb(230, 230, 230);
         --light-text-color: rgb(72, 72, 74);
-        --link-color: #ca6521;
+        --link-color: #FF5F5F;
         --nav-color: #ffffff;
         --nav-link-color: #111111;
         --search-color: #ababab;
@@ -111,7 +111,7 @@ ol, ul {
 
 /* Progress bar */
 .my-class .bar {
-    background: #f69801;
+    background: #FF5F5F;
 }
 
 body {
@@ -225,7 +225,7 @@ header {
 }
 
 .navbar-dark .navbar-brand {
-    color: #ff7601 !important;
+    color: #FF5F5F !important;
 }
 .navbar-dark .navbar-nav .nav-link {
     color: var(--nav-link-color) !important;
@@ -294,7 +294,7 @@ header {
         width: 5%;
         cursor: pointer;
         text-align: center;
-        color: orange;
+        color: #FF5F5F;
 
       .icon {
         vertical-align: text-top;
@@ -302,7 +302,7 @@ header {
         fill: #fff;
 
         &:hover {
-          fill: orange;
+          fill: #FF5F5F;
           transform: rotate(90deg);
         }
       }
@@ -327,13 +327,13 @@ header {
         position: absolute;
         top: 10%;
         width: 100%;
-        color: #f69801;
+        color: #FF5F5F;
         background: rgba(0, 0, 0, 0);
         font-size: 30px;
         font-weight: 300;
         text-align: center;
         border: 0px;
-        border-bottom: 1px dashed #ffa000;
+        border-bottom: 1px dashed #FF5F5F;
         margin: 0px auto;
         margin-top: -51px;
         padding-left: 30px;
@@ -342,7 +342,7 @@ header {
 
       &:focus {
         border: 0;
-        border-bottom: 1px dashed #ffa000;
+        border-bottom: 1px dashed #FF5F5F;
       }
     }
 
@@ -383,12 +383,12 @@ header {
         text-decoration: none;
         font-size: 25px;
         line-height: 25px;
-        color: orange !important;
+        color: #FF5F5F !important;
         text-decoration: none;
       }
 
       &__date {
-        color: orange;
+        color: #FF5F5F;
         font-size: 15px;
         line-height: 15px;
       }
@@ -577,7 +577,7 @@ header {
 }
 
 .lg-progress-bar .lg-progress {
-    background-color: #db980f !important;
+    background-color: #FF5F5F !important;
     height: 4px;
     width: 0;
 }
@@ -638,7 +638,7 @@ header {
 }
 .article-card-link, .article-card-link:hover{
     text-decoration: none;
-    color: orange !important;
+    color: #FF5F5F !important;
 }
 .article-card{
     list-style-type: none;
@@ -780,8 +780,14 @@ footer {
     padding: 20px;
     background-color: var(--main-background-color);
     color: var(--main-text-color);
+    
+    & > .social-link {
+        font-size: 30px;
+        padding: 10px;
+        margin: 4px;
+        text-decoration: none !important;
+    }
 }
-
 
 
 /* Responsive Media Queries */
