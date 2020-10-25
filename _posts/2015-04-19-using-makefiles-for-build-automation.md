@@ -2,8 +2,10 @@
 layout: post
 title: Using Makefiles for build automation
 comments:   true
-summary: In my last presentation at Things Lab, I mentioned build automation as one of the best practices used in Continuous Integration (CI). But build automation goes even beyond CI; you not neccessarily have to use CI to use automated builds. Actually, build automation dates even before CI was mentioned for the first time.
-tags: [makefile, c, c++, make, mingw]
+summary: How did they do it before pipelined Continuous Integration were a thing?
+category: 
+    - makefile
+    - C/C++
 ---
 
 In my [last presentation](http://aziflaj.github.io/real-world-webapp/) at Things Lab, I mentioned **build automation** as one of the best practices used in Continuous Integration (CI). But build automation goes even beyond CI; you don't neccessarily have to use CI to use automated builds. Actually, build automation dates even before CI was mentioned for the first time.

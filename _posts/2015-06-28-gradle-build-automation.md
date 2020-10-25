@@ -2,8 +2,12 @@
 layout: post
 title: Using Gradle for Build Automation
 comments:   true
-summary: "In a previous blogpost I wrote about using Makefiles for build automation. Makefiles might be good enough for C and C++ projects, but no Java developer is using them. Instead, there are better build tools for Java that are far better than make, such as Ant, Maven and Gradle. In this blogpost, I'm going to show you the basics of Gradle usage."
-tags: [java, gradle, build, tool, automation]
+summary: Makefiles might be good enough for C/C++ projects, but no Java developer is using them. In this blogpost, I'm going to show you the basics of Gradle usage.
+category: 
+    - java
+    - gradle
+    - build tools
+    - automation
 ---
 
 In a previous blogpost I wrote about [using Makefiles for build automation](http://aziflaj.github.io/using-makefiles-for-build-automation/). Makefiles might be good enough for C and C++ projects, but no Java developer is using them ([there are reasons](http://stackoverflow.com/questions/2209827/why-is-no-one-using-make-for-java)). Instead, there are better build tools for Java that are far better than `make`, such as Ant, Maven and Gradle. In this blogpost, I'm going to show you the basics of Gradle usage.

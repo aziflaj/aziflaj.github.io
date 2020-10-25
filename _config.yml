@@ -1,7 +1,7 @@
 title: Aldo Ziflaj
 subtitle: Software Engineer
 description: >- # this means to ignore newlines until "baseurl:"
-  devlopr-jekyll is a beautiful Jekyll Theme Built For Developers, which is optimized for speed and readability.
+  Aldo Ziflaj is a Software Engineer working with Ruby on Rails, Elixir and Phoenix, Node.js, React and other cutting-edge software development technologies.
 
 url: "https://aziflaj.github.io"
 baseurl: "" # the subpath of your site, e.g. /blog
@@ -24,13 +24,13 @@ urls:
 
 # Edit these details
 
-author_logo: aziflaj.png
+author_logo: profile.png
 author: Aldo Ziflaj
 # author_bio: 
 author_email: "aldoziflaj95@gmail.com"
 author_location: Berlin, DE
 author_website_url: "https://aziflaj.github.io"
-typewrite-text: typewrite text goes here
+typewrite-text: "Result-driven Senior Software Engineer"
 
 # Experiences
 author_work_experiences:
@@ -133,7 +133,7 @@ author_education_details:
 
 # Projects
 # author_project_details:
-#   - project_thumbnail: gamershub.png
+#   - project_thumbnail:
 #     project_title: Gamers Hub
 #     project_description: A Platform built for Gamers and Game Devs
 #     project_url: https://gamershub.in
@@ -168,13 +168,13 @@ disqus_shortname: aldoziflaj
 # mailchimp_form_url: https://sujaykundu.us10.list-manage.com/subscribe/post?u=50bab1c85eae24ecfb0f68361&amp;id=3a2dd721d0
 
 # formspree (contact form)
-# formspree_email: johndoe@gmail.com
+formspree_email: aldoziflaj95@gmail.com
 
 # syntax highlighter
 markdown: kramdown
 highlighter: rouge
 # permalink: pretty
-permalink: /:categories/:title/
+permalink: /:title/
 
 # Choose what to show ( can be true or false)
 show_author_work_experiences: true
@@ -182,8 +182,8 @@ show_author_education_details: true
 show_author_project_details: false
 
 # pagination of posts
-paginate: 4
-per_page: 4
+paginate: 10
+per_page: 10
 paginate_path: "/blog/page/:num/"
 
 # minify

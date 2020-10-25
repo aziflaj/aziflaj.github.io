@@ -3,8 +3,10 @@ layout:     post
 title:      3D printing and Rapid Prototyping
 date:       2015-09-01
 comments:   true
-summary:    It has been a while since Things Lab finished working with its 3D printer. This is a small introduction to 3D printers and a guide to building up your own 3D printer. 
-tags:       [things, lab, printer, 3D, gcode]
+summary:    It has been a while since Things Lab finished working with its 3D printer. This is a small introduction to 3D printers and a guide to building up your own 3D printer.
+category:
+    - Things Lab
+    - 3d Printing 
 ---
 
 According to [Wikipedia](http://en.wikipedia.org/wiki/3D_printing), 3D printing is **any of various processes used to make a three-dimensional object**. I would define a 3D printer as _"a computer-controlled machine that lies layers of material on top of the other layers, in order to create an object defined by a 3D model"_. 3D printers are used in industry (as they are a kind of _industrial robot_), for rapid prototyping, distributed manufacturing and as well as food industry, biotechnology, etc.

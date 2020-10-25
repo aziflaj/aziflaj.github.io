@@ -3,8 +3,11 @@ layout:     post
 title:      "Week #11: Jump Starting Sinatra"
 date:       2016-03-04
 comments:   true
-summary:    "No more exams! As I wrote in the end of my last blogpost, I had to take one month off from the challenge because of the finals. Now I'm free to go on with the Project 52, to learn more and become better. This week, I developed a simple Sinatra application, after reading through \"Jump Start Sinatra\" by Darren Jones (apparently, there's a footballer with the same name; he didn't write a book). If you don't know, Sinatra is a Domain-Specific Language (DSL) written in Ruby that gives you the possibility to create simple web applications quickly and without too much effort. While I've been playing before with Ruby, using Rails and Chef, this is my first time with Sinatra."
-tags:       [challenge, ruby, sinatra]
+summary:    I developed a simple Sinatra application, after reading through "Jump Start Sinatra" by Darren Jones (apparently, there's a footballer with the same name; he didn't write a book). While I've been playing before with Ruby, using Rails and Chef, this is my first time with Sinatra.
+category:
+    - project52
+    - ruby
+    - sinatra
 ---
 
 No more exams! As I wrote in the end of my last blogpost, I had to take one month off from the challenge because of the finals. Now I'm free to go on with the Project 52, to learn more and become better. This week, I developed a simple Sinatra application, after reading through "Jump Start Sinatra" by [Darren Jones](https://twitter.com/daz4126) (apparently, there's [a footballer](https://en.wikipedia.org/wiki/Darren_Jones) with the same name; he didn't write any book).

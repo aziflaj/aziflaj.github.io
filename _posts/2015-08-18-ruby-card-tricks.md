@@ -2,11 +2,15 @@
 layout: post
 title: Ruby and card tricks
 comments: true
-summary: "Magic is not real, but card tricks are. Most of the card tricks I know are based on doing something without the other guy watching, such as manipulating the cards, seeing them in one way or another, etc. But I know a card trick that is highly mathematical rather than a real ‘trick’. Hence, it would work with any kind of object that is stackable on other peers."
-tags: [ruby, magic, cards, rails, math, mathematics]
+summary: Magic is not real, but card tricks are...
+category: 
+    - ruby
+    - magic
+    - cards
+    - math
 ---
 
-Magic is not real, but card tricks are. Most of the card tricks I know are based on doing something without the other guy watching, such as manipulating the cards, seeing them in one way or another, etc. But I know a card trick that is highly mathematical rather than a real _'trick'_. Hence, it would work with any kind of object that is [stackable](https://www.google.com/search?q=stackable&ie=utf-8&oe=utf-8#q=define+stackable) on other peers.
+Most of the card tricks I know are based on doing something without the other guy watching, such as manipulating the cards, seeing them in one way or another, etc. But I know a card trick that is highly mathematical rather than a real _'trick'_. Hence, it would work with any kind of object that is [stackable](https://www.google.com/search?q=stackable&ie=utf-8&oe=utf-8#q=define+stackable) on other peers.
 
 The trick is rather simple. It is done using 21 playing cards. With the cards facing down, you ask the other guy to pick one, see it, and put it with the other cards. Then, you start putting the cards in 3 stacks, one after the other, and in the end ask the other guy to point to the stack that contains the card (without pointing the card, of course). You put this stack between the other two, and repeat this process another 2 times (3 times in total). In the end, the other guy's card will be the 11th card in the big pile of cards.
 

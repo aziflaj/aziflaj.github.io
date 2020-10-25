@@ -3,8 +3,13 @@ layout:     post
 title:      "Week #9: Java, Node.js and Android"
 date:       2015-12-25
 comments:   true
-summary:    "It has been a while since my last blog post and the last challenge. But I have been working on a couple of projects in parallel, including school projects and personal projects so I didn't have enough time to write a blog post about the progress of the challenge. Anyway, these last 2-3 weeks I've been working with Node.js and Java. Even though the projects aren't yet finished, I feel obliged to write the blog post and describe what I've been working on."
-tags:       [challenge, java, javascript, nodejs, sails, mongo, android, mobile, native]
+summary:    For the last 2-3 weeks I've been working with Node.js and Java. The projects are still work-in-progress, but I feel obliged to write the blog post and describe what I've been working on.
+category:
+    - project52
+    - java
+    - nodejs
+    - mongo
+    - android
 ---
 
 It has been a while since my last blog post and the last challenge. But I have been working on a couple of projects in parallel, including school projects and personal projects so I didn't have enough time to write a blog post about the progress of the challenge. Anyway, these last 2-3 weeks I've been working with Node.js and Java. Even though the projects aren't yet finished, I feel obliged to write the blog post and describe what I've been working on.

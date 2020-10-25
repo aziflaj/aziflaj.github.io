@@ -3,8 +3,11 @@ layout:     post
 title:      "Week #8: Remaking an Ionic Application"
 date:       2015-12-08
 comments:   true
-summary:    "Native mobile development is an in-demand skill you should have, but it has its drawbacks as everything else. Of course, the performance is as good as possible, but you can't simply port the application from one platform to the other. This is where hybrid mobile apps come into play. They probably don't have the same high-performance as native apps, but using the same code-base you can compile applications for ALL the platforms. This week, I went back into one of the frameworks I like in the hybrid app development \"field\", the Ionic Framework."
-tags:       [challenge, javascript, ionic, angularjs, hybrid, mobile]
+summary:    This week I went back to one of the frameworks I like in the hybrid app development "field", the Ionic Framework, and built a logo game using it"
+category:
+    - project52
+    - javascript
+    - angularjs
 ---
 
 Native mobile development is an in-demand skill you should have, but it has its drawbacks as everything else. Of course, the performance is as good as possible, but you can't simply port the application from one platform to the other. This is where hybrid mobile apps come into play. They probably don't have the same high-performance as native apps, but using the same code-base you can compile applications for ALL the platforms. This week, I went back into one of the frameworks I like in the hybrid app development "field", the [Ionic Framework](http://ionicframework.com/).

@@ -2,9 +2,12 @@
 layout:     post
 title:      "Week #13: Playing Blackjack with Machine Learning"
 date:       2016-04-11
-summary:    "For the last months I've been reading a lot about machine learning, AI and some related topics. I've read online articles, papers and doctorates from well-known (and not so well-known) people in the AI field, and I've gathered plenty of information about the field in general. I've grown up to be a great fan of neural nets and since the first OCR I trained (MNIST). Anyway, this \"week\" I've been working on something I'd like to call \"a probability model for playing Blackjack\". If that intrigued you, please keep reading."
+summary:    A (very dumb) probability model deciding whether you should draw another card or not to win at Blackjack.
 comments:   true
-tags:       [challenge, machine, learning, game, blackjack]
+category:
+    - project52
+    - java
+    - machine learning
 ---
 
 It has been almost a month since the last blogpost, and I've been too busy to keep it up with my Project 52. This is my last semester as a Computer Engineering undergraduate and usually is the heaviest semester of all. That's why I've been so silent for the last month and didn't even have too much time to focus on this project.

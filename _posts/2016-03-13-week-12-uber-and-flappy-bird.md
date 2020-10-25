@@ -2,9 +2,13 @@
 layout:     post
 title:      "Week #12: Uber and Flappy Bird"
 date:       2016-03-05
-summary:    "This week I went back into following the Android course by Rob Percival, building an Uber clone and after that, a Flappy Bird clone. During this time, I was working with Parse Geolocation API and libGDX for developing the game. Also I followed an introduction to Android Wear, how to build simple applications for smart watches and test these apps in the emulator."
+summary:    My experience working with Parse Geolocation API and libGDX
+summary:    This week I built an Uber clone and after that, a Flappy Bird clone. I had the chance to work with Parse Geolocation API and libGDX for developing the game. Also I followed an introduction to Android Wear, how to build simple applications for smart watches and test these apps in the emulator.
 comments:   true
-tags:       [challenge, android, uber, game, libgdx]
+category:
+    - project52
+    - android
+    - libgdx
 ---
 
 This week I went back into following the Android course by [Rob Percival](https://twitter.com/techedrob), building an Uber clone and after that, a Flappy Bird clone. During this time, I was working with Parse Geolocation API and libGDX for developing the game. Also I followed an introduction to Android Wear, how to build simple applications for smart watches and test these apps in the emulator.

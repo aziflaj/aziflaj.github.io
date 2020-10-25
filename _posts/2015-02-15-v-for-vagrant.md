@@ -4,7 +4,10 @@ title:      V for Vagrant
 date:       2015-02-15
 comments:   true
 summary:    Vagrant is a very nice provision tool that helps me with web development. I don't want to install every tool on my machine; I want my environment as clean as possible. Vagrant helps me create virtual machines with all the necessary tools for any project.
-tags:       [vagrant, provision, puppet, puphpet]
+category:
+    - vagrant
+    - provision
+    - puppet
 ---
 
 <p>

@@ -2,8 +2,10 @@
 layout: post
 title: What time is it?
 comments:   true
-summary: "A couple of months ago, I saw a nice Javascript project: a background changing clock. Based on the Hex color codes, it could change the background based on the time, using hours, minutes and seconds as hashcode generator. I liked it and decided to write it by myself."
-tags: [clock, time, javascript]
+summary: A Hex color clock I built for fun
+category: 
+    - JavaScript
+    - clock
 ---
 
 A couple of months ago, I saw a nice Javascript project: a background changing clock. Based on the [Hex color codes](http://www.color-hex.com/), it could change the background based on the time, using hours, minutes and seconds as hashcode generator. I liked it and decided to write it by myself.

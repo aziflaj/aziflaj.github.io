@@ -3,8 +3,14 @@ layout:     post
 title:      "Week #7: 7 questions answered"
 date:       2015-11-28
 comments:   true
-summary:    "This is the 7th week of my challenge, and it has been good so far. I have been learning a lot and I intend to learn a lot more, maybe even get back to the same technologies and explore them more deeply. I learned a new JVM language called Kotlin, I learned provisioning with Chef, I did some Node.js development using Sails.js and I also made a simplified IRC in Java. I decided to take this week off from developing. Instead, I picked 7 interesting questions over time and I intend to answer them as good as I can."
-tags:       [challenge, questions, c#, java, python, orm, javascript, nodejs, artificial, intelligence, neural, networks]
+summary:    Instead of building another application this week, I picked 7 interesting questions over time and I intend to answer them as good as I can.
+category:
+    - project52
+    - questions
+    - orm
+    - nodejs
+    - artificial intelligence
+    - neural networks
 ---
 
 This is the 7th week of [my challenge](https://github.com/aziflaj/52), and it has been good so far. I have been learning a lot and I intend to learn a lot more, maybe even get back to the same technologies and explore them more deeply. I learned [a new JVM language called Kotlin](https://github.com/aziflaj/ToDo-kotlin/), I learned [provisioning with Chef](https://github.com/aziflaj/vagrant-chef), I did some [Node.js development using Sails.js](https://github.com/aziflaj/Sailor) and I also made [a simplified IRC in Java](https://github.com/aziflaj/IRC). I decided to take this week off from developing. Instead, I picked 7 interesting questions over time and I intend to answer them as good as I can.

@@ -3,8 +3,13 @@ layout:     post
 title:      "Week #5 challenge: Authorization for the Last Week Project"
 date:       2015-11-14
 comments:   true
-summary:    "Fifth week already! If your remember the project I developed last week, you probably recall that I didn't add some things to it. For example, everyone could just delete everything from the database, just like everyone could store anything. This week, I added a simple authorization mechanism, based on API keys, so not everyone could have access to everything."
-tags:       [challenge, node, javascript, mvc, framework, mongo, mongodb, validation, authorization, authentication]
+summary:    I added a simple authorization mechanism to my last week's project using API keys, so not everyone could have access to everything.
+category:
+    - project52
+    - node.js
+    - mongo
+    - authorization
+    - authentication
 ---
 
 Fifth week already! If your remember [the project I developed last week](https://aziflaj.github.io/week-4-challenge-server-side-javascript/), you probably recall that I didn't add some things to it. For example, everyone could just delete everything from the database, just like everyone could store anything. This week, I added a simple authorization mechanism, based on API keys, so not everyone could have access to everything. 
