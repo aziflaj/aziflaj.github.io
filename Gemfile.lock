@@ -46,6 +46,8 @@ GEM
       jekyll (>= 3.7, < 5.0)
       sinatra (~> 1.4)
       sinatra-contrib (~> 1.4)
+    jekyll-archives (2.2.1)
+      jekyll (>= 3.6, < 5.0)
     jekyll-feed (0.13.0)
       jekyll (>= 3.7, < 5.0)
     jekyll-gist (1.5.0)
@@ -140,6 +142,7 @@ DEPENDENCIES
   devlopr (~> 0.4.5)
   jekyll (~> 4.1, >= 4.1.1)
   jekyll-admin (~> 0.10.2)
+  jekyll-archives
   jekyll-gist (~> 1.5.0)
   jekyll-menus (~> 0.6.1)
   jekyll-paginate (~> 1.1.0)
