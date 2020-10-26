@@ -2,8 +2,9 @@
 layout: post
 title: Manage your appointments with Rails, Part 1
 date: '2019-08-28'
-summary: 
+summary: Getting started with Rails by building an Appointment Scheduler
 comments: true
+icon: icons/rails.png
 category:
   - rails
 ---

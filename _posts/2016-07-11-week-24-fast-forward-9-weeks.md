@@ -5,6 +5,7 @@ author: Aldo Ziflaj
 date: '2016-07-07'
 summary: Updates after 9 weeks of inactivity
 comments: true
+icon: icons/project52.png
 category:
   - project52
 ---

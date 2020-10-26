@@ -4,6 +4,7 @@ title: Converting Markdown to HTML using Ruby
 date: '2016-07-26'
 summary: I wrote a Ruby module to translate MD files to HTML
 comments: true
+icon: icons/project52.png
 category:
   - project52
 ---

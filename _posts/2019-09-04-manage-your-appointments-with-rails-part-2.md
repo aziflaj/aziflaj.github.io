@@ -2,7 +2,8 @@
 layout: post
 title: Manage your appointments with Rails, Part 2
 date: '2019-09-04'
-summary: 
+summary: Authentication and Authorization in Rails using Devise
+icon: icons/rails.png 
 comments: true
 category:
   - rails

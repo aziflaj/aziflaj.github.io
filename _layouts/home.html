@@ -30,26 +30,25 @@ layout: default
       <li class="article-card">
         <a href="{{post.url}}" class="article-card-link">
           <div id="article-container">
-            <div id="article-img">
-              {% if post.icon %}
-              {% assign icon = post.icon %}
-              {% else %}
-              {% assign icon = "site/pencil.png" %}
-              {% endif %}
-              <img
-                  src="{{site.url}}{{site.baseurl}}/assets/img/{{icon}}"
-                  width="50px"
-                  height="50px"
-              />
-            </div>
-            <div id="article-link">
-              <p class="recent-article-link">{{post.title}} <span style="color: #ccc; font-size: 15px;"> - <i><time
-                  datetime="{{ post.date }}"
-                  itemprop="datePublished">{{ post.date | date: "%b %-d, %Y" }}</time></i></span></p>
+            <div class="article-container--left">
+              <div id="article-img">
+                {% if post.icon %}
+                <img src="{{site.url}}{{site.baseurl}}/assets/img/{{post.icon}}" width="30px"/>
+                {% else %}
+                <img src="{{site.url}}{{site.baseurl}}/assets/img/site/pencil.png" width="30px" height="30px"/>
+                {% endif %}
+              </div>
+              <div id="article-link">
+                <p class="recent-article-link">{{post.title}} <span style="color: #ccc; font-size: 15px;"> - <i><time
+                    datetime="{{ post.date }}"
+                    itemprop="datePublished">{{ post.date | date: "%b %-d, %Y" }}</time></i></span></p>
+              </div>
             </div>
             <div id="article-alert">
               {% for cat in post.category limit:1 %}
-              <button class="btn btn-sm btn-dark">{{cat}}</button>
+              <a href="{{site.url}}{{site.baseurl}}/category/{{cat}}">
+                <button class="btn btn-sm btn-dark">{{cat}}</button>
+              </a>
               {% endfor %}
             </div>
           </div>

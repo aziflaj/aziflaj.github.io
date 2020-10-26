@@ -6,6 +6,7 @@ $body-typeface: 'Open Sans', sans-serif;
 $nav-typeface: 'Open Sans', sans-serif;
 $mono-typeface: 'Share Tech Mono', monospace;
 $text-width: 650px;
+$cool-red: #FF5F5F;
 
 html[data-theme="dark"] {
   --bold-color: rgb(188, 188, 188);
@@ -223,7 +224,7 @@ header {
 }
 
 .fa.fa-search.search-icon {
-  color: #FF5F5F !important;
+  color: $cool-red !important;
 }
 
 
@@ -254,7 +255,7 @@ header {
 }
 
 .navbar-dark .navbar-brand {
-  color: #FF5F5F !important;
+  color: $cool-red !important;
 }
 
 .navbar-dark .navbar-nav .nav-link {
@@ -418,7 +419,7 @@ header {
       text-decoration: none;
       font-size: 25px;
       line-height: 25px;
-      color: #FF5F5F !important;
+      color: $cool-red !important;
       text-decoration: none;
     }
 
@@ -623,7 +624,7 @@ header {
 }
 
 .lg-progress-bar .lg-progress {
-  background-color: #FF5F5F !important;
+  background-color: $cool-red !important;
   height: 4px;
   width: 0;
 }
@@ -672,9 +673,15 @@ header {
 }
 
 #article-container {
-  display: grid;
+  display: flex;
   width: 100%;
-  grid-template-columns: 1fr 50fr 4fr;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.article-container--left {
+  display: flex;
+  align-items: center;
 }
 
 #recent-articles, #recent-projects {
@@ -688,14 +695,22 @@ header {
 }
 
 #article-img {
+  max-width: 50px;
   padding-left: 10px;
-  padding-top: 2px;
+  //padding-top: 2px;
   margin: 4px;
 }
 
-#article-link, #article-alert {
+#article-link {
   padding-left: 10px;
   padding-top: 10px;
+  margin: 4px;
+}
+
+#article-alert {
+  //padding-left: 10px;
+  //padding-top: 10px;
+  float: right;
   margin: 4px;
 }
 
@@ -706,16 +721,15 @@ header {
 
 .article-card-link, .article-card-link:hover {
   text-decoration: none;
-  color: #FF5F5F !important;
+  color: $cool-red !important;
 }
 
 .article-card {
   list-style-type: none;
 }
 
-.article-card a :hover {
+.article-card a:hover {
   text-decoration: none;
-  background: #303030 !important;
   border-color: #303030;
   background: transparent;
 }
@@ -744,7 +758,7 @@ header {
     height: 150px;
     margin-left: 20px;
     border-radius: 50%;
-    border: 2px solid #ff5f5f;
+    border: 2px solid #FF5F5F;
   }
 
   .profile-name {
@@ -1293,6 +1307,10 @@ footer {
 }
 
 /* Syntax Hightlighter */
+.highlight {
+  font-family: $mono-typeface;
+}
+
 .highlight pre {
   background-color: #212529;
   padding: 20px;

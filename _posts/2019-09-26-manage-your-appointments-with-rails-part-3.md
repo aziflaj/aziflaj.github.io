@@ -1,8 +1,9 @@
 ---
 layout: post
 title: Manage your appointments with Rails, Part 3
-date: '2019-09-04'
-summary: 
+date: '2019-09-26'
+summary: Modularizing complex Rails applications  
+icon: icons/rails.png
 comments: true
 category:
   - rails
