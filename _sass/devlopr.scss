@@ -1,9 +1,10 @@
 /* devlopr-jekyll styling */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700;800&family=Share+Tech+Mono&display=swap');
 
 /* variables */
-$body-typeface: 'Quicksand', sans-serif;
-$nav-typeface: "Gill sans";
-$mono-typeface: Menlo, Monaco, monospace;
+$body-typeface: 'Open Sans', sans-serif;
+$nav-typeface: 'Open Sans', sans-serif;
+$mono-typeface: 'Share Tech Mono', monospace;
 $text-width: 650px;
 
 html[data-theme="dark"] {
@@ -27,6 +28,20 @@ html[data-theme="dark"] {
 html[data-theme="dark"] {
   #article-img {
     filter: invert(1);
+  }
+
+  .jumbotron > p {
+    max-width: fit-content;
+    background-color: black;
+    color: white !important;
+  }
+}
+
+html[data-theme="light"] {
+  .jumbotron > p {
+    max-width: fit-content;
+    background-color: white;
+    color: black !important;
   }
 }
 
@@ -123,7 +138,7 @@ ol, ul {
 body {
   background-color: var(--main-background-color) !important;
   color: var(--main-text-color) !important;
-  font-family: 'Quicksand', sans-serif !important;
+  font-family: $body-typeface !important;
   font-feature-settings: "kern" on;
   font-size: 1.4rem;
   font-variant-numeric: oldstyle-nums;
@@ -513,7 +528,7 @@ header {
 /* jumbotron */
 .jumbotron {
   background-color: var(--main-background-color) !important;
-  background-image: url('https://images.pexels.com/photos/1037992/pexels-photo-1037992.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260');
+  background-image: url('https://images.pexels.com/photos/3821159/pexels-photo-3821159.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
