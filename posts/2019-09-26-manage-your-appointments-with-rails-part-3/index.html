@@ -1,0 +1,306 @@
+<!doctype html><html lang=en><head><title>Manage your appointments with Rails, Part 3 :: Friendly Neighborhood Softwaredude</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Modularizing complex Rails applications"><meta name=keywords content><meta name=robots content="noodp"><link rel=canonical href=/posts/2019-09-26-manage-your-appointments-with-rails-part-3/><link rel=stylesheet href=/assets/style.css><link rel=stylesheet href=/assets/blue.css><link rel=stylesheet href=/style.css><link rel=apple-touch-icon href=/img/apple-touch-icon-192x192.png><link rel="shortcut icon" href=/img/favicon/blue.png><meta name=twitter:card content="summary"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="og:title" content="Manage your appointments with Rails, Part 3"><meta property="og:description" content="Modularizing complex Rails applications"><meta property="og:url" content="/posts/2019-09-26-manage-your-appointments-with-rails-part-3/"><meta property="og:site_name" content="Friendly Neighborhood Softwaredude"><meta property="og:image" content="/img/favicon/blue.png"><meta property="og:image:width" content="2048"><meta property="og:image:height" content="1024"><meta property="article:published_time" content="2019-09-26 00:00:00 +0000 UTC"></head><body class=blue><div class="container center headings--one-size"><header class=header><div class=header__inner><div class=header__logo><a href=/><div class=logo>Friendly Neighborhood Softwaredude</div></a></div><div class=menu-trigger>menu</div></div><nav class=menu><ul class="menu__inner menu__inner--desktop"><li><a href=/about>About</a></li><li><a href=/contact>Contact</a></li></ul><ul class="menu__inner menu__inner--mobile"><li><a href=/about>About</a></li><li><a href=/contact>Contact</a></li></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=/posts/2019-09-26-manage-your-appointments-with-rails-part-3/>Manage your appointments with Rails, Part 3</a></h1><div class=post-meta><span class=post-date>2019-09-26</span>
+<span class=post-reading-time>:: 10 min read (1934 words)</span></div><div class=post-content><div><p>Welcome back to the series. You being here means I’m probably doing something right. If you have any suggestions on what could be done different, or if you think a certain feature would be good to have, or if you feel following the code samples is too solitary and you want to be included more into the series, just drop me a line and let me know.</p><p>As I said in the previous <a href=/manage-your-appointments-with-rails-part-2/>episode of the series</a>, we’ll continue with the Slot model. So, let’s.</p><h2 id=mr-sandman-bring-me-a-model>Mr. Sandman, bring me a model<a href=#mr-sandman-bring-me-a-model class=hanchor arialabel=Anchor>&#8983;</a></h2><p>We’ve already lined out what the slots table should store. We need to store this information:</p><ul><li>the scheduled date and time for the slot</li><li>the host of the event</li><li>the guest’s email (so we can notify them the event is about to start)</li><li>notes added from the host for the guest</li></ul><p>All this can be done by a single command in your terminal:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ rails g model Slot scheduled_at:datetime user:references notes:text guest_email:string
+</span></span></code></pre></div><p>This command not only creates the model for us, but it also adds a migration file and a spec file for the created model:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=display:flex><span><span style=color:#75715e># app/models/slot.rb</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Slot</span> <span style=color:#f92672>&lt;</span> <span style=color:#66d9ef>ApplicationRecord</span>
+</span></span><span style=display:flex><span>  belongs_to <span style=color:#e6db74>:user</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># db/migrate/XXX_create_slots.rb</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>CreateSlots</span> <span style=color:#f92672>&lt;</span> <span style=color:#66d9ef>ActiveRecord</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Migration</span><span style=color:#f92672>[</span><span style=color:#ae81ff>6</span><span style=color:#f92672>.</span><span style=color:#ae81ff>0</span><span style=color:#f92672>]</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>change</span>
+</span></span><span style=display:flex><span>    create_table <span style=color:#e6db74>:slots</span> <span style=color:#66d9ef>do</span> <span style=color:#f92672>|</span>t<span style=color:#f92672>|</span>
+</span></span><span style=display:flex><span>      t<span style=color:#f92672>.</span>datetime <span style=color:#e6db74>:scheduled_at</span>
+</span></span><span style=display:flex><span>      t<span style=color:#f92672>.</span>references <span style=color:#e6db74>:user</span>, <span style=color:#e6db74>null</span>: <span style=color:#66d9ef>false</span>, <span style=color:#e6db74>foreign_key</span>: <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>      t<span style=color:#f92672>.</span>text <span style=color:#e6db74>:notes</span>
+</span></span><span style=display:flex><span>      t<span style=color:#f92672>.</span>string <span style=color:#e6db74>:guest_email</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      t<span style=color:#f92672>.</span>timestamps
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># spec/models/slot_spec.rb</span>
+</span></span><span style=display:flex><span>require <span style=color:#e6db74>&#39;rails_helper&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>RSpec</span><span style=color:#f92672>.</span>describe <span style=color:#66d9ef>Slot</span>, <span style=color:#e6db74>type</span>: <span style=color:#e6db74>:model</span> <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>  pending <span style=color:#e6db74>&#34;add some examples to (or delete) </span><span style=color:#e6db74>#{</span>__FILE__<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span></code></pre></div><p>Let’s proceed by running the migration (<code>rails db:migrate</code>) and let’s add some specs for the slots:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=display:flex><span><span style=color:#75715e># spec/factories/slots.rb</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>FactoryBot</span><span style=color:#f92672>.</span>define <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>  factory <span style=color:#e6db74>:slot</span> <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>    user
+</span></span><span style=display:flex><span>    guest_email { <span style=color:#66d9ef>FFaker</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Internet</span><span style=color:#f92672>.</span>email }
+</span></span><span style=display:flex><span>    scheduled_at { <span style=color:#ae81ff>10</span><span style=color:#f92672>.</span>minutes<span style=color:#f92672>.</span>from_now }
+</span></span><span style=display:flex><span>    notes { <span style=color:#e6db74>&#39;&#39;</span> }
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># spec/models/slot_spec.rb</span>
+</span></span><span style=display:flex><span>require <span style=color:#e6db74>&#39;rails_helper&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>RSpec</span><span style=color:#f92672>.</span>describe <span style=color:#66d9ef>Slot</span>, <span style=color:#e6db74>type</span>: <span style=color:#e6db74>:model</span> <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>  subject { build <span style=color:#e6db74>:slot</span> }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  it { should belong_to(<span style=color:#e6db74>:user</span>)<span style=color:#f92672>.</span>dependent(<span style=color:#e6db74>:destroy</span>)<span style=color:#f92672>.</span>required }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#75715e># email validation</span>
+</span></span><span style=display:flex><span>  it { should validate_presence_of(<span style=color:#e6db74>:guest_email</span>) }
+</span></span><span style=display:flex><span>  it { should allow_value(<span style=color:#e6db74>&#39;test@mail.com&#39;</span>)<span style=color:#f92672>.</span>for(<span style=color:#e6db74>:guest_email</span>) }
+</span></span><span style=display:flex><span>  it { should_not allow_value(<span style=color:#e6db74>&#39;mail.com&#39;</span>)<span style=color:#f92672>.</span>for(<span style=color:#e6db74>:guest_email</span>) }
+</span></span><span style=display:flex><span>  it { should_not allow_value(<span style=color:#e6db74>&#39;test&#39;</span>)<span style=color:#f92672>.</span>for(<span style=color:#e6db74>:guest_email</span>) }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  it <span style=color:#e6db74>&#39;is valid when scheduled at least 5 minutes from now&#39;</span> <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>    subject<span style=color:#f92672>.</span>scheduled_at <span style=color:#f92672>=</span> <span style=color:#ae81ff>2</span><span style=color:#f92672>.</span>minutes<span style=color:#f92672>.</span>ago
+</span></span><span style=display:flex><span>    expect(subject)<span style=color:#f92672>.</span>not_to be_valid
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    subject<span style=color:#f92672>.</span>scheduled_at <span style=color:#f92672>=</span> <span style=color:#ae81ff>5</span><span style=color:#f92672>.</span>minutes<span style=color:#f92672>.</span>from_now
+</span></span><span style=display:flex><span>    expect(subject)<span style=color:#f92672>.</span>to be_valid
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  it <span style=color:#e6db74>&#39;is not valid when scheduled in the past&#39;</span> <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>    subject<span style=color:#f92672>.</span>scheduled_at <span style=color:#f92672>=</span> <span style=color:#ae81ff>5</span><span style=color:#f92672>.</span>minutes<span style=color:#f92672>.</span>ago
+</span></span><span style=display:flex><span>    expect(subject)<span style=color:#f92672>.</span>not_to be_valid
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span></code></pre></div><p>What we’re specifying here is that:</p><ul><li>When a user is deleted from the DB, all their scheduled slots are also deleted</li><li>The guest email looks like an email address</li><li>The slots can only be scheduled to at least 5 minutes later</li></ul><p>To make the tests green, here’s what we’ll do to the Slot model:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Slot</span> <span style=color:#f92672>&lt;</span> <span style=color:#66d9ef>ApplicationRecord</span>
+</span></span><span style=display:flex><span>  belongs_to <span style=color:#e6db74>:user</span>, <span style=color:#e6db74>dependent</span>: <span style=color:#e6db74>:destroy</span>, <span style=color:#e6db74>required</span>: <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  validates <span style=color:#e6db74>:guest_email</span>, <span style=color:#e6db74>presence</span>: <span style=color:#66d9ef>true</span>,
+</span></span><span style=display:flex><span>                          format: { <span style=color:#e6db74>with</span>: <span style=color:#e6db74>/\A[A-Z0-9._%a-z\-]+@(?:[A-Z0-9a-z\-]+\.)+[A-Za-z]{2,4}\z/</span> }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  validate <span style=color:#e6db74>:scheduled_in_the_future</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>private</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>scheduled_in_the_future</span>
+</span></span><span style=display:flex><span>    seconds_params <span style=color:#f92672>=</span> { <span style=color:#e6db74>sec</span>: <span style=color:#ae81ff>0</span> }
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>if</span> scheduled_at<span style=color:#f92672>.</span>change(seconds_params) <span style=color:#f92672>&gt;=</span> <span style=color:#ae81ff>5</span><span style=color:#f92672>.</span>minutes<span style=color:#f92672>.</span>from_now<span style=color:#f92672>.</span>change(seconds_params)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    errors<span style=color:#f92672>.</span>add(<span style=color:#e6db74>:scheduled_at</span>, <span style=color:#e6db74>&#39;should be at least 5 minutes from now&#39;</span>)
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span></code></pre></div><p>Take a close look at the two different methods we’re using for validation: <code>validate</code> and <code>validates</code>. The difference between them is that <code>validates</code> uses Rails’ built-in validation options, while the other one, <code>validate</code>, requires a method (in our case, <code>scheduled_in_the_future</code>) that is used for the validation of the object.</p><p>And with this code, our specs are green again.</p><h2 id=give-a-purpose-to-the-dashboard>Give a purpose to the Dashboard<a href=#give-a-purpose-to-the-dashboard class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Last time, we created a “dashboard”, but that’s fairly empty. I want to add some functionality to the dashboard, such as listing all the upcoming events (the booked slots), a list of all available free slots (with a way of updating/deleting existing slots) and a way of creating new slots:</p><p><img src=https://miro.medium.com/max/1400/1*_kdqWvhiEPaXqwosiKr7TA.png alt></p><p>Using MaterializeCSS, I’m going to build the above view. Try doing the same, <a href=https://github.com/aziflaj/skeduler/commit/c894b5db3257d4879fa342e4017c1439dbbd5e2e>here’s my diff for that</a>. I created partials for each tab, which will make it easier to add Ruby code in the future.</p><p>Now, we don’t really have a way to check if one slot is booked by a guest or not. We can assume that a slot with a <code>guest_email</code> that is not empty (or <code>nil</code>) is a booked slot. Translated into Ruby code, that’d be:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Slot</span> <span style=color:#f92672>&lt;</span> <span style=color:#66d9ef>ApplicationRecord</span>
+</span></span><span style=display:flex><span>  <span style=color:#75715e># ...</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>booked?</span>
+</span></span><span style=display:flex><span>    guest_email<span style=color:#f92672>.</span>present?
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>  <span style=color:#75715e># ...</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span></code></pre></div><p>In order to manage some more complex queries, e.g. selecting all the user slots that don’t have this guest_email set into the record, we create a Query object.</p><blockquote><p>Q: Why using Query objects at all?
+A: We want our code as much readable as possible. We can put this code inside the User model and call it as user.free_slots, but if we continue adding similar functionality to the model, then it’ll grow into an unreadable blob of code. Keeping one Query object for each “important” query in the app improves readability, helps during debugging, and complies to the Single Responsibility Principle of <a href=https://en.wikipedia.org/wiki/SOLID>SOLID</a>.</p></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=display:flex><span><span style=color:#75715e># app/queries/free_slots_for_user.rb</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>module</span> FreeSlotsForUser
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Query</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>initialize</span>(user)
+</span></span><span style=display:flex><span>      @user <span style=color:#f92672>=</span> user
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>call</span>
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>Slot</span><span style=color:#f92672>.</span>where(<span style=color:#e6db74>user</span>: user, <span style=color:#e6db74>guest_email</span>: <span style=color:#f92672>[</span><span style=color:#66d9ef>nil</span>, <span style=color:#e6db74>&#39;&#39;</span><span style=color:#f92672>]</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>attr_reader</span> <span style=color:#e6db74>:user</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span></code></pre></div><p>Let’s also add some specs for this class:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=display:flex><span><span style=color:#75715e># spec/queries/free_slots_for_user_spec.rb</span>
+</span></span><span style=display:flex><span>require <span style=color:#e6db74>&#39;rails_helper&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>RSpec</span><span style=color:#f92672>.</span>describe <span style=color:#66d9ef>FreeSlotsForUser</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Query</span> <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>  subject { described_class<span style=color:#f92672>.</span>new(user) }
+</span></span><span style=display:flex><span>  let(<span style=color:#e6db74>:user</span>) { create <span style=color:#e6db74>:user</span> }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  before <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Three free slots</span>
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>3</span><span style=color:#f92672>.</span>times { create <span style=color:#e6db74>:slot</span>, <span style=color:#e6db74>user</span>: user, <span style=color:#e6db74>guest_email</span>: <span style=color:#f92672>[</span><span style=color:#66d9ef>nil</span>, <span style=color:#e6db74>&#39;&#39;</span><span style=color:#f92672>].</span>sample }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Three booked slots</span>
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>3</span><span style=color:#f92672>.</span>times { create <span style=color:#e6db74>:slot</span>, <span style=color:#e6db74>user</span>: user, <span style=color:#e6db74>guest_email</span>: <span style=color:#66d9ef>FFaker</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Internet</span><span style=color:#f92672>.</span>email }
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  it <span style=color:#e6db74>&#39;filters all free slots&#39;</span> <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>    expect(subject<span style=color:#f92672>.</span>call<span style=color:#f92672>.</span>count)<span style=color:#f92672>.</span>to eq(<span style=color:#ae81ff>3</span>)
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span></code></pre></div><p>At this moment I found out that we should remove some specs from the <code>slot_spec.rb</code>; we want to allow <code>nil</code>/empty values for <code>guest_email</code>. So remove the presence validator from the spec file and change the model to look like this:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Slot</span> <span style=color:#f92672>&lt;</span> <span style=color:#66d9ef>ApplicationRecord</span>
+</span></span><span style=display:flex><span>  <span style=color:#75715e># ...</span>
+</span></span><span style=display:flex><span>  validates <span style=color:#e6db74>:guest_email</span>, <span style=color:#e6db74>allow_blank</span>: <span style=color:#66d9ef>true</span>,
+</span></span><span style=display:flex><span>                          format: { <span style=color:#f92672>...</span> } <span style=color:#75715e># don&#39;t change the format</span>
+</span></span><span style=display:flex><span>  <span style=color:#75715e># ...</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span></code></pre></div><p>Now, in the dashboard, we want to show these free slots and the upcoming booked slots as well. Add an <code>UpcomingSlotsForUser::Query</code> class yourself, and create the following controller:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=display:flex><span><span style=color:#75715e># app/controllers/slots_controller.rb</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>SlotsController</span> <span style=color:#f92672>&lt;</span> <span style=color:#66d9ef>ApplicationController</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>free</span>
+</span></span><span style=display:flex><span>    slots <span style=color:#f92672>=</span> <span style=color:#66d9ef>FreeSlotsForUser</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Query</span><span style=color:#f92672>.</span>new(current_user)<span style=color:#f92672>.</span>call
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    respond_to <span style=color:#66d9ef>do</span> <span style=color:#f92672>|</span>format<span style=color:#f92672>|</span>
+</span></span><span style=display:flex><span>      format<span style=color:#f92672>.</span>html { render <span style=color:#e6db74>&#39;slots/_free&#39;</span>, <span style=color:#e6db74>slots</span>: slots }
+</span></span><span style=display:flex><span>      format<span style=color:#f92672>.</span>json { render <span style=color:#e6db74>json</span>: slots }
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>upcoming</span>
+</span></span><span style=display:flex><span>    slots <span style=color:#f92672>=</span> <span style=color:#66d9ef>UpcomingSlotsForUser</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Query</span><span style=color:#f92672>.</span>new(current_user)<span style=color:#f92672>.</span>call
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    respond_to <span style=color:#66d9ef>do</span> <span style=color:#f92672>|</span>format<span style=color:#f92672>|</span>
+</span></span><span style=display:flex><span>      format<span style=color:#f92672>.</span>html { render <span style=color:#e6db74>&#39;slots/_upcoming&#39;</span>, <span style=color:#e6db74>slots</span>: slots }
+</span></span><span style=display:flex><span>      format<span style=color:#f92672>.</span>json { render <span style=color:#e6db74>json</span>: slots }
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># config/routes.rb</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>Rails</span><span style=color:#f92672>.</span>application<span style=color:#f92672>.</span>routes<span style=color:#f92672>.</span>draw <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>  <span style=color:#75715e># ...</span>
+</span></span><span style=display:flex><span>  get <span style=color:#e6db74>&#39;free_slots&#39;</span>, <span style=color:#e6db74>to</span>: <span style=color:#e6db74>&#39;slots#free&#39;</span>
+</span></span><span style=display:flex><span>  get <span style=color:#e6db74>&#39;upcoming_meetings&#39;</span>, <span style=color:#e6db74>to</span>: <span style=color:#e6db74>&#39;slots#upcoming&#39;</span>
+</span></span><span style=display:flex><span>  <span style=color:#75715e># ...</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span></code></pre></div><p>We made our controller to return either HTML content (when <code>/free_slots</code> is visited) or JSON content (when <code>/free_slots.json</code> is visited).</p><blockquote><p>If you get an error saying that Rails can’t load the query classes, add this in your <code>config/application.rb</code>:
+<code>config.autoload_paths &lt;&lt; Rails.root.join('app', 'queries')</code></p></blockquote><p>Now, visiting one of the above configured routes will return the required view.</p><h2 id=html-is-heavy-bandwidth-is-limited>HTML is heavy, bandwidth is limited<a href=#html-is-heavy-bandwidth-is-limited class=hanchor arialabel=Anchor>&#8983;</a></h2><p>The title is self-explanatory; if we can return smaller responses when a URL is visited, the user consumes less data from their plan, the lighter responses make the app faster, etc. During the last 5 years, more and more people have been building Single Page Applications (SPA), where the first request sent to the server downloads a blob of JS necessary for running the application, and the rest of the client-server communication is done through JSON. JS frameworks/libraries like Angular, React, Vue, etc., make the frontend management a breeze. But we don’t need any of those to lighten the responses. We already built JSON responses for our <code>SlotsController</code>, so let’s consume these endpoints from our frontend.</p><p>Instead of returning HTML from our controller, we’ll just return JSON responses:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>SlotsController</span> <span style=color:#f92672>&lt;</span> <span style=color:#66d9ef>ApplicationController</span>
+</span></span><span style=display:flex><span>  respond_to <span style=color:#e6db74>:json</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>free</span>
+</span></span><span style=display:flex><span>    slots <span style=color:#f92672>=</span> <span style=color:#66d9ef>FreeSlotsForUser</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Query</span><span style=color:#f92672>.</span>new(current_user)<span style=color:#f92672>.</span>call
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    render <span style=color:#e6db74>json</span>: slots
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>upcoming</span>
+</span></span><span style=display:flex><span>    slots <span style=color:#f92672>=</span> <span style=color:#66d9ef>UpcomingSlotsForUser</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Query</span><span style=color:#f92672>.</span>new(current_user)<span style=color:#f92672>.</span>call
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    render <span style=color:#e6db74>json</span>: slots
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span></code></pre></div><p>Now, we don’t need to append <code>.json</code> to our URLs to get JSON data; we return json by default. To show the fetched data in the browser, we firstly add these ul tags:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style=display:flex><span><span style=color:#75715e>&lt;!-- app/views/slots/_upcoming.html.erb --&gt;</span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>ul</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;upcoming-meetings&#34;</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>ul</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>&lt;!-- app/views/slots/_free.html.erb --&gt;</span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>ul</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;free-slots&#34;</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>ul</span>&gt;
+</span></span></code></pre></div><p>Then, we make <code>app/assets/javascripts/dashboard.js</code> to look like this:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=display:flex><span>document.<span style=color:#a6e22e>addEventListener</span>(<span style=color:#e6db74>&#39;DOMContentLoaded&#39;</span>, <span style=color:#66d9ef>function</span> () {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>loadData</span>().<span style=color:#a6e22e>then</span>(() =&gt; <span style=color:#a6e22e>populateViews</span>());
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>tabs</span> <span style=color:#f92672>=</span> document.<span style=color:#a6e22e>querySelectorAll</span>(<span style=color:#e6db74>&#39;.tabs&#39;</span>);
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>M</span>.<span style=color:#a6e22e>Tabs</span>.<span style=color:#a6e22e>init</span>(<span style=color:#a6e22e>tabs</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>fabs</span> <span style=color:#f92672>=</span> document.<span style=color:#a6e22e>querySelectorAll</span>(<span style=color:#e6db74>&#39;.fixed-action-btn&#39;</span>);
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>M</span>.<span style=color:#a6e22e>FloatingActionButton</span>.<span style=color:#a6e22e>init</span>(<span style=color:#a6e22e>fabs</span>);
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>loadData</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>async</span> () =&gt; {
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>free_slots_response</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>await</span> <span style=color:#a6e22e>fetch</span>(<span style=color:#e6db74>&#39;/free_slots&#39;</span>);
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>upcoming_meetings_response</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>await</span> <span style=color:#a6e22e>fetch</span>(<span style=color:#e6db74>&#39;/upcoming_meetings&#39;</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  window.<span style=color:#a6e22e>slots</span> <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>upcoming</span><span style=color:#f92672>:</span> <span style=color:#66d9ef>await</span> <span style=color:#a6e22e>upcoming_meetings_response</span>.<span style=color:#a6e22e>json</span>(),
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>free</span><span style=color:#f92672>:</span> <span style=color:#66d9ef>await</span> <span style=color:#a6e22e>free_slots_response</span>.<span style=color:#a6e22e>json</span>(),
+</span></span><span style=display:flex><span>  };
+</span></span><span style=display:flex><span>};
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>populateViews</span> <span style=color:#f92672>=</span> () =&gt; {
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>slots</span> <span style=color:#f92672>=</span> window.<span style=color:#a6e22e>slots</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>populateUpcomingMeetings</span>(<span style=color:#a6e22e>slots</span>.<span style=color:#a6e22e>upcoming</span>);
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>populateFreeSlots</span>(<span style=color:#a6e22e>slots</span>.<span style=color:#a6e22e>free</span>);
+</span></span><span style=display:flex><span>};
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>populateUpcomingMeetings</span> <span style=color:#f92672>=</span> (<span style=color:#a6e22e>data</span>) =&gt; {
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>template</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>`&lt;li&gt;Meeting with &lt;a href=&#34;mailto:$guest_email&#34;&gt;$guest_email&lt;/a&gt; at $time&lt;/li&gt;`</span>;
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>dateOptions</span> <span style=color:#f92672>=</span> {<span style=color:#a6e22e>hour</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;2-digit&#39;</span>, <span style=color:#a6e22e>minute</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;2-digit&#39;</span>, <span style=color:#a6e22e>day</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;2-digit&#39;</span>, <span style=color:#a6e22e>month</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;short&#39;</span>, <span style=color:#a6e22e>year</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;numeric&#39;</span>};
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  document.<span style=color:#a6e22e>querySelector</span>(<span style=color:#e6db74>&#39;ul.upcoming-meetings&#39;</span>).<span style=color:#a6e22e>innerHTML</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>data</span>.<span style=color:#a6e22e>map</span>(<span style=color:#a6e22e>item</span> =&gt; {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>formattedDate</span> <span style=color:#f92672>=</span> (<span style=color:#66d9ef>new</span> Date(<span style=color:#a6e22e>item</span>.<span style=color:#a6e22e>scheduled_at</span>)).<span style=color:#a6e22e>toLocaleString</span>(<span style=color:#e6db74>&#39;en-US&#39;</span>, <span style=color:#a6e22e>dateOptions</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>template</span>.<span style=color:#a6e22e>replace</span>(<span style=color:#e6db74>&#39;$time&#39;</span>, <span style=color:#a6e22e>formattedDate</span>)
+</span></span><span style=display:flex><span>      .<span style=color:#a6e22e>replace</span>(<span style=color:#e6db74>/\$guest_email/g</span>, <span style=color:#a6e22e>item</span>.<span style=color:#a6e22e>guest_email</span>)
+</span></span><span style=display:flex><span>  }).<span style=color:#a6e22e>join</span>(<span style=color:#e6db74>&#39;&#39;</span>);
+</span></span><span style=display:flex><span>};
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>populateFreeSlots</span> <span style=color:#f92672>=</span> (<span style=color:#a6e22e>data</span>) =&gt; {
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>template</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>`&lt;li&gt;Free slot at $time&lt;/li&gt;`</span>;
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>dateOptions</span> <span style=color:#f92672>=</span> {<span style=color:#a6e22e>hour</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;2-digit&#39;</span>, <span style=color:#a6e22e>minute</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;2-digit&#39;</span>, <span style=color:#a6e22e>day</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;2-digit&#39;</span>, <span style=color:#a6e22e>month</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;short&#39;</span>, <span style=color:#a6e22e>year</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;numeric&#39;</span>};
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  document.<span style=color:#a6e22e>querySelector</span>(<span style=color:#e6db74>&#39;ul.free-slots&#39;</span>).<span style=color:#a6e22e>innerHTML</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>data</span>.<span style=color:#a6e22e>map</span>(<span style=color:#a6e22e>item</span> =&gt; {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>formattedDate</span> <span style=color:#f92672>=</span> (<span style=color:#66d9ef>new</span> Date(<span style=color:#a6e22e>item</span>.<span style=color:#a6e22e>scheduled_at</span>)).<span style=color:#a6e22e>toLocaleString</span>(<span style=color:#e6db74>&#39;en-US&#39;</span>, <span style=color:#a6e22e>dateOptions</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>template</span>.<span style=color:#a6e22e>replace</span>(<span style=color:#e6db74>&#39;$time&#39;</span>, <span style=color:#a6e22e>formattedDate</span>)
+</span></span><span style=display:flex><span>  }).<span style=color:#a6e22e>join</span>(<span style=color:#e6db74>&#39;&#39;</span>);
+</span></span><span style=display:flex><span>};
+</span></span></code></pre></div><p>That’s a lot of code, so let’s explain the most important bits:</p><ul><li>The <code>loadData()</code> function asynchronously (i.e. doesn’t block the flow) fetches all the necessary data from the server and assigns the data to the <code>window.slots</code> global variable. Consider this variable as a global state for the application, a single source of truth for all the slots data.</li><li>After the data is loaded, the views are populated using the <code>populateViews()</code> function. This function maps the JSON data to a given template, joins all those templates into a single HTML piece, and injects that HTML into our views</li></ul><p>There are also other changes in my diff, so <a href=https://github.com/aziflaj/skeduler/commit/6d6f21020b0e0cafadbb69a59884875cb2f8d454>head there and check it all out</a>. My result is this:</p><p><img src=https://miro.medium.com/max/1400/1*FH_bxYnkJnS6tqtNgRWkTg.png alt="upcoming meetings"></p><p><img src=https://miro.medium.com/max/1400/1*dag8f3WMgLtxZgZHs6fa8g.png alt="free slots"></p><h2 id=and-god-said-let-there-be>And God said “Let there be…<a href=#and-god-said-let-there-be class=hanchor arialabel=Anchor>&#8983;</a></h2><p>…slot creation”. And the developer implemented said functionality. And God saw it, and it was asynchronous.</p><p>We’ll now give functionality to the FAB that we have in our page. By clicking it, the user (event host) will see a form which allows them to create a free slot. Let’s now create a new partial view <code>app/views/slots/_form.html.erb</code> with the following code:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>id</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;slot-creation-modal&#34;</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;modal&#34;</span>&gt;
+</span></span><span style=display:flex><span>  <span style=color:#960050;background-color:#1e0010>&lt;</span>%= form_with model: Slot.new, html: { class: &#39;new-slot&#39; } do |f| %&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;modal-content&#34;</span>&gt;
+</span></span><span style=display:flex><span>      &lt;<span style=color:#f92672>h4</span>&gt;Create a new slot&lt;/<span style=color:#f92672>h4</span>&gt;
+</span></span><span style=display:flex><span>      &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;row&#34;</span>&gt;
+</span></span><span style=display:flex><span>        &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;input-field col s12&#34;</span>&gt;
+</span></span><span style=display:flex><span>          &lt;<span style=color:#f92672>i</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;material-icons prefix&#34;</span>&gt;date_range&lt;/<span style=color:#f92672>i</span>&gt;
+</span></span><span style=display:flex><span>          <span style=color:#960050;background-color:#1e0010>&lt;</span>%= f.text_field :scheduled_at_date, class: &#39;datepicker&#39;, placeholder: &#39;Scheduled date&#39; %&gt;
+</span></span><span style=display:flex><span>        &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;input-field col s12&#34;</span>&gt;
+</span></span><span style=display:flex><span>          &lt;<span style=color:#f92672>i</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;material-icons prefix&#34;</span>&gt;access_time&lt;/<span style=color:#f92672>i</span>&gt;
+</span></span><span style=display:flex><span>          <span style=color:#960050;background-color:#1e0010>&lt;</span>%= f.text_field :scheduled_at_time, class: &#39;timepicker&#39;, placeholder: &#39;Scheduled time&#39; %&gt;
+</span></span><span style=display:flex><span>        &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>        &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;input-field col s12&#34;</span>&gt;
+</span></span><span style=display:flex><span>          &lt;<span style=color:#f92672>i</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;material-icons prefix&#34;</span>&gt;event_note&lt;/<span style=color:#f92672>i</span>&gt;
+</span></span><span style=display:flex><span>          <span style=color:#960050;background-color:#1e0010>&lt;</span>%= f.text_area :notes, placeholder: &#39;Notes&#39;, rows: 10 %&gt;
+</span></span><span style=display:flex><span>        &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>      &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>    &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;modal-footer&#34;</span>&gt;
+</span></span><span style=display:flex><span>      <span style=color:#960050;background-color:#1e0010>&lt;</span>%= f.submit &#39;Create slot&#39;, class: &#39;modal-close waves-effect waves-green btn-flat&#39; %&gt;
+</span></span><span style=display:flex><span>    &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>  <span style=color:#960050;background-color:#1e0010>&lt;</span>% end %&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span></code></pre></div><p>Render this partial anywhere you want inside the <code>app/views/dashboard/index.html.erb</code> file. To actually create the slot, here’s what we do:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=display:flex><span><span style=color:#75715e># app/controllers/slots_controller.rb</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>SlotsController</span> <span style=color:#f92672>&lt;</span> <span style=color:#66d9ef>ApplicationController</span>
+</span></span><span style=display:flex><span>  protect_from_forgery <span style=color:#e6db74>with</span>: <span style=color:#e6db74>:null_session</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>create</span>
+</span></span><span style=display:flex><span>    slot <span style=color:#f92672>=</span> <span style=color:#66d9ef>Slots</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Builder</span><span style=color:#f92672>.</span>new(current_user, params)<span style=color:#f92672>.</span>call
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> slot<span style=color:#f92672>.</span>save
+</span></span><span style=display:flex><span>      redirect_to dashboard_path
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>else</span>
+</span></span><span style=display:flex><span>      redirect_to dashboard_path, <span style=color:#e6db74>alert</span>: slot<span style=color:#f92672>.</span>errors<span style=color:#f92672>.</span>full_messages<span style=color:#f92672>.</span>join(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>  <span style=color:#75715e># ...</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># app/services/slots/builder.rb</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>module</span> Slots
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Builder</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>initialize</span>(user, params)
+</span></span><span style=display:flex><span>      @user <span style=color:#f92672>=</span> user
+</span></span><span style=display:flex><span>      @params <span style=color:#f92672>=</span> params
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>call</span>
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>Slot</span><span style=color:#f92672>.</span>new(slot_params)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>attr_reader</span> <span style=color:#e6db74>:user</span>, <span style=color:#e6db74>:params</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>slot_params</span>
+</span></span><span style=display:flex><span>      { <span style=color:#e6db74>user</span>: user,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>scheduled_at</span>: scheduled_at,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>notes</span>: safe_params<span style=color:#f92672>[</span><span style=color:#e6db74>:notes</span><span style=color:#f92672>]</span> }
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>safe_params</span>
+</span></span><span style=display:flex><span>      params<span style=color:#f92672>.</span>require(<span style=color:#e6db74>:slot</span>)<span style=color:#f92672>.</span>permit(<span style=color:#e6db74>:scheduled_at_date</span>, <span style=color:#e6db74>:scheduled_at_time</span>, <span style=color:#e6db74>:notes</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>scheduled_at</span>
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>DateTime</span><span style=color:#f92672>.</span>parse(<span style=color:#e6db74>&#34;</span><span style=color:#e6db74>#{</span>safe_params<span style=color:#f92672>[</span><span style=color:#e6db74>:scheduled_at_date</span><span style=color:#f92672>]</span><span style=color:#e6db74>}</span><span style=color:#e6db74> </span><span style=color:#e6db74>#{</span>safe_params<span style=color:#f92672>[</span><span style=color:#e6db74>:scheduled_at_time</span><span style=color:#f92672>]</span><span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span></code></pre></div><p>We’re delegating slot building to a Service Object. Just like the case with Query objects, Services are blocks of code that we use to improve readability and reusability. Usually, service objects are where the business logic goes. Here’s <a href=https://github.com/aziflaj/skeduler/commit/d53be482c15433dd8a2a9bbb9e9f1c29fda82b7e>the whole diff</a> for what I’ve done.</p><h2 id=to-sumarize>To sumarize<a href=#to-sumarize class=hanchor arialabel=Anchor>&#8983;</a></h2><p>You saw how Rails models are created using generators, how to query the DB for data, how to asynchronously fetch data from the server, and how to use service objects to modularise your app.</p><p>Next time we’ll do some refactoring on the front-end side. We’ll jump into Webpacker (Rails way of managing Webpack-based frontend modules) and Stimulus.js (a small JS library build by Rails’ team), and we’ll add some more functionality to the app. Stay tuned.</p><p><em>Previously posted on <a href=https://medium.com/@aziflaj/manage-your-appointments-with-rails-3-db1313636dfe>my Medium blog</a></em></p></div></div><div class=pagination><div class=pagination__title><span class=pagination__title-h>Read other posts</span><hr></div><div class=pagination__buttons><span class="button previous"><a href=/posts/2019-10-26-manage-your-appointments-with-rails-part-4/><span class=button__icon>←</span>
+<span class=button__text>Manage your appointments with Rails, Part 4</span></a></span>
+<span class="button next"><a href=/posts/2019-09-04-manage-your-appointments-with-rails-part-2/><span class=button__text>Manage your appointments with Rails, Part 2</span>
+<span class=button__icon>→</span></a></span></div></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 Aldo Ziflaj</span>
+<span>:: Powered by <a href=https://gohugo.io/ target=_blank>Hugo</a></span></div></div></footer><script src=/assets/main.js></script>
+<script src=/assets/prism.js></script></div></body></html>

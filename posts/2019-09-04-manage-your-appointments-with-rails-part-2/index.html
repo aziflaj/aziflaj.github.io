@@ -1,0 +1,292 @@
+<!doctype html><html lang=en><head><title>Manage your appointments with Rails, Part 2 :: Friendly Neighborhood Softwaredude</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Authentication and Authorization in Rails using Devise"><meta name=keywords content><meta name=robots content="noodp"><link rel=canonical href=/posts/2019-09-04-manage-your-appointments-with-rails-part-2/><link rel=stylesheet href=/assets/style.css><link rel=stylesheet href=/assets/blue.css><link rel=stylesheet href=/style.css><link rel=apple-touch-icon href=/img/apple-touch-icon-192x192.png><link rel="shortcut icon" href=/img/favicon/blue.png><meta name=twitter:card content="summary"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="og:title" content="Manage your appointments with Rails, Part 2"><meta property="og:description" content="Authentication and Authorization in Rails using Devise"><meta property="og:url" content="/posts/2019-09-04-manage-your-appointments-with-rails-part-2/"><meta property="og:site_name" content="Friendly Neighborhood Softwaredude"><meta property="og:image" content="/img/favicon/blue.png"><meta property="og:image:width" content="2048"><meta property="og:image:height" content="1024"><meta property="article:published_time" content="2019-09-04 00:00:00 +0000 UTC"></head><body class=blue><div class="container center headings--one-size"><header class=header><div class=header__inner><div class=header__logo><a href=/><div class=logo>Friendly Neighborhood Softwaredude</div></a></div><div class=menu-trigger>menu</div></div><nav class=menu><ul class="menu__inner menu__inner--desktop"><li><a href=/about>About</a></li><li><a href=/contact>Contact</a></li></ul><ul class="menu__inner menu__inner--mobile"><li><a href=/about>About</a></li><li><a href=/contact>Contact</a></li></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=/posts/2019-09-04-manage-your-appointments-with-rails-part-2/>Manage your appointments with Rails, Part 2</a></h1><div class=post-meta><span class=post-date>2019-09-04</span>
+<span class=post-reading-time>:: 11 min read (2319 words)</span></div><div class=post-content><div><p>As I said last time (<a href=/manage-your-appointments-with-rails-part-1>link to Part 1</a>), in this blogpost we’ll continue <a href=https://github.com/aziflaj/skeduler>with the same codebase</a> and we’ll check how Devise manages user authentication. In our case, what we’re doing is a simple email/password login from an HTML form, but it might seem like black magic; the code that actually does the thing, is nowhere to be found…</p><p>You can see all the endpoints exposed by our application by running rails routes in the terminal. That’d actually be a lot of information, so lets see this instead:</p><p><img src=https://miro.medium.com/max/1400/1*GrdT9qabcOWZVU65NC-h9Q.png alt></p><p>All those endpoints, added by Devise, point to controllers that live inside the gem. If you visit one of those, e.g. <a href=http://localhost:3000/users/sign_in>http://localhost:3000/users/sign_in</a>, you’ll see a login form. The views exist inside <code>app/views/devise</code>, but the controllers are inside of Devise. The rendered view is nothing but bare bones, pure HTML, with almost no styling. Let’s change that.</p><h2 id=get-clacssy>Get ClaCSSy<a href=#get-clacssy class=hanchor arialabel=Anchor>&#8983;</a></h2><p>We’ll be using <a href=https://materializecss.com/getting-started.html>MaterializeCSS</a> for styling the app. There’s a gem available (<a href=https://github.com/mkhairi/materialize-sass#installation>materialize-sass</a>), so follow those directions to install and set the gem up. Don’t worry if you can’t find an app/assets/javascripts/application.js file in your project; Rails 6 doesn’t ship with an app/assets/javascripts folder, so you can just create it manually. Now, I’m going to update the styles for some of the views without giving much explanation (the only explanation is “I felt like this looks good”), but you can see all the changes <a href=https://github.com/aziflaj/skeduler/commit/3f4a9c80>here</a>. You might find this syntax unknown:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>&lt;</span>%= render &#39;shared/header&#39; %&gt;
+</span></span></code></pre></div><p>This line tells Rails that we want to render a <em>partial</em>, a reusable partial view that does not belong to a controller. In the above case, a file named <code>app/views/shared/_header.html</code>.erb is rendered. Notice the underscore before the filename; that’s how Rails knows this is a partial view.</p><p>Now that Materialize is installed and we already have some styles in our app, we’ll start customising Devise’s views. You can find the Sign Up screen at <code>app/views/devise/registrations/new.html.erb</code> and the Log In screen at <code>app/views/devise/sessions/new.html.erb</code>, and my updated styles <a href=https://github.com/aziflaj/skeduler/commit/e4efe7eb>here</a>. I also updated the password reset views for you.</p><h2 id=get-into-devise>Get into Devise<a href=#get-into-devise class=hanchor arialabel=Anchor>&#8983;</a></h2><p>As you might’ve noticed by now, Devise handles everything that has to do with user sessions and registrations. It also manages password resets (in case any user forgets their password), email confirmation, social login (through a plugin), etc. So now is the time to create the first account by signing up. After signing up, open up a terminal window and run <code>rails c</code> (c stands for console). In the console, run:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=display:flex><span><span style=color:#66d9ef>User</span><span style=color:#f92672>.</span>first<span style=color:#f92672>.</span>username
+</span></span></code></pre></div><p>Apparently, our username isn’t stored. And that’s because Devise has no idea what to do with this field. All it knows is that users register with an email and a password, nothing else. So, to permit this new parameter to be stored in the model, we need to let Devise know about it:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ApplicationController</span> <span style=color:#f92672>&lt;</span> <span style=color:#66d9ef>ActionController</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Base</span>
+</span></span><span style=display:flex><span>  before_action <span style=color:#e6db74>:configure_permitted_parameters</span>, <span style=color:#66d9ef>if</span>: <span style=color:#e6db74>:devise_controller?</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>protected</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>configure_permitted_parameters</span>
+</span></span><span style=display:flex><span>    devise_parameter_sanitizer<span style=color:#f92672>.</span>permit(<span style=color:#e6db74>:sign_up</span>, <span style=color:#e6db74>keys</span>: <span style=color:#f92672>[</span><span style=color:#e6db74>:username</span><span style=color:#f92672>]</span>)
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span></code></pre></div><p>Now, you can try again, and you’ll see that the username is stored in the database.</p><p>Now, we want users to be able to login using either their email, or their username. There are a couple of ways to do this, but we’ll use <a href=https://github.com/heartcombo/devise/wiki/How-To:-Allow-users-to-sign-in-using-their-username-or-email-address>the official way</a>.</p><p>You can check all my changed files <a href=https://github.com/aziflaj/skeduler/commit/bf4e8a89>here</a>. There are a lot of changes in that commit, but all of them are coming from the docs and they give a good explanation on what everything does. In order to not confuse some emails with usernames (e.g., if some user sets their username to something that looks like email), I added some validations (and spec) to check if the username matches a certain RegExp. I’m not allowing special characters in the username, and they can’t start with a digit (for no real reason besides me not liking the usernames that start with digits).</p><h2 id=dont-forget-about-rubocop>Don’t forget about Rubocop<a href=#dont-forget-about-rubocop class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Rubocop is a dependency we installed on Part 1, and we didn’t really configure it. So if I run <code>rubocop</code> on terminal, I get 243 offenses. That’s not cool. That’s 243 times I’ve been added to Santa’s naughty list. So, let’s configure Rubocop and see how many “mistakes” I’ve really done.</p><p>Rubocop takes his orders from a file called <code>.rubocop.yml</code>. In this file, we’ll list all the rules we want to follow when writing code. Notice that this isn’t a standard way of writing Ruby. The good (and the bad) thing of most programming languages, Ruby included, is that you can write code in any way you want; the machine doesn’t care. But good programmers write code that other programmers understand. So, here’s my <code>.rubocop.yml</code>:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>require</span>: <span style=color:#ae81ff>rubocop-rails</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>AllCops</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>TargetRubyVersion</span>: <span style=color:#ae81ff>2.6.3</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Exclude</span>:
+</span></span><span style=display:flex><span>    - <span style=color:#e6db74>&#39;db/**/*&#39;</span>
+</span></span><span style=display:flex><span>    - <span style=color:#e6db74>&#39;bin/**/*&#39;</span>
+</span></span><span style=display:flex><span>    - <span style=color:#e6db74>&#39;vendor/**/*&#39;</span>
+</span></span><span style=display:flex><span>    - <span style=color:#e6db74>&#39;config/**/*&#39;</span>
+</span></span><span style=display:flex><span>    - <span style=color:#e6db74>&#39;spec/spec_helper.rb&#39;</span>
+</span></span><span style=display:flex><span>    - <span style=color:#e6db74>&#39;spec/rails_helper.rb&#39;</span>
+</span></span><span style=display:flex><span>    - <span style=color:#e6db74>&#39;node_modules/**/*&#39;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Rails</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Enabled</span>: <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Commonly used screens these days easily fit more than 80 characters.</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Metrics/LineLength</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Max</span>: <span style=color:#ae81ff>120</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Metrics/AbcSize</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Max</span>: <span style=color:#ae81ff>20</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Too short methods lead to extraction of single-use methods, which can make</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># the code easier to read (by naming things), but can also clutter the class</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Metrics/MethodLength</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Max</span>: <span style=color:#ae81ff>20</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># The guiding principle of classes is SRP, SRP can&#39;t be accurately measured by LoC</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Metrics/ClassLength</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Max</span>: <span style=color:#ae81ff>1500</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Metrics/ModuleLength</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Max</span>: <span style=color:#ae81ff>1500</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Messes with my RSpec cases</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Metrics/BlockLength</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Max</span>: <span style=color:#ae81ff>500</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Style/EmptyMethod</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Enabled</span>: <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># We do not need to support Ruby 1.9, so this is good to use.</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Style/SymbolArray</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Enabled</span>: <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Mixing the styles looks just silly.</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Style/HashSyntax</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>EnforcedStyle</span>: <span style=color:#ae81ff>ruby19_no_mixed_keys</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># has_key? and has_value? are far more readable than key? and value?</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Style/PreferredHashMethods</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Enabled</span>: <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Style/CollectionMethods</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Enabled</span>: <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>PreferredMethods</span>:
+</span></span><span style=display:flex><span>    <span style=color:#75715e># inject seems more common in the community.</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>reduce</span>: <span style=color:#e6db74>&#34;inject&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Either allow this style or don&#39;t. Marking it as safe with parenthesis</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># is silly. Let&#39;s try to live without them for now.</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Style/ParenthesesAroundCondition</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>AllowSafeAssignment</span>: <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Lint/AssignmentInCondition</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>AllowSafeAssignment</span>: <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># A specialized exception class will take one or more arguments and construct the message from it.</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># So both variants make sense.</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Style/RaiseArgs</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Enabled</span>: <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Style/FrozenStringLiteralComment</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Enabled</span>: <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Indenting the chained dots beneath each other is not supported by this cop,</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># see https://github.com/bbatsov/rubocop/issues/1633</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Layout/MultilineOperationIndentation</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Enabled</span>: <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Fail is an alias of raise. Avoid aliases, it&#39;s more cognitive load for no gain.</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># The argument that fail should be used to abort the program is wrong too,</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># there&#39;s Kernel#abort for that.</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Style/SignalException</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>EnforcedStyle</span>: <span style=color:#ae81ff>only_raise</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Style/RescueStandardError</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>EnforcedStyle</span>: <span style=color:#ae81ff>implicit</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Suppressing exceptions can be perfectly fine, and be it to avoid to</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># explicitly type nil into the rescue since that&#39;s what you want to return,</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># or suppressing LoadError for optional dependencies</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Lint/HandleExceptions</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Enabled</span>: <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># do / end blocks should be used for side effects,</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># methods that run a block for side effects and have</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># a useful return value are rare, assign the return</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># value to a local variable for those cases.</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Style/MethodCalledOnDoEndBlock</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Enabled</span>: <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Enforcing the names of variables? To single letter ones? Just no.</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Style/SingleLineBlockParams</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Enabled</span>: <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Shadowing outer local variables with block parameters is often useful</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># to not reinvent a new name for the same thing, it highlights the relation</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># between the outer variable and the parameter. The cases where it&#39;s actually</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># confusing are rare, and usually bad for other reasons already, for example</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># because the method is too long.</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Lint/ShadowingOuterLocalVariable</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Enabled</span>: <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Check with yard instead.</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Style/Documentation</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Enabled</span>: <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># This is just silly. Calling the argument `other` in all cases makes no sense.</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Naming/BinaryOperatorParameterName</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Enabled</span>: <span style=color:#66d9ef>false</span>
+</span></span></code></pre></div><p>Now, running Rubocop will only show 6 offenses, which isn’t that bad. I can see 3 different issues that I have to fix:</p><ul><li>Use <code>%i[]</code> for symbol arrays. Using <code>[:username, :email]</code> is the same as <code>%i[username email]</code>. Notice the 2nd form doesn’t have colons and comas.</li><li>Use <code>find_by</code> instead of <code>where(…).first</code>. Nothing wrong with <code>where(…).first</code>, just that <code>where</code> is used to return multiple entries, and <code>find_by</code> is used to return a single one.</li><li>Don’t use <code>binding.pry</code>… at least don’t push it on a production server.</li></ul><p>You might want to run rubocop automatically whenever you’re ready to commit code in git. Since git is expandable with hooks, you can use a pre-commit hook that won’t commit your code if there are offenses. This goes beyond the Rails’ scope, hence beyond the blogposts scope, so consider it a homework.</p><h2 id=creating-the-user-dashboard>Creating the User Dashboard<a href=#creating-the-user-dashboard class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Now that the users authentication is ready, we can start thinking of actually building features for the app. I’ll start by creating a dashboard (a stubby one), where the users will get redirected after they log in, where they’ll see (and later, create and update) their available slots. Also, I don’t want the landing page to be visible for logged-in users; there’s no reason for them to see that page.</p><p>Firstly, I’ll create a <code>DashboardController</code> with an <code>index</code> action, and the view returned is the view where we’ll build the dashboard:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=display:flex><span><span style=color:#75715e># app/controllers/application_controller.rb</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ApplicationController</span> <span style=color:#f92672>&lt;</span> <span style=color:#66d9ef>ActionController</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Base</span>
+</span></span><span style=display:flex><span>  <span style=color:#75715e># ...</span>
+</span></span><span style=display:flex><span>  before_action <span style=color:#e6db74>:authenticate_user!</span> <span style=color:#75715e># add this</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>protected</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>after_sign_in_path_for</span>(_) <span style=color:#75715e># add this</span>
+</span></span><span style=display:flex><span>    dashboard_path
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>  <span style=color:#75715e># ...</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=display:flex><span><span style=color:#75715e># app/controllers/dashboard_controller.rb</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>DashboardController</span> <span style=color:#f92672>&lt;</span> <span style=color:#66d9ef>ApplicationController</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>index</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style=display:flex><span># app/views/dashboard/index.html.erb
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;valign-wrapper&#34;</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>h2</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;center-align&#34;</span>&gt;Welcome <span style=color:#960050;background-color:#1e0010>&lt;</span>%= current_user.username %&gt;&lt;/<span style=color:#f92672>h2</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=display:flex><span><span style=color:#75715e># config/routes.rb</span>
+</span></span><span style=display:flex><span>get <span style=color:#e6db74>&#39;dashboard&#39;</span>, <span style=color:#e6db74>to</span>: <span style=color:#e6db74>&#39;dashboard#index&#39;</span> <span style=color:#75715e># add this</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># app/controllers/pages_controller.rb</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>PagesController</span> <span style=color:#f92672>&lt;</span> <span style=color:#66d9ef>ApplicationController</span>
+</span></span><span style=display:flex><span>  skip_before_action <span style=color:#e6db74>:authenticate_user!</span>, <span style=color:#e6db74>only</span>: <span style=color:#e6db74>:hello</span>
+</span></span><span style=display:flex><span>  before_action <span style=color:#e6db74>:redirect_users</span>, <span style=color:#e6db74>only</span>: <span style=color:#e6db74>:hello</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>hello</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>private</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>redirect_users</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>unless</span> user_signed_in?
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    redirect_to dashboard_path
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span></code></pre></div><p>We’re using <code>before_action :authenticate_user!</code> on <code>ApplicationController</code> to make sure all the routes require an authenticated user. And we skip it for the landing page, since we don’t need users to be authenticated to see the landing page. We’re also using a <code>before_action</code> to redirect already logged in users from the landing page to the dashboard.</p><h2 id=spec-a-bit>Spec a bit<a href=#spec-a-bit class=hanchor arialabel=Anchor>&#8983;</a></h2><p>This is one of those cases when I’m too lazy to write specs before writing the code (no TDD involved here), but I’m also too lazy to manually test what I’ve implemented. So what we’re doing now is no more TDD, just writing automated tests.</p><p>I want to write some tests on how the system behaves when the login credentials or the sign up parameters are wrong, and what happens when a logged in user tries to access the landing page, or a non-logged in user tries to access the dashboard. Since I’ve already implemented these, I expect the specs to pass (given they’re written correctly).</p><p>Before actually writing the specs, I want to configure a couple of things:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=display:flex><span><span style=color:#75715e># Gemfile</span>
+</span></span><span style=display:flex><span>group <span style=color:#e6db74>:development</span>, <span style=color:#e6db74>:test</span> <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>  gem <span style=color:#e6db74>&#39;ffaker&#39;</span>, <span style=color:#e6db74>&#39;~&gt; 2.12&#39;</span>  <span style=color:#75715e># add this</span>
+</span></span><span style=display:flex><span>  <span style=color:#75715e># ...</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>group <span style=color:#e6db74>:test</span> <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>  gem <span style=color:#e6db74>&#39;factory_bot_rails&#39;</span>, <span style=color:#e6db74>&#39;~&gt; 5.0&#39;</span>, <span style=color:#e6db74>&#39;&gt;= 5.0.2&#39;</span> <span style=color:#75715e># add this</span>
+</span></span><span style=display:flex><span>  <span style=color:#75715e># ...</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># CREATE THE FOLLOWING FILES</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># spec/support/factory_bot.rb</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>RSpec</span><span style=color:#f92672>.</span>configure <span style=color:#66d9ef>do</span> <span style=color:#f92672>|</span>config<span style=color:#f92672>|</span> 
+</span></span><span style=display:flex><span>  config<span style=color:#f92672>.</span>include <span style=color:#66d9ef>FactoryBot</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Syntax</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Methods</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># spec/support/headless_chrome.rb</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>RSpec</span><span style=color:#f92672>.</span>configure <span style=color:#66d9ef>do</span> <span style=color:#f92672>|</span>config<span style=color:#f92672>|</span>
+</span></span><span style=display:flex><span>  config<span style=color:#f92672>.</span>before(<span style=color:#e6db74>:each</span>, <span style=color:#e6db74>type</span>: <span style=color:#e6db74>:system</span>) <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>    driven_by <span style=color:#e6db74>:selenium</span>, <span style=color:#e6db74>using</span>: <span style=color:#e6db74>:headless_chrome</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># spec/support/devise_helpers.rb</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>RSpec</span><span style=color:#f92672>.</span>configure <span style=color:#66d9ef>do</span> <span style=color:#f92672>|</span>config<span style=color:#f92672>|</span>
+</span></span><span style=display:flex><span>  config<span style=color:#f92672>.</span>include <span style=color:#66d9ef>Devise</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Test</span><span style=color:#f92672>::</span><span style=color:#66d9ef>IntegrationHelpers</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># spec/factories/users.rb</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>FactoryBot</span><span style=color:#f92672>.</span>define <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>  factory <span style=color:#e6db74>:user</span> <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>    username { <span style=color:#66d9ef>FFaker</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Lorem</span><span style=color:#f92672>.</span>words<span style=color:#f92672>.</span>join(<span style=color:#e6db74>&#39;&#39;</span>) }
+</span></span><span style=display:flex><span>    email { <span style=color:#66d9ef>FFaker</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Internet</span><span style=color:#f92672>.</span>email }
+</span></span><span style=display:flex><span>    password { <span style=color:#e6db74>&#39;password&#39;</span> }
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span></code></pre></div><p>What did we just do? We installed <a href=https://github.com/ffaker/ffaker>the FFaker gem</a> to help us generate some fake test data, we installed and configured <a href=https://github.com/thoughtbot/factory_bot>FactoryBot</a>, we configured some Devise test helpers, and we configured a headless browser (chrome) to be used with the system specs. Now, for the real test, here’s how we test the login functionality (<code>spec/system/login_spec.rb</code>):</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=display:flex><span>require <span style=color:#e6db74>&#39;rails_helper&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>RSpec</span><span style=color:#f92672>.</span>describe <span style=color:#e6db74>&#39;Login&#39;</span> <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>  let(<span style=color:#e6db74>:user</span>) { create <span style=color:#e6db74>:user</span> }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  before <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>    visit root_path
+</span></span><span style=display:flex><span>    expect(body)<span style=color:#f92672>.</span>to have_link(<span style=color:#e6db74>&#39;Log In&#39;</span>)
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  context <span style=color:#e6db74>&#39;with valid params&#39;</span> <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>    let(<span style=color:#e6db74>:password</span>) { <span style=color:#e6db74>&#39;password&#39;</span> }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    it <span style=color:#e6db74>&#39;logs in with username&#39;</span> <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>      click_link <span style=color:#e6db74>&#39;Log In&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      within(<span style=color:#e6db74>:css</span>, <span style=color:#e6db74>&#39;form&#39;</span>) <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>        fill_in <span style=color:#e6db74>&#39;Username or Email&#39;</span>, <span style=color:#e6db74>with</span>: user<span style=color:#f92672>.</span>username
+</span></span><span style=display:flex><span>        fill_in <span style=color:#e6db74>&#39;Password&#39;</span>, <span style=color:#e6db74>with</span>: password
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        find(<span style=color:#e6db74>&#39;[type=&#34;submit&#34;]&#39;</span>)<span style=color:#f92672>.</span>click
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      expect(page)<span style=color:#f92672>.</span>to have_link(<span style=color:#e6db74>&#39;Log Out&#39;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    it <span style=color:#e6db74>&#39;logs in with email&#39;</span> <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>      click_link <span style=color:#e6db74>&#39;Log In&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      within(<span style=color:#e6db74>:css</span>, <span style=color:#e6db74>&#39;form&#39;</span>) <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>        fill_in <span style=color:#e6db74>&#39;Username or Email&#39;</span>, <span style=color:#e6db74>with</span>: user<span style=color:#f92672>.</span>email
+</span></span><span style=display:flex><span>        fill_in <span style=color:#e6db74>&#39;Password&#39;</span>, <span style=color:#e6db74>with</span>: password
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        find(<span style=color:#e6db74>&#39;[type=&#34;submit&#34;]&#39;</span>)<span style=color:#f92672>.</span>click
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      expect(page)<span style=color:#f92672>.</span>to have_link(<span style=color:#e6db74>&#39;Log Out&#39;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  context <span style=color:#e6db74>&#39;with invalid params&#39;</span> <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>    let(<span style=color:#e6db74>:password</span>) { <span style=color:#e6db74>&#39;12345678&#39;</span> }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    it <span style=color:#e6db74>&#39;does not log in with username&#39;</span> <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>      click_link <span style=color:#e6db74>&#39;Log In&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      within(<span style=color:#e6db74>:css</span>, <span style=color:#e6db74>&#39;form&#39;</span>) <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>        fill_in <span style=color:#e6db74>&#39;Username or Email&#39;</span>, <span style=color:#e6db74>with</span>: user<span style=color:#f92672>.</span>username
+</span></span><span style=display:flex><span>        fill_in <span style=color:#e6db74>&#39;Password&#39;</span>, <span style=color:#e6db74>with</span>: password
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        find(<span style=color:#e6db74>&#39;[type=&#34;submit&#34;]&#39;</span>)<span style=color:#f92672>.</span>click
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      expect(page)<span style=color:#f92672>.</span>to have_text(<span style=color:#e6db74>&#39;Invalid Login or password&#39;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    it <span style=color:#e6db74>&#39;does not log in with email&#39;</span> <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>      click_link <span style=color:#e6db74>&#39;Log In&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      within(<span style=color:#e6db74>:css</span>, <span style=color:#e6db74>&#39;form&#39;</span>) <span style=color:#66d9ef>do</span>
+</span></span><span style=display:flex><span>        fill_in <span style=color:#e6db74>&#39;Username or Email&#39;</span>, <span style=color:#e6db74>with</span>: user<span style=color:#f92672>.</span>email
+</span></span><span style=display:flex><span>        fill_in <span style=color:#e6db74>&#39;Password&#39;</span>, <span style=color:#e6db74>with</span>: password
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        find(<span style=color:#e6db74>&#39;[type=&#34;submit&#34;]&#39;</span>)<span style=color:#f92672>.</span>click
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      expect(page)<span style=color:#f92672>.</span>to have_text(<span style=color:#e6db74>&#39;Invalid Login or password&#39;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span></code></pre></div><p>This spec uses Capybara to emulate user behaviours. It’s clear that what we’re doing here, is describing what a typical user would do to login:</p><ul><li>Visit the root path (/)</li><li>Click on the log in link in the navbar</li><li>Fill the form with their username/email and password</li><li>Click the Log in button</li></ul><p>Finally, we expect to either see the logout button (if the login was done successfully), or an error message.</p><p>I added a couple of other spec files here, so <a href=https://github.com/aziflaj/skeduler/commit/e6b44a5a>check the diff</a>.</p><h2 id=add-a-unique-index-for-username>Add a unique index for username<a href=#add-a-unique-index-for-username class=hanchor arialabel=Anchor>&#8983;</a></h2><p>I just noticed that we don’t have an index for the username. This means that, when (if) our application gets thousands of users, searching through the database for a given username will take a while. Without indices, think of the database driver running a linear search for every record in the DB until it finds a matching username, or running out of entries. So, let’s do this:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ rails g migration add_index_for_username
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>AddIndexForUsername</span> <span style=color:#f92672>&lt;</span> <span style=color:#66d9ef>ActiveRecord</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Migration</span><span style=color:#f92672>[</span><span style=color:#ae81ff>6</span><span style=color:#f92672>.</span><span style=color:#ae81ff>0</span><span style=color:#f92672>]</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>change</span>
+</span></span><span style=display:flex><span>    add_index <span style=color:#e6db74>:users</span>, <span style=color:#e6db74>:username</span>, <span style=color:#e6db74>unique</span>: <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ rails db:migrate
+</span></span></code></pre></div><h2 id=to-sumarize>To sumarize<a href=#to-sumarize class=hanchor arialabel=Anchor>&#8983;</a></h2><p>In this blogpost you saw Rails partials in action, configuring Devise for your needs, configuring Rubocop, stopping users from accessing views you don’t want them to access, and writing system specs. If you get into an already existing project, Devise and Rubocop will probably be already configured. Writing (system) specs is something that you’ll do more often than you think, so better get used to the syntax and to the toolset as soon as possible. As for Devise and its plethora of configurable options, <a href=https://github.com/plataformatec/devise/wiki>the wiki</a> covers almost everything you need.</p><p>All the code for this project is in <a href=https://github.com/aziflaj/skeduler/tree/part2>this github repo</a>. Next time, we’ll jump into creating the Slot model. See you then.</p><p><em>Previously posted on <a href=https://medium.com/@aziflaj/manage-your-appointments-with-rails-2-cb0d0fd8d2a1>my Medium blog</a></em></p></div></div><div class=pagination><div class=pagination__title><span class=pagination__title-h>Read other posts</span><hr></div><div class=pagination__buttons><span class="button previous"><a href=/posts/2019-09-26-manage-your-appointments-with-rails-part-3/><span class=button__icon>←</span>
+<span class=button__text>Manage your appointments with Rails, Part 3</span></a></span>
+<span class="button next"><a href=/posts/2019-08-28-manage-your-appointments-with-rails-part-1/><span class=button__text>Manage your appointments with Rails, Part 1</span>
+<span class=button__icon>→</span></a></span></div></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 Aldo Ziflaj</span>
+<span>:: Powered by <a href=https://gohugo.io/ target=_blank>Hugo</a></span></div></div></footer><script src=/assets/main.js></script>
+<script src=/assets/prism.js></script></div></body></html>
