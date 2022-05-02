@@ -1,0 +1,43 @@
+.contact-page {
+  display: flex;
+}
+
+.contact-page > section {
+  width: 50%;
+  margin: 0 10px;
+}
+
+form > [type="submit"] {
+  background: #98C379 !important;
+  border-color: #98C379 !important;
+  padding: 12px 16px;
+  border-width: 1px;
+  border-radius: 2px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.form-control {
+  font-size: 16px;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0;
+
+  height: 52px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.8) !important;
+  border-radius: 0px;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+
+  width: 100%;
+}
+
+.form-control::placeholder {
+  font-family: Fira Code,Monaco,Consolas,Ubuntu Mono,monospace;
+}
+
+textarea.form-control {
+  height: 150px;
+}
+
