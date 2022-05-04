@@ -1,6 +1,7 @@
 ---
 title: About me
 readingTime: false
+hideComments: true
 ---
 
 The name is Ziflaj, Aldo Ziflaj (cue the Bond music)...
