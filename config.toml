@@ -3,6 +3,8 @@ languageCode = 'en-us'
 title = "Aldo's Brain Juice, Condensed in Human Words."
 theme = 'terminal'
 
+disqusShortname = 'aldoziflaj'
+
 [params]
   # dir name of your main content (default is `content/posts`).
   # the list of set content will show up on your index page (baseurl).
