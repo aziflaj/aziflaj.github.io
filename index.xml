@@ -17,7 +17,7 @@ Vim. Now, the only editor I use is &lt;a href="https://neovim.io/">Neovim&lt;/a>
 because it has &lt;a href="https://copilot.github.com/">Github Copilot&lt;/a> support. Besides that, Vim and Neovim are basically the same to me.&lt;/p>
 &lt;p>People who never used Vim before think it&amp;rsquo;s either too hard to use,
 or they think it&amp;rsquo;s just a Notepad that&amp;rsquo;s too hard to get out of, so not worth
-using. But there&amp;rsquo;s a reason your code editor and IDE of choice has a Vim mode,
+using. But there&amp;rsquo;s a reason your code editor and IDE of choice comes with a Vim mode,
 so without further ado, allow me to introduce you to the Vim goodness.&lt;/p>
 &lt;img src="/images/20220502/vimvside.jpeg" alt="chadvim" class="center" style="border-radius: 8px;" />
 &lt;h2 id="modal-editing">Modal editing&lt;/h2>
@@ -32,9 +32,6 @@ your keys don&amp;rsquo;t actually do what they&amp;rsquo;re expected to do, e.g
 the line (kinda like &lt;del>copying&lt;/del> yanking and pasting)&lt;/li>
 &lt;li>pressing &lt;code>i&lt;/code> or &lt;code>a&lt;/code> makes the keys start working as they should&amp;hellip;&lt;/li>
 &lt;/ul>
-&lt;p>This is what makes Vim seem hard to use at first, lots of special &amp;ldquo;commands&amp;rdquo;
-that get you lost. But as learning new things usually goes, you don&amp;rsquo;t &lt;em>need&lt;/em>
-to know all of these to use Vim.&lt;/p>
 &lt;p>The reason why Vim starts in a Normal mode that doesn&amp;rsquo;t seem normal at all (when
 you switch from &lt;em>normal&lt;/em> code editors) is that most of the time, you are reading
 the file and moving around rather than making changes. By pressing &lt;code>i&lt;/code>, you
@@ -48,29 +45,37 @@ all &lt;code>vim&lt;/code> occurrences into &lt;code>Vim&lt;/code>; those of you
 You can also notice (on the bottom left, right above where the command is
 written) that Vim changes from &lt;strong>Normal&lt;/strong> to &lt;strong>Command&lt;/strong> mode, everything that
 starts with &lt;code>:&lt;/code> is a Vim command.&lt;/p>
+&lt;p>One of the reasons Vim seems hard to use at first is that people think they need
+to know everything about it in order to start using it. Long before making it my
+default code editor, I was using Vim to edit files in production servers. All I
+needed for that was to know how to move around with &lt;code>h/j/k/l&lt;/code>, &lt;code>w/b&lt;/code> for moving
+between words, &lt;code>dd&lt;/code> to delete lines and &lt;code>i&lt;/code> to start writing what I needed to
+write. That&amp;rsquo;s more than enough to ditch nano or whatever terminal editor you&amp;rsquo;re
+currently using.&lt;/p>
 &lt;p>There&amp;rsquo;s also Visual mode (including Visual Block and Visual Line), similar to
 click-dragging your mouse over the text; and Replace mode, similar to pressing
-the &lt;code>Ins&lt;/code> key on &lt;a href="https://www.computerhope.com/jargon/i/insertke.htm">most keyboards&lt;/a>, but I rarely use them, so &amp;hellip; not much I can say about them ¯\&lt;em>(ツ)&lt;/em>/¯&lt;/p>
+the &lt;code>Ins&lt;/code> key on &lt;a href="https://www.computerhope.com/jargon/i/insertke.htm">most keyboards&lt;/a>, but I rarely use them, so &amp;hellip; not much to say about them&lt;/p>
+&lt;p>¯\&lt;em>(ツ)&lt;/em>/¯&lt;/p>
 &lt;h2 id="vim-is-hackable-like-atom">Vim is hackable like Atom&lt;/h2>
 &lt;p>&amp;hellip;well, it&amp;rsquo;s a bit more hackable than that. The default Vim you get in your OS
-is just barebones; it does almost what Notepad can do. But with the power
-of an &lt;code>init.vim&lt;/code> file and a few plugins, you can turn it into a real IDE that
+is just the barebones; it does almost what Notepad can do. But with a few lines
+of &lt;code>init.vim&lt;/code> file and a couple of plugins, you can turn it into a real IDE that
 supports:&lt;/p>
 &lt;ul>
 &lt;li>Syntax highlighting&lt;/li>
 &lt;li>Line numbers and &lt;em>relative&lt;/em> line numbers&lt;/li>
 &lt;li>Indentation guides, visible invisible characters (like spaces, tabs, line
 breaks, or &lt;a href="https://www.youtube.com/shorts/x1kyIUZgzqo">this invisible cunt&lt;/a>)&lt;/li>
-&lt;li>Running tests by doing &lt;code>Space + t&lt;/code> (current &lt;strong>t&lt;/strong>est file), &lt;code>Space + a&lt;/code> (&lt;strong>a&lt;/strong>ll
-tests), &lt;code>Space + s&lt;/code> (the test &lt;strong>s&lt;/strong>urrounding the cursor), or &lt;code>Space + l&lt;/code> (rerun
-the &lt;strong>l&lt;/strong>ast
+&lt;li>Running tests by doing &lt;code>Space + t&lt;/code> (current &lt;strong>T&lt;/strong>est file), &lt;code>Space + a&lt;/code> (&lt;strong>A&lt;/strong>ll
+tests), &lt;code>Space + s&lt;/code> (the test &lt;strong>S&lt;/strong>urrounding the cursor), or &lt;code>Space + l&lt;/code> (rerun
+the &lt;strong>L&lt;/strong>ast
 test)&lt;/li>
 &lt;li>Jumping to the test file for a class/module by pressing &lt;code>:A&lt;/code>&lt;/li>
 &lt;li>Automatically running a linter whenever a file is saved&lt;/li>
 &lt;li>&lt;code>Ctrl + f&lt;/code> to globally search for a given string (like &lt;code>Ctrl + Shift + f&lt;/code> on
 most IDEs/editors)&lt;/li>
 &lt;li>&lt;code>Ctrl + p&lt;/code> to open a file&lt;/li>
-&lt;li>Get Code completion suggestions as in every other IDE or Code editor.&lt;/li>
+&lt;li>Code completion suggestions as in every other IDE or Code editor.&lt;/li>
 &lt;/ul>
 &lt;img src="/images/20220502/completion.gif" alt="code completion" class="center" style="border-radius: 8px;" />
 &lt;p>The hackable thing about Vim is that the above commands are not set in stone.
@@ -84,25 +89,28 @@ Here are a couple of lines from my &lt;code>init.vim&lt;/code>:&lt;/p>
 &lt;code>&amp;lt;Leader&amp;gt;&lt;/code> as the &lt;code>Space&lt;/code> key, and whenever &lt;code>Space + t&lt;/code> are pressed, Vim acts
 the same as typing &lt;code>:TestFile&lt;/code> followed by Enter (&lt;code>&amp;lt;CR&amp;gt;&lt;/code> stands for &lt;a href="https://en.wikipedia.org/wiki/Carriage_return#Computers">Carriage Return&lt;/a>). Same thing goes for my &lt;code>Ctrl + p&lt;/code> and &lt;code>Ctrl + f&lt;/code>; both of these are
 user-defined, so they can do whatever the user (in this case, myself) wants:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-vim" data-lang="vim">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">nnoremap&lt;/span> &amp;lt;&lt;span style="color:#a6e22e">C&lt;/span>-&lt;span style="color:#a6e22e">p&lt;/span>&amp;gt; &amp;lt;&lt;span style="color:#a6e22e">cmd&lt;/span>&amp;gt;&lt;span style="color:#a6e22e">Telescope&lt;/span> &lt;span style="color:#a6e22e">find_files&lt;/span>&amp;lt;&lt;span style="color:#a6e22e">CR&lt;/span>&amp;gt;&lt;span style="color:#960050;background-color:#1e0010">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>&lt;span style="color:#a6e22e">nnoremap&lt;/span> &amp;lt;&lt;span style="color:#a6e22e">C&lt;/span>-&lt;span style="color:#a6e22e">f&lt;/span>&amp;gt; &amp;lt;&lt;span style="color:#a6e22e">cmd&lt;/span>&amp;gt;&lt;span style="color:#a6e22e">Telescope&lt;/span> &lt;span style="color:#a6e22e">live_grep&lt;/span>&amp;lt;&lt;span style="color:#a6e22e">CR&lt;/span>&amp;gt;&lt;span style="color:#960050;background-color:#1e0010">
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-vim" data-lang="vim">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">nnoremap&lt;/span> &amp;lt;&lt;span style="color:#a6e22e">C&lt;/span>-&lt;span style="color:#a6e22e">p&lt;/span>&amp;gt; :&lt;span style="color:#a6e22e">Telescope&lt;/span> &lt;span style="color:#a6e22e">find_files&lt;/span>&amp;lt;&lt;span style="color:#a6e22e">CR&lt;/span>&amp;gt;&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span>&lt;span style="color:#a6e22e">nnoremap&lt;/span> &amp;lt;&lt;span style="color:#a6e22e">C&lt;/span>-&lt;span style="color:#a6e22e">f&lt;/span>&amp;gt; :&lt;span style="color:#a6e22e">Telescope&lt;/span> &lt;span style="color:#a6e22e">live_grep&lt;/span>&amp;lt;&lt;span style="color:#a6e22e">CR&lt;/span>&amp;gt;&lt;span style="color:#960050;background-color:#1e0010">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="i-dont-have-to-leave-my-terminal">I don&amp;rsquo;t have to leave my terminal&lt;/h2>
 &lt;p>In my job, I get to use the terminal a lot. After so many years of struggling with
 computers, I&amp;rsquo;m more comfortable doing
-stuff from the terminal rather than from a GUI (that&amp;rsquo;s fancy talk for &lt;em>&amp;ldquo;I&amp;rsquo;m too
+stuff from the terminal rather than the GUI (that&amp;rsquo;s fancy talk for &lt;em>&amp;ldquo;I&amp;rsquo;m too
 lazy to reach for the mouse&amp;rdquo;&lt;/em>). So when the first thing you do on a Monday
 morning is to fire up &lt;a href="https://iterm2.com/index.html">iTerm&lt;/a>, using a
 terminal-based editor doesn&amp;rsquo;t seem that crazy. &lt;em>&amp;ldquo;But wait&amp;rdquo;&lt;/em>, &amp;ndash; you say, &amp;ndash; &lt;em>&amp;ldquo;even
 my Fancy Schmancy IDE has a built-in terminal&amp;rdquo;&lt;/em>. It sure does, but mine is
 floating in the middle of the screen.&lt;/p>
 &lt;img src="/images/20220502/floaterm.png" alt="floaterm" class="center" style="border-radius: 8px;" />
+&lt;p>Plus I can fire up a new terminal window by doing &lt;code>⌘ + T&lt;/code> and move around with
+&lt;code>⌘ + number&lt;/code> or &lt;code>⌘ + left&lt;/code> and &lt;code>⌘ + right&lt;/code>; using the keyboard is faster than
+reaching for the mouse.&lt;/p>
 &lt;h2 id="moving-through-panes">Moving through panes&lt;/h2>
-&lt;p>Here how a normal day of work might look like:&lt;/p>
+&lt;p>Here how a normal day of work might look &lt;a href="https://github.com/aziflaj/gogot">like&lt;/a>:&lt;/p>
 &lt;img src="/images/20220502/workdir.png" alt="gogot" class="center" style="border-radius: 8px;" />
 &lt;p>There might be a few files opened side-by-side, a terminal window open to run some
 commands, and so on. Moving between opened files is as easy as &lt;code>Ctrl + h/j/k/l&lt;/code>
 (on my config), toggling the terminal is just a &lt;code>\ + e&lt;/code> away and as Drew Neil
-says, &lt;a href="https://www.amazon.com/Practical-Vim-Edit-Speed-Thought/dp/1680501275">&lt;em>text is edited at the speed of thought&lt;/em>&lt;/a>&lt;/p>
+says, &lt;a href="https://www.amazon.com/Practical-Vim-Edit-Speed-Thought/dp/1680501275">&lt;em>text is edited at the speed of thought&lt;/em>&lt;/a>.&lt;/p>
 &lt;p>FYI, to get out of Vim you do &lt;code>:h :q&lt;/code> and RTFM.&lt;/p></content></item><item><title>Designing a Better User Experience for My Fingers</title><link>/posts/2021-12-28-designing-better-ux-for-my-fingers/</link><pubDate>Tue, 28 Dec 2021 00:00:00 +0000</pubDate><guid>/posts/2021-12-28-designing-better-ux-for-my-fingers/</guid><description>Those of you who know me must be surprised I&amp;rsquo;m even considering writing about UX. For those who don&amp;rsquo;t know me, I believe an introduction is due. I am one of those people who stare at the terminal for hours every day, either fixing bugs or writing them. Sometimes I have to do some clicking around to manually test the code I wrote, but most of my time is spent either executing commands in a terminal, or writing code in a terminal-based editor.</description><content>&lt;p>Those of you who know me must be surprised I&amp;rsquo;m even considering writing about UX. For those who don&amp;rsquo;t know me, I believe an introduction is due. I am one of those people who stare at the terminal for hours every day, either fixing bugs or writing them. Sometimes I have to do some clicking around to manually test the code I wrote, but most of my time is spent either executing commands in a terminal, or writing code in a &lt;a href="https://neovim.io/">terminal-based editor&lt;/a>. People don&amp;rsquo;t expect me, someone who&amp;rsquo;s willing to start a debate on why Zsh is the superior shell and how your mouse-dependent development process is slowing you down, to start talking about designing user interfaces and optimizing user experience. And I don&amp;rsquo;t blame them, but we are living in strange times&amp;hellip;&lt;/p>
 &lt;p>If you are in the same field as me, you most likely heard people throwing terms like UI and UX when it comes to designing graphical interfaces and defining users interactions with the product they&amp;rsquo;re building. I want to extend the interface definition beyond graphical, the interaction definition beyond clicking on a screen, and the user definition to include code monkeys, programming primates and software simians (so, most of my audience). When talking about you as a user of a computer, your interface is your keyboard (and your mouse, if you&amp;rsquo;re one of those people), and it&amp;rsquo;s designed by someone who never saw human hands.&lt;/p>
 &lt;p>&lt;img src="/images/20211228/staggered.jpeg" alt="staggered kb">&lt;/p>
