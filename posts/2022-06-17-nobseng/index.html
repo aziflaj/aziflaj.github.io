@@ -1,0 +1,139 @@
+<!doctype html><html lang=en><head><title>The No-Bullshit Guide into Building Software :: Friendly Neighborhood Softwaredude</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Yesterday I did a presentation titled &amp;ldquo;The No Bullshit Guide into Building Software&amp;rdquo;, as a way to share my experience in the industry regarding what I&amp;rsquo;ve seen is a good approach when building, or helping engineers build better software. This blogpost is created by reusing the notes I wrote before the presentation, and what was said during the event doesn&amp;rsquo;t go far away from what is written here. You can find the slides here"><meta name=keywords content><meta name=robots content="noodp"><link rel=canonical href=/posts/2022-06-17-nobseng/><script async src="https://www.googletagmanager.com/gtag/js?id=G-ZMWD0LX3M8"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-ZMWD0LX3M8",{anonymize_ip:!1})}</script><link rel=stylesheet href=/assets/style.css><link rel=stylesheet href=/assets/blue.css><link rel=stylesheet href=/style.css><link rel=apple-touch-icon href=/img/apple-touch-icon-192x192.png><link rel="shortcut icon" href=/img/favicon/blue.png><meta name=twitter:card content="summary"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="og:title" content="The No-Bullshit Guide into Building Software"><meta property="og:description" content="Yesterday I did a presentation titled &amp;ldquo;The No Bullshit Guide into Building Software&amp;rdquo;, as a way to share my experience in the industry regarding what I&amp;rsquo;ve seen is a good approach when building, or helping engineers build better software. This blogpost is created by reusing the notes I wrote before the presentation, and what was said during the event doesn&amp;rsquo;t go far away from what is written here. You can find the slides here"><meta property="og:url" content="/posts/2022-06-17-nobseng/"><meta property="og:site_name" content="Friendly Neighborhood Softwaredude"><meta property="og:image" content="/img/favicon/blue.png"><meta property="og:image:width" content="2048"><meta property="og:image:height" content="1024"><meta property="article:published_time" content="2022-06-17 00:00:00 +0000 UTC"></head><body class=blue><div class="container center headings--one-size"><header class=header><div class=header__inner><div class=header__logo><a href=/><div class=logo>Friendly Neighborhood Softwaredude</div></a></div><div class=menu-trigger>menu</div></div><nav class=menu><ul class="menu__inner menu__inner--desktop"><li><a href=/about>About</a></li><li><a href=/contact>Contact</a></li></ul><ul class="menu__inner menu__inner--mobile"><li><a href=/about>About</a></li><li><a href=/contact>Contact</a></li></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=/posts/2022-06-17-nobseng/>The No-Bullshit Guide into Building Software</a></h1><div class=post-meta><span class=post-date>2022-06-17</span>
+<span class=post-reading-time>:: 10 min read (2071 words)</span></div><div class=post-content><div><blockquote><p>Yesterday I did a presentation titled &ldquo;The No Bullshit Guide into Building
+Software&rdquo;, as a way to share my experience in the industry regarding what
+I&rsquo;ve seen is a good approach when building, or helping engineers build better
+software. This blogpost is created by reusing the notes I wrote before the
+presentation, and what was said during the event doesn&rsquo;t go far away from what
+is written here. You can find the slides <a href=https://speakerdeck.com/aziflaj/no-bullshit-guide-into-building-software>here</a></p></blockquote><img src=/images/20220617/1.png class=center style=border-radius:8px><p>I&rsquo;m assuming all of us here are doing something towards building, or helping to
+build, software. We&rsquo;re all at different stages of our career and we all have
+different approaches to doing our work, which also implies we mean different things by
+<em>bullshit</em>. Some of us consider bullshit what we don&rsquo;t know or understand, and
+some others think that anything done differently from their approach is bullshit.
+And that&rsquo;s one of the side effects of seniority and experience, having opinions.
+The opinions formed during the years of experience are one of the main differences
+between a senior and a junior practicioner in the software industry. </p><p>I have been meddling with code since I was underaged, and in these 10+ years of
+having to stare at a computer screen for hours every day, I&rsquo;ve come to the realisation that
+during these 60 years that Software Engineering has been existing as a practice,
+the front end people only recently
+have had the chance to work with really interesting and complex stuff. Before,
+the frontend would just render whatever the server replied with, maybe do some
+jQuery shenanigans to make things look better, but that was it. Nowadays you get
+SPAs, PWAs, micro-frontends, all these ES6/7/8/9/whatever the latest number is,
+build pipelines and much more. Given the massive number of people that are joining the industry
+as frontend developers, along with the lack of experience and that of the maturity
+of the front-end as an engineering practice, the No-Bullshit Guide into
+Building Software could be summarised as&mldr;</p><img src=/images/20220617/2.png class=center style=border-radius:8px><p><em>Welcome to my TED Talk, are there any questions?</em></p><blockquote><p><em>Disclaimer towards JS developers</em>: I don&rsquo;t believe all of you are complete
+numbnuts, but it&rsquo;s fun having a go at your community.</p></blockquote><img src=/images/20220617/3.png class=center style=border-radius:8px><p>So who am I? Yada yada yada, I work for a Finnish scale-up called Leadfeeder,
+and before that I worked in this other local start-up called Publer that almost all of you have heard before. All
+that I&rsquo;m sharing with you today are opinions backed by my experience, and in no
+way are the absolute truth. If you disagree with me I&rsquo;m very open to discussion,
+maybe one of us ends up changing their mind.</p><img src=/images/20220617/4.png class=center style=border-radius:8px><p>Before moving ahead, it&rsquo;s better to define some terminology. What I mean by
+<em>bullshit</em> during this presentation, is anything that makes building
+software harder and longer. Any practice that doesn&rsquo;t necessarily add value to the
+software process, is bullshit. Anything that makes you wanna stop doing software,
+is bullshit. And on the other hand, anything that you love but isn&rsquo;t needed to
+the software you&rsquo;re building works towards clouding your judgement, so is
+therefore also bullshit.</p><img src=/images/20220617/5.png class=center style=border-radius:8px><p>Now you all know, or you&rsquo;re supposed to know, what the software process is.
+Either some waterfall (which is cool) or some agile (which is also cool) or even
+weird mix of different software development processes (again, cool), with the
+right steps and the right transitions
+between steps, that converts a list of requirements into a working software product.
+And there are a lot
+of actors that contribute their own bullshit to the process, but mostly it&rsquo;s
+Project Managers, Product Owners, or Product People in general; and Developers,
+or Engineers, or maybe Code Monkeys when they start acting like <a href=https://techcrunch.com/2016/06/02/the-prima-donna-engineering-effect/>prima donnas</a>.</p><p>And usually, the bullshit these two actors introduce into the process always
+affects the other actor. And what&rsquo;s something all Product People love and all (well, most
+of) the Devs hate?</p><img src=/images/20220617/6.png class=center style=border-radius:8px><p>Meetings. Geez, PMs want to have a call for everything. They want to have a call
+for this and a call for that, and they
+want to have another call to schedule those other calls, but then again whatever
+time you propose for them is not going to work because, well, they have another
+call at that time. </p><p>What I see as a mistake in some of the Product People I&rsquo;ve worked with is an issue
+with how they regard Agile methodologies in general. They seem to forget the
+&ldquo;People over Processes&rdquo; thing, and focus too much on the process instead. So we get</p><ul><li>Sprint planning & estimation calls&mldr;</li><li>Daily stand-ups to inform Product People on the progress</li><li>Every 2 weeks (or however long the Sprint is), we get Reviews and Retros</li><li>And there&rsquo;s all the ad-hoc calls you get invited at, because the Product people
+don&rsquo;t know what to tell to the stakeholders, so they add a developer on the call. </li></ul><p>Context switching is costly for developers. Along with the preparation before the
+call, as well as the effort to get back to writing code after the call, a
+30-minute call for a developer could translate into 1 hour spent on not building
+that feature every Product Person wants built yesterday.
+Devs don&rsquo;t <em>need to</em> have daily stand-ups because most of the time, they work together. They
+already know what other developers on their team are working on; they review their Pull Requests.
+And estimations are never right.</p><p>So, for a better PMing experience&mldr;</p><img src=/images/20220617/7.png class=center style=border-radius:8px><ul><li><p><strong>Write better specs</strong>. Give your developers all the tools they need in order to build
+what you have in mind. Whether it be mockups, user stories, actual VS
+expected system behaviour, etc. We will still come at
+you with questions, but better to make educated questions rather than &ldquo;So&mldr;
+what do you want me to do about this ticket?&rdquo;</p></li><li><p><strong>Prioritise your features</strong>. By having constant contact with stakeholders and/or the client, the product people can (and should) decide which of the tickets will be done before the others.
+ </p></li><li><p>Make sure to <strong>not let people distract your developers</strong>. That&rsquo;s more of a Cache
+Proxy rather than a Buffer, but you get the idea. Don&rsquo;t let other employees of
+the company, and especially not the stakeholders, to go to the developers and
+ask them about the progress of their features. The product people should be
+the information point for all non-developers.</p></li><li><p><strong>Prioritise your features!</strong> Developers don&rsquo;t know what the stakeholders need,
+so most of the time they will prioritise tech-improvements and
+technically challenging tasks, rather than features the users/clients need</p></li><li><p><strong>Consider all estimations as optimistic</strong>, and when passing on deadlines, add a
+couple of extra days (or even weeks) to make sure everything works fine.
+Bugs arise all the time, almost always after the deadline and when the application is
+deployed in production. Having a soft and a hard deadline always helps.</p></li></ul><p>Can you guess what the next one will be?</p><ul><li><p>(expect the unexpected, and) <strong>Know your product</strong>. Just like the developers know the
+system from a technical point of view, you should be the go-to person for
+product-specific questions. And always&mldr;</p></li><li><p><strong>Prioritise your features</strong>. Devs are generally good at prioritising what they
+like, and even better at pushing away tasks they don&rsquo;t want to <em>&ldquo;lose time with&rdquo;</em>.
+So one of the things you&rsquo;ll hear most often from developers is:</p></li></ul><img src=/images/20220617/8.png class=center style=border-radius:8px><p><strong>&ldquo;We&rsquo;ll do it later&rdquo;</strong>. Surprise surprise, we won&rsquo;t. This is just one thing we tell
+you so we don&rsquo;t &ldquo;lose time&rdquo; on &ldquo;unnecessary shit&rdquo;. And how we prioritise,
+especially when it comes to technical solutions that are very good and very
+much needed (<em>if we do say so ourselves</em>), is by saying <strong>&ldquo;we need this&rdquo;</strong>. Most likely, we won&rsquo;t ever need it, but we&rsquo;re trying to see a
+bigger picture that will never be painted.</p><p>And then there&rsquo;s our technobabble, throwing away years of experience because
+we&rsquo;re using a &ldquo;new&rdquo; paradigm; or we talk about having a robust architecture
+which handles everything the rightest and bestest way possible (and most likely
+it&rsquo;s overengineering of a very simple use-case); or we talk about that new
+technology we learned about in a webinar or a conference that <strong>&ldquo;is just better at
+everything than whatever we&rsquo;re using right now&rdquo;</strong> (&mldr;it&rsquo;s not)</p><p>Most of these are just solutions for made up issues we think we will have, and
+we try to fix these issues in the only way we know&mldr; that one way described in
+that article we discovered last night on Medium. We follow advice on how big
+companies handle their issues, without thinking if their solution really applies
+to our problems. We forget that the field of Software Engineering has existed since
+the 60s and that in the last 60 years, most of the problems faced by most of the people
+already have a well-tested approach. </p><img src=/images/20220617/9.png class=center style=border-radius:8px><p>So maybe, the first thing to do is to realise that old tech, that one
+thing that didn&rsquo;t really evolve for the past 20 years (or 5 years if you&rsquo;re a JS
+developer) is not extinct like dinosaurs. It&rsquo;s actually well aged, and the reason it&rsquo;s
+still alive and still used is a strong indicator of that well-aged-ness (think
+of the 50-years old Unix and of 15-years old Django versus the very young and
+almost unused anymore Meteor.js).</p><p>History repeats itself when it comes to new technologies, because most problems
+are already solved in a smart way. Back in the 80s, when
+HTTP didn&rsquo;t exist and people were doing distributed computing via RPC, life was
+good. Then in the 90s, with the massification of Object-Oriented Programming,
+Calling a Procedure in a Remote computer was rebranded into Invoking a Method
+in a Remote computer, giving so birth to RMI - the new RPC. Then times evolved,
+HTTP became a thing and people started using XML to describe which method to
+invoke into a remote object; we started calling this XML-RPC but the name didn&rsquo;t
+stick, so we renamed it to SOAP. And SOAP was good for a while, unless you had
+to cache some response; so we came up with a better approach: RESTful APIs.
+Instead of calling a method on a remote object, using REST we call an HTTP
+Endpoint&mldr; which then gets mapped to a function or to a method in an object in
+the server. The two newest approaches to &ldquo;solving the problem&rdquo; of calling a
+procedure on a remote computer, GraphQL and gRPC, are also reiterations of two
+older approaches to solving the same problem, respectively SOAP and
+(surprisingly) RPC. <strong>Almost all new tech is just old tech written
+differently</strong>.</p><p>When it comes to patterns, rather than ways to put files into folders, it&rsquo;s
+better to view them as generic structures that help you approach the solution of
+analogous problems. Just because you learned most of them in school and
+practiced them in an OO-language, it doesn&rsquo;t mean that the same patterns can&rsquo;t
+be used in non-OO programming.</p><p>And when it comes to scale issues, most of the time they&rsquo;re inexistent. When I
+used to interview people, I&rsquo;d always ask them the same question: <em>&ldquo;How do I
+migrate my database and make sure that there are no downtimes due to database
+locks?&rdquo;</em> The solution to this can be as easy as &ldquo;Run the migrations during
+night-time, when all the users are asleep&rdquo;, or as complex as having multiple
+replicas and handling rolling migrations and dealing with replicas with
+different database schemas for an indecisive amount of time&mldr; surprisingly most people never asked me about the scale of the application, they always went with the bestest solution described by the biggest companies out there.</p><p><strong>You don&rsquo;t have a scale problem, until you have a scale problem</strong>. And when you
+do have a scale problem, then the microservices are not the silver bullet. It&rsquo;s
+easier to have a monolith and scale it either vertically or horizontally, rather
+than invest time into splitting a monolith into microservices. Monoliths are better
+to begin with, faster to develop, easier to deploy, simpler
+to maintain. When moving a module out of a monolith, you&rsquo;re changing a
+function call into a network call, which can fail for more reasons than a
+plain-ol&rsquo; function call. A network call is also slower than a function call, so
+there goes our performance&mldr;</p><p>There is nothing wrong with monoliths&mldr; until they become enormously unmaintainable.
+Maybe then it&rsquo;s better to think of splitting it. But proceed with care. More
+moving parts means more things that can go wrong, and according to Murphy&rsquo;s law
+<em>&ldquo;Anything that can go wrong, will go wrong&rdquo;</em></p></div></div><div class=pagination><div class=pagination__title><span class=pagination__title-h>Read other posts</span><hr></div><div class=pagination__buttons><span class="button next"><a href=/posts/2022-05-05-how-do-i-vim/><span class=button__text>How do I Vim</span>
+<span class=button__icon>→</span></a></span></div></div><div id=disqus_thread></div><script type=application/javascript>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//aldoziflaj.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 Aldo Ziflaj</span>
+<span>:: Powered by <a href=https://gohugo.io/ target=_blank>Hugo</a></span></div></div></footer><script src=/assets/main.js></script>
+<script src=/assets/prism.js></script>
+<script data-name=BMC-Widget data-cfasync=false src=https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js data-id=aziflaj data-description="Support me!" data-message="What you're reading is fueled by beer and love. Buy me one and I'll keep spreading the good word" data-color=#61AFEF data-position=Right data-x_margin=18 data-y_margin=18></script></div></body></html>

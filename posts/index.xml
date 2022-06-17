@@ -1,4 +1,202 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Friendly Neighborhood Softwaredude</title><link>/posts/</link><description>Recent content in Posts on Friendly Neighborhood Softwaredude</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 05 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>How do I Vim</title><link>/posts/2022-05-05-how-do-i-vim/</link><pubDate>Thu, 05 May 2022 00:00:00 +0000</pubDate><guid>/posts/2022-05-05-how-do-i-vim/</guid><description>My first editor was Notepad. Not the ++ version, the plain old white one that lacks syntax highlighting, smart indentation, and basically everything you need to write code. All it did was help me create files with different extensions. That&amp;rsquo;s not a big deal when all you&amp;rsquo;re writing are Windows Batch scripts, but it does get harder when you go beyond the script kiddie stage. Since then, I have switched through a handful of code editors and used them for a while before deciding they were garbage and moving on to the next one.</description><content>&lt;p>My first editor was Notepad. Not &lt;a href="https://notepad-plus-plus.org/">the ++
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Friendly Neighborhood Softwaredude</title><link>/posts/</link><description>Recent content in Posts on Friendly Neighborhood Softwaredude</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 17 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>The No-Bullshit Guide into Building Software</title><link>/posts/2022-06-17-nobseng/</link><pubDate>Fri, 17 Jun 2022 00:00:00 +0000</pubDate><guid>/posts/2022-06-17-nobseng/</guid><description>Yesterday I did a presentation titled &amp;ldquo;The No Bullshit Guide into Building Software&amp;rdquo;, as a way to share my experience in the industry regarding what I&amp;rsquo;ve seen is a good approach when building, or helping engineers build better software. This blogpost is created by reusing the notes I wrote before the presentation, and what was said during the event doesn&amp;rsquo;t go far away from what is written here. You can find the slides here</description><content>&lt;blockquote>
+&lt;p>Yesterday I did a presentation titled &amp;ldquo;The No Bullshit Guide into Building
+Software&amp;rdquo;, as a way to share my experience in the industry regarding what
+I&amp;rsquo;ve seen is a good approach when building, or helping engineers build better
+software. This blogpost is created by reusing the notes I wrote before the
+presentation, and what was said during the event doesn&amp;rsquo;t go far away from what
+is written here. You can find the slides &lt;a href="https://speakerdeck.com/aziflaj/no-bullshit-guide-into-building-software">here&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;img src="/images/20220617/1.png" class="center" style="border-radius: 8px;" />
+&lt;p>I&amp;rsquo;m assuming all of us here are doing something towards building, or helping to
+build, software. We&amp;rsquo;re all at different stages of our career and we all have
+different approaches to doing our work, which also implies we mean different things by
+&lt;em>bullshit&lt;/em>. Some of us consider bullshit what we don&amp;rsquo;t know or understand, and
+some others think that anything done differently from their approach is bullshit.
+And that&amp;rsquo;s one of the side effects of seniority and experience, having opinions.
+The opinions formed during the years of experience are one of the main differences
+between a senior and a junior practicioner in the software industry. &lt;/p>
+&lt;p>I have been meddling with code since I was underaged, and in these 10+ years of
+having to stare at a computer screen for hours every day, I&amp;rsquo;ve come to the realisation that
+during these 60 years that Software Engineering has been existing as a practice,
+the front end people only recently
+have had the chance to work with really interesting and complex stuff. Before,
+the frontend would just render whatever the server replied with, maybe do some
+jQuery shenanigans to make things look better, but that was it. Nowadays you get
+SPAs, PWAs, micro-frontends, all these ES6/7/8/9/whatever the latest number is,
+build pipelines and much more. Given the massive number of people that are joining the industry
+as frontend developers, along with the lack of experience and that of the maturity
+of the front-end as an engineering practice, the No-Bullshit Guide into
+Building Software could be summarised as&amp;hellip;&lt;/p>
+&lt;img src="/images/20220617/2.png" class="center" style="border-radius: 8px;" />
+&lt;p>&lt;em>Welcome to my TED Talk, are there any questions?&lt;/em>&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;em>Disclaimer towards JS developers&lt;/em>: I don&amp;rsquo;t believe all of you are complete
+numbnuts, but it&amp;rsquo;s fun having a go at your community.&lt;/p>
+&lt;/blockquote>
+&lt;img src="/images/20220617/3.png" class="center" style="border-radius: 8px;" />
+&lt;p>So who am I? Yada yada yada, I work for a Finnish scale-up called Leadfeeder,
+and before that I worked in this other local start-up called Publer that almost all of you have heard before. All
+that I&amp;rsquo;m sharing with you today are opinions backed by my experience, and in no
+way are the absolute truth. If you disagree with me I&amp;rsquo;m very open to discussion,
+maybe one of us ends up changing their mind.&lt;/p>
+&lt;img src="/images/20220617/4.png" class="center" style="border-radius: 8px;" />
+&lt;p>Before moving ahead, it&amp;rsquo;s better to define some terminology. What I mean by
+&lt;em>bullshit&lt;/em> during this presentation, is anything that makes building
+software harder and longer. Any practice that doesn&amp;rsquo;t necessarily add value to the
+software process, is bullshit. Anything that makes you wanna stop doing software,
+is bullshit. And on the other hand, anything that you love but isn&amp;rsquo;t needed to
+the software you&amp;rsquo;re building works towards clouding your judgement, so is
+therefore also bullshit.&lt;/p>
+&lt;img src="/images/20220617/5.png" class="center" style="border-radius: 8px;" />
+&lt;p>Now you all know, or you&amp;rsquo;re supposed to know, what the software process is.
+Either some waterfall (which is cool) or some agile (which is also cool) or even
+weird mix of different software development processes (again, cool), with the
+right steps and the right transitions
+between steps, that converts a list of requirements into a working software product.
+And there are a lot
+of actors that contribute their own bullshit to the process, but mostly it&amp;rsquo;s
+Project Managers, Product Owners, or Product People in general; and Developers,
+or Engineers, or maybe Code Monkeys when they start acting like &lt;a href="https://techcrunch.com/2016/06/02/the-prima-donna-engineering-effect/">prima donnas&lt;/a>.&lt;/p>
+&lt;p>And usually, the bullshit these two actors introduce into the process always
+affects the other actor. And what&amp;rsquo;s something all Product People love and all (well, most
+of) the Devs hate?&lt;/p>
+&lt;img src="/images/20220617/6.png" class="center" style="border-radius: 8px;" />
+&lt;p>Meetings. Geez, PMs want to have a call for everything. They want to have a call
+for this and a call for that, and they
+want to have another call to schedule those other calls, but then again whatever
+time you propose for them is not going to work because, well, they have another
+call at that time. &lt;/p>
+&lt;p>What I see as a mistake in some of the Product People I&amp;rsquo;ve worked with is an issue
+with how they regard Agile methodologies in general. They seem to forget the
+&amp;ldquo;People over Processes&amp;rdquo; thing, and focus too much on the process instead. So we get&lt;/p>
+&lt;ul>
+&lt;li>Sprint planning &amp;amp; estimation calls&amp;hellip;&lt;/li>
+&lt;li>Daily stand-ups to inform Product People on the progress&lt;/li>
+&lt;li>Every 2 weeks (or however long the Sprint is), we get Reviews and Retros&lt;/li>
+&lt;li>And there&amp;rsquo;s all the ad-hoc calls you get invited at, because the Product people
+don&amp;rsquo;t know what to tell to the stakeholders, so they add a developer on the call. &lt;/li>
+&lt;/ul>
+&lt;p>Context switching is costly for developers. Along with the preparation before the
+call, as well as the effort to get back to writing code after the call, a
+30-minute call for a developer could translate into 1 hour spent on not building
+that feature every Product Person wants built yesterday.
+Devs don&amp;rsquo;t &lt;em>need to&lt;/em> have daily stand-ups because most of the time, they work together. They
+already know what other developers on their team are working on; they review their Pull Requests.
+And estimations are never right.&lt;/p>
+&lt;p>So, for a better PMing experience&amp;hellip;&lt;/p>
+&lt;img src="/images/20220617/7.png" class="center" style="border-radius: 8px;" />
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>Write better specs&lt;/strong>. Give your developers all the tools they need in order to build
+what you have in mind. Whether it be mockups, user stories, actual VS
+expected system behaviour, etc. We will still come at
+you with questions, but better to make educated questions rather than &amp;ldquo;So&amp;hellip;
+what do you want me to do about this ticket?&amp;rdquo;&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Prioritise your features&lt;/strong>. By having constant contact with stakeholders and/or the client, the product people can (and should) decide which of the tickets will be done before the others.
+ &lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Make sure to &lt;strong>not let people distract your developers&lt;/strong>. That&amp;rsquo;s more of a Cache
+Proxy rather than a Buffer, but you get the idea. Don&amp;rsquo;t let other employees of
+the company, and especially not the stakeholders, to go to the developers and
+ask them about the progress of their features. The product people should be
+the information point for all non-developers.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Prioritise your features!&lt;/strong> Developers don&amp;rsquo;t know what the stakeholders need,
+so most of the time they will prioritise tech-improvements and
+technically challenging tasks, rather than features the users/clients need&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Consider all estimations as optimistic&lt;/strong>, and when passing on deadlines, add a
+couple of extra days (or even weeks) to make sure everything works fine.
+Bugs arise all the time, almost always after the deadline and when the application is
+deployed in production. Having a soft and a hard deadline always helps.&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>Can you guess what the next one will be?&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>(expect the unexpected, and) &lt;strong>Know your product&lt;/strong>. Just like the developers know the
+system from a technical point of view, you should be the go-to person for
+product-specific questions. And always&amp;hellip;&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Prioritise your features&lt;/strong>. Devs are generally good at prioritising what they
+like, and even better at pushing away tasks they don&amp;rsquo;t want to &lt;em>&amp;ldquo;lose time with&amp;rdquo;&lt;/em>.
+So one of the things you&amp;rsquo;ll hear most often from developers is:&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;img src="/images/20220617/8.png" class="center" style="border-radius: 8px;" />
+&lt;p>&lt;strong>&amp;ldquo;We&amp;rsquo;ll do it later&amp;rdquo;&lt;/strong>. Surprise surprise, we won&amp;rsquo;t. This is just one thing we tell
+you so we don&amp;rsquo;t &amp;ldquo;lose time&amp;rdquo; on &amp;ldquo;unnecessary shit&amp;rdquo;. And how we prioritise,
+especially when it comes to technical solutions that are very good and very
+much needed (&lt;em>if we do say so ourselves&lt;/em>), is by saying &lt;strong>&amp;ldquo;we need this&amp;rdquo;&lt;/strong>. Most likely, we won&amp;rsquo;t ever need it, but we&amp;rsquo;re trying to see a
+bigger picture that will never be painted.&lt;/p>
+&lt;p>And then there&amp;rsquo;s our technobabble, throwing away years of experience because
+we&amp;rsquo;re using a &amp;ldquo;new&amp;rdquo; paradigm; or we talk about having a robust architecture
+which handles everything the rightest and bestest way possible (and most likely
+it&amp;rsquo;s overengineering of a very simple use-case); or we talk about that new
+technology we learned about in a webinar or a conference that &lt;strong>&amp;ldquo;is just better at
+everything than whatever we&amp;rsquo;re using right now&amp;rdquo;&lt;/strong> (&amp;hellip;it&amp;rsquo;s not)&lt;/p>
+&lt;p>Most of these are just solutions for made up issues we think we will have, and
+we try to fix these issues in the only way we know&amp;hellip; that one way described in
+that article we discovered last night on Medium. We follow advice on how big
+companies handle their issues, without thinking if their solution really applies
+to our problems. We forget that the field of Software Engineering has existed since
+the 60s and that in the last 60 years, most of the problems faced by most of the people
+already have a well-tested approach. &lt;/p>
+&lt;img src="/images/20220617/9.png" class="center" style="border-radius: 8px;" />
+&lt;p>So maybe, the first thing to do is to realise that old tech, that one
+thing that didn&amp;rsquo;t really evolve for the past 20 years (or 5 years if you&amp;rsquo;re a JS
+developer) is not extinct like dinosaurs. It&amp;rsquo;s actually well aged, and the reason it&amp;rsquo;s
+still alive and still used is a strong indicator of that well-aged-ness (think
+of the 50-years old Unix and of 15-years old Django versus the very young and
+almost unused anymore Meteor.js).&lt;/p>
+&lt;p>History repeats itself when it comes to new technologies, because most problems
+are already solved in a smart way. Back in the 80s, when
+HTTP didn&amp;rsquo;t exist and people were doing distributed computing via RPC, life was
+good. Then in the 90s, with the massification of Object-Oriented Programming,
+Calling a Procedure in a Remote computer was rebranded into Invoking a Method
+in a Remote computer, giving so birth to RMI - the new RPC. Then times evolved,
+HTTP became a thing and people started using XML to describe which method to
+invoke into a remote object; we started calling this XML-RPC but the name didn&amp;rsquo;t
+stick, so we renamed it to SOAP. And SOAP was good for a while, unless you had
+to cache some response; so we came up with a better approach: RESTful APIs.
+Instead of calling a method on a remote object, using REST we call an HTTP
+Endpoint&amp;hellip; which then gets mapped to a function or to a method in an object in
+the server. The two newest approaches to &amp;ldquo;solving the problem&amp;rdquo; of calling a
+procedure on a remote computer, GraphQL and gRPC, are also reiterations of two
+older approaches to solving the same problem, respectively SOAP and
+(surprisingly) RPC. &lt;strong>Almost all new tech is just old tech written
+differently&lt;/strong>.&lt;/p>
+&lt;p>When it comes to patterns, rather than ways to put files into folders, it&amp;rsquo;s
+better to view them as generic structures that help you approach the solution of
+analogous problems. Just because you learned most of them in school and
+practiced them in an OO-language, it doesn&amp;rsquo;t mean that the same patterns can&amp;rsquo;t
+be used in non-OO programming.&lt;/p>
+&lt;p>And when it comes to scale issues, most of the time they&amp;rsquo;re inexistent. When I
+used to interview people, I&amp;rsquo;d always ask them the same question: &lt;em>&amp;ldquo;How do I
+migrate my database and make sure that there are no downtimes due to database
+locks?&amp;rdquo;&lt;/em> The solution to this can be as easy as &amp;ldquo;Run the migrations during
+night-time, when all the users are asleep&amp;rdquo;, or as complex as having multiple
+replicas and handling rolling migrations and dealing with replicas with
+different database schemas for an indecisive amount of time&amp;hellip; surprisingly most people never asked me about the scale of the application, they always went with the bestest solution described by the biggest companies out there.&lt;/p>
+&lt;p>&lt;strong>You don&amp;rsquo;t have a scale problem, until you have a scale problem&lt;/strong>. And when you
+do have a scale problem, then the microservices are not the silver bullet. It&amp;rsquo;s
+easier to have a monolith and scale it either vertically or horizontally, rather
+than invest time into splitting a monolith into microservices. Monoliths are better
+to begin with, faster to develop, easier to deploy, simpler
+to maintain. When moving a module out of a monolith, you&amp;rsquo;re changing a
+function call into a network call, which can fail for more reasons than a
+plain-ol&amp;rsquo; function call. A network call is also slower than a function call, so
+there goes our performance&amp;hellip;&lt;/p>
+&lt;p>There is nothing wrong with monoliths&amp;hellip; until they become enormously unmaintainable.
+Maybe then it&amp;rsquo;s better to think of splitting it. But proceed with care. More
+moving parts means more things that can go wrong, and according to Murphy&amp;rsquo;s law
+&lt;em>&amp;ldquo;Anything that can go wrong, will go wrong&amp;rdquo;&lt;/em>&lt;/p></content></item><item><title>How do I Vim</title><link>/posts/2022-05-05-how-do-i-vim/</link><pubDate>Thu, 05 May 2022 00:00:00 +0000</pubDate><guid>/posts/2022-05-05-how-do-i-vim/</guid><description>My first editor was Notepad. Not the ++ version, the plain old white one that lacks syntax highlighting, smart indentation, and basically everything you need to write code. All it did was help me create files with different extensions. That&amp;rsquo;s not a big deal when all you&amp;rsquo;re writing are Windows Batch scripts, but it does get harder when you go beyond the script kiddie stage. Since then, I have switched through a handful of code editors and used them for a while before deciding they were garbage and moving on to the next one.</description><content>&lt;p>My first editor was Notepad. Not &lt;a href="https://notepad-plus-plus.org/">the ++
 version&lt;/a>, the plain old white one that lacks syntax
 highlighting, smart indentation, and
 basically everything you need to write code. All it did was help me
