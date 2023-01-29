@@ -1,19 +1,24 @@
 ---
 layout: post
-title: using little space for things of little importance - tinkering with compression
-date: '2023-01-31'
+title: Little Space for Things of Little Importance - Tinkering with Compression
+date: '2023-01-29'
 ---
 
 I was watching [this video](https://www.youtube.com/watch?v=tSuCa8zN4mo) from Numberphile
 where [Zoe Griffiths](https://zoelgriffiths.co.uk/) tries to memorize the sequence of
-Red and Black cards. And I was thinking, "What would be the simplest way to store this
-sequence in a computer file?".
+Red and Black cards. And I was thinking, "this is a good example to explain
+how compression works".
 
-The world of Compression Algorithms is divided into two nations. On one side are the lossless compression
-algoriths; which do lossless. On the other side there are lossy compression algoriths, which do lossy and 
-work around that.
+A compression algorithm can either be a lossless or a lossy algorithm. A compression algorithm
+is consideres lossless when there is no information reduction after compressing; these kind of algorithms
+work by reducing statistical redundancy, e.g. by back-referencing repeated portions of the data.
+The ZIP format implements lossless compression.
+On the other hand, the lossy algorithms remove unnecessary data or noise from the
+original representation. The decompressed representation obtained after reversing a lossy compression is only
+an approximation of the original representation. MP3 uses lossy data compression
 
-Let's write our own compression algorithm to store the sequence of Red and Black cards in a deck of cards.
+What I'm implementing here is a form of lossless compression called Run-Length Encoding (RLE), and it will be
+used to store the sequence of Red and Black cards in a deck of cards. You can find the source code [here](https://github.com/aziflaj/cardcompress/).
 
 ## First, some boilerplate
 I can't do deck compression without having a deck first. So, let there be Card:
@@ -34,7 +39,7 @@ type Card struct {
 }
 ```
 
-For simplicity while dealing with card colors, I added two boolean
+For simplicity when dealing with card colors, I added two boolean
 `Red()` and `Black()` methods to `Card`, as well as a `Color()` method.
 
 I also want a way to create a shuffled deck of cards, so here it goes:
@@ -67,14 +72,13 @@ func (d *Deck) Shuffle() {
 
 ## Compression of said deck
 
-Since I only care for the color of the cards, one way to compress them is to count 
-how many cards of the same color are in a sequence, and store the sequences lengths in an array. I also
-need to know the color of the first card. E.g., for the following
-deck:
+Since I only care about the color of the cards, one way to compress them is to keep a tally of
+how many cards of the same color are in a sequence, and store the sequences lengths (tallies) in an array. I also
+need to know the color of the first card. E.g., for the following deck:
 
 {{< image src="/images/20230131/cards1.png" position="center" style="border-radius: 8px;" >}}
 
-I only need need to store the starting color (Red) as well as the array of sequence lengths:
+I only need need to store the starting color (Red) as well as the tallies:
 
 ```
 [1 4 1 2 1 1 6 2 1 2 7 3 1 2 6 2 1 7 1 1]
@@ -121,19 +125,21 @@ func (d *Deck) Compress() (bool, []uint32) {
 }
 ```
 
-The `sequences` array is storing `int32` for each sequence length, so 4 bytes per each count. That's too much!
+In this implementation, the `sequences` array is storing `int32` for each tally,
+so 4 bytes per each count. That's too much!
 
 The maximum number of cards of the same color that can be in a sequence is 26 (e.g. if all the Spades and all the Clubs are in the same sequence).
 I don't need more than 5 bits to store the number `26` so using `int32` for these is an overkill; I'm wasting precious bits that
 I could be using to store more valuable data. 
-So, instead of using 4 bytes to store each sequence length, I'm going to do some bitwise magic in order to store
-different sequence lengths in the same `int32`.
+So, instead of using 4 bytes to store each tally, I'm going to do some bitwise magic and store
+multiple, different tallies in the same `int32`.
 
 Since all sequence lengths are not wider than 5 bits, I can store up to 6 of them in the same `int32`, like this:
 
 {{< image src="/images/20230131/bits2.png" position="center" style="border-radius: 8px;" >}}
 
-The 2 Most Significant Bits I am not using (yet), and the rest of the bits of an integer are storing the sequence lengths, sort of multiplexed:
+The 2 Most Significant Bits I am not using (yet), and the rest of the bits of
+the int32 are storing the sequence lengths, sort of multiplexed (for lack of a better word):
 
 ```go
 package cardistry
@@ -193,21 +199,20 @@ func (cs *ColorSeq) Decompress() string {
 
 You can see the bitwise wizardry in action here. In the `NewColorSeq()` method
 I'm using a variable called `robin` to sorta "round-robin"-ify in which position
-(Seq1 to Seq6 from the above photo) should the color sequence be put. I'm also using a
+(Seq1 through Seq6) should the color sequence be put. I'm also using a
 `bigboi` variable to accumulate these Seq1 through Seq6 values into a single `int32`.
 
 When `Decompress`ing, which is the opposite of compressing tallies into a single `int32`,
 I'm AND-ing the "bigboi" `int32` with 0x1F (11111 in binary) and shifting it 5 bits to the right,
 so I can continue getting the values Seq1 through Seq6.
 
-If I put all of these together, I get the following program:
+Putting it all together:
 
 ```go
 package main
 
 import (
 	"aziflaj/cardcompress/cardistry"
-	"bytes"
 	"fmt"
 )
 
@@ -232,13 +237,13 @@ And a sample output:
 
 ## What about sizes?
 
-I don't know yet if this cOmPrEsSiOn AlGoRiThM actually does any good. So I'm dumping everything in files
+I don't know yet if this _cOmPrEsSiOn AlGoRiThM_ actually does any good. So I'm dumping everything in files
 and see if there's some difference in file size before and after applying this compression. Specifically,
 I want to compare the file size of 3 binary files:
 
-1. The file of int32 tallies
-2. The file of uint8 tallies
-3. The file of int32 ColorSeq Frames
+- The file of int32 tallies
+- The file of int32 ColorSeq Frames
+- The file of uint8 tallies
 
 So, to update the code, I added a `writeToFile` function to simplify dumping arrays into a binary file:
 
@@ -311,13 +316,14 @@ array of sequence lengths. If I also compare hexdumps between the binary files, 
 ```
 
 It's a bit more difficult to understand what's in the `matrix.bin` file, given the
-values are "multiplexed" (for lack of a better word) into bytes, but it's quite easy to
+values are multiplexed into bytes, but it's quite easy to
 read `tally.bin`. The first `01 00 00 00` is the same `1` that shows up in the beginning
 of the sequence; the `1` that means "One red card" in the beginning of the sequence,
 and it's written as `01 00 00 00` instead of `00 00 00 01` because of the
 little endian-ness.
 
-If I do the following update in the Card struct (moving from `int32` to `uint8`):
+Now, to see how much of a difference it would make if instead of using `int32` for Card faces,
+I'd use `uint8`:
 
 ```go
  type Card struct {
@@ -328,7 +334,7 @@ If I do the following update in the Card struct (moving from `int32` to `uint8`)
 ```
 
 After updating all the places where this `uint8` is now used, I get the following
-file sizes for the same program:
+file sizes from the same program:
 
 ```bash
 -rw-r--r--  1 aldo  staff    16B Jan 29 22:26 matrix.bin
@@ -348,5 +354,10 @@ and `hexdump`ed:
 00000014
 ```
 
-Compared to the hexdump from above, this `uint8` approach requires less bytes, but
-it's still more than the compressed approach.
+Compared to the hexdump from above, `uint8` requires less bytes that `int32`, but
+it's still more than the "very compressed" compressed approach.
+
+Run-Length Encoding is a simple and naive approach to compression. It was initially used
+during the late 60s in analog TV transmissions and fax machines. Even though mostly
+replaced with newer, better compression techniques, RLE still finds usage
+in DEFLATE, the algorithm behind the ZIP file format, as well as in PDF and GIF file formats.
