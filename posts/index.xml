@@ -11,7 +11,7 @@ On the other hand, the lossy algorithms remove unnecessary data or noise from th
 original representation. The decompressed representation obtained after reversing a lossy compression is only
 an approximation of the original representation. MP3 uses lossy data compression&lt;/p>
 &lt;p>What I&amp;rsquo;m implementing here is a form of lossless compression called Run-Length Encoding (RLE), and it will be
-used to store the sequence of Red and Black cards in a deck of cards.&lt;/p>
+used to store the sequence of Red and Black cards in a deck of cards. You can find the source code &lt;a href="https://github.com/aziflaj/cardcompress/">here&lt;/a>.&lt;/p>
 &lt;h2 id="first-some-boilerplate">First, some boilerplate&lt;/h2>
 &lt;p>I can&amp;rsquo;t do deck compression without having a deck first. So, let there be Card:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">cardistry&lt;/span>
