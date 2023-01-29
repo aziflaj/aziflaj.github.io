@@ -41,3 +41,6 @@ textarea.form-control {
   height: 150px;
 }
 
+.emoji {
+  font-family: Apple Color Emoji, Segoe UI Emoji, NotoColorEmoji, Segoe UI Symbol, Android Emoji, EmojiSymbols;
+}

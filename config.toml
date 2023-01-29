@@ -2,6 +2,7 @@ baseURL = '/'
 languageCode = 'en-us'
 title = "Aldo's Brain Juice, Condensed in Human Words."
 theme = 'terminal'
+enableEmoji = true
 
 disqusShortname = 'aldoziflaj'
 googleAnalytics = 'G-ZMWD0LX3M8'
