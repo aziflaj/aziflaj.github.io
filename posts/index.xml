@@ -1,4 +1,294 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Friendly Neighborhood Softwaredude</title><link>/posts/</link><description>Recent content in Posts on Friendly Neighborhood Softwaredude</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 17 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>The No-Bullshit Guide into Building Software</title><link>/posts/2022-06-17-nobseng/</link><pubDate>Fri, 17 Jun 2022 00:00:00 +0000</pubDate><guid>/posts/2022-06-17-nobseng/</guid><description>Yesterday I did a presentation titled &amp;ldquo;The No Bullshit Guide into Building Software&amp;rdquo;, as a way to share my experience in the industry regarding what I&amp;rsquo;ve seen is a good approach when building, or helping engineers build better software. This blogpost is created by reusing the notes I wrote before the presentation, and what was said during the event doesn&amp;rsquo;t go far away from what is written here. You can find the slides here</description><content>&lt;blockquote>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Friendly Neighborhood Softwaredude</title><link>/posts/</link><description>Recent content in Posts on Friendly Neighborhood Softwaredude</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 29 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Little Space for Things of Little Importance - Tinkering with Compression</title><link>/posts/2023-01-29-little-space-for-things-of-little-importance/</link><pubDate>Sun, 29 Jan 2023 00:00:00 +0000</pubDate><guid>/posts/2023-01-29-little-space-for-things-of-little-importance/</guid><description>I was watching this video from Numberphile where Zoe Griffiths tries to memorize the sequence of Red and Black cards. And I was thinking, &amp;ldquo;this is a good example to explain how compression works&amp;rdquo;.
+A compression algorithm can either be a lossless or a lossy algorithm. A compression algorithm is consideres lossless when there is no information reduction after compressing; these kind of algorithms work by reducing statistical redundancy, e.g. by back-referencing repeated portions of the data.</description><content>&lt;p>I was watching &lt;a href="https://www.youtube.com/watch?v=tSuCa8zN4mo">this video&lt;/a> from Numberphile
+where &lt;a href="https://zoelgriffiths.co.uk/">Zoe Griffiths&lt;/a> tries to memorize the sequence of
+Red and Black cards. And I was thinking, &amp;ldquo;this is a good example to explain
+how compression works&amp;rdquo;.&lt;/p>
+&lt;p>A compression algorithm can either be a lossless or a lossy algorithm. A compression algorithm
+is consideres lossless when there is no information reduction after compressing; these kind of algorithms
+work by reducing statistical redundancy, e.g. by back-referencing repeated portions of the data.
+The ZIP format implements lossless compression.
+On the other hand, the lossy algorithms remove unnecessary data or noise from the
+original representation. The decompressed representation obtained after reversing a lossy compression is only
+an approximation of the original representation. MP3 uses lossy data compression&lt;/p>
+&lt;p>What I&amp;rsquo;m implementing here is a form of lossless compression called Run-Length Encoding (RLE), and it will be
+used to store the sequence of Red and Black cards in a deck of cards.&lt;/p>
+&lt;h2 id="first-some-boilerplate">First, some boilerplate&lt;/h2>
+&lt;p>I can&amp;rsquo;t do deck compression without having a deck first. So, let there be Card:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">cardistry&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> (
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Spades&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;♠️&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Hearts&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;♥️&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Diamonds&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;♦️&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Clubs&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;♣️&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">type&lt;/span> &lt;span style="color:#a6e22e">Card&lt;/span> &lt;span style="color:#66d9ef">struct&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Number&lt;/span> &lt;span style="color:#66d9ef">int32&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Suit&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>For simplicity when dealing with card colors, I added two boolean
+&lt;code>Red()&lt;/code> and &lt;code>Black()&lt;/code> methods to &lt;code>Card&lt;/code>, as well as a &lt;code>Color()&lt;/code> method.&lt;/p>
+&lt;p>I also want a way to create a shuffled deck of cards, so here it goes:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">cardistry&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">type&lt;/span> &lt;span style="color:#a6e22e">Deck&lt;/span> []&lt;span style="color:#a6e22e">Card&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">NewDeck&lt;/span>() &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">Deck&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">d&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">Deck&lt;/span>{}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">suits&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> []&lt;span style="color:#66d9ef">string&lt;/span>{&lt;span style="color:#a6e22e">Spades&lt;/span>, &lt;span style="color:#a6e22e">Hearts&lt;/span>, &lt;span style="color:#a6e22e">Diamonds&lt;/span>, &lt;span style="color:#a6e22e">Clubs&lt;/span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">suit&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">suits&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">i&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>; &lt;span style="color:#a6e22e">i&lt;/span> &lt;span style="color:#f92672">&amp;lt;=&lt;/span> &lt;span style="color:#ae81ff">13&lt;/span>; &lt;span style="color:#a6e22e">i&lt;/span>&lt;span style="color:#f92672">++&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">d&lt;/span> = append(&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">d&lt;/span>, &lt;span style="color:#a6e22e">Card&lt;/span>{&lt;span style="color:#a6e22e">Number&lt;/span>: uint32(&lt;span style="color:#a6e22e">i&lt;/span>), &lt;span style="color:#a6e22e">Suit&lt;/span>: &lt;span style="color:#a6e22e">suit&lt;/span>})
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">d&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> (&lt;span style="color:#a6e22e">d&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">Deck&lt;/span>) &lt;span style="color:#a6e22e">Shuffle&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">rand&lt;/span>.&lt;span style="color:#a6e22e">Seed&lt;/span>(&lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Now&lt;/span>().&lt;span style="color:#a6e22e">UnixNano&lt;/span>())
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// Fisher Yates shuffle
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">rand&lt;/span>.&lt;span style="color:#a6e22e">Shuffle&lt;/span>(len(&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">d&lt;/span>), &lt;span style="color:#66d9ef">func&lt;/span>(&lt;span style="color:#a6e22e">i&lt;/span>, &lt;span style="color:#a6e22e">j&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">d&lt;/span>)[&lt;span style="color:#a6e22e">i&lt;/span>], (&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">d&lt;/span>)[&lt;span style="color:#a6e22e">j&lt;/span>] = (&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">d&lt;/span>)[&lt;span style="color:#a6e22e">j&lt;/span>], (&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">d&lt;/span>)[&lt;span style="color:#a6e22e">i&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> })
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="compression-of-said-deck">Compression of said deck&lt;/h2>
+&lt;p>Since I only care about the color of the cards, one way to compress them is to keep a tally of
+how many cards of the same color are in a sequence, and store the sequences lengths (tallies) in an array. I also
+need to know the color of the first card. E.g., for the following deck:&lt;/p>
+&lt;img src="/images/20230131/cards1.png" class="center" style="border-radius: 8px;" />
+&lt;p>I only need need to store the starting color (Red) as well as the tallies:&lt;/p>
+&lt;pre tabindex="0">&lt;code>[1 4 1 2 1 1 6 2 1 2 7 3 1 2 6 2 1 7 1 1]
+&lt;/code>&lt;/pre>&lt;p>To &amp;ldquo;compress&amp;rdquo; the deck of cards into a first color and an array of sequences:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// Compress the deck
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// @return sign: false means the series starts with Black,
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// true means it starts with Red
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// @return sequences: lengs of the sequences of the same color
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">func&lt;/span> (&lt;span style="color:#a6e22e">d&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">Deck&lt;/span>) &lt;span style="color:#a6e22e">Compress&lt;/span>() (&lt;span style="color:#66d9ef">bool&lt;/span>, []&lt;span style="color:#66d9ef">uint32&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">sign&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">false&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">firstCard&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> (&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">d&lt;/span>)[&lt;span style="color:#ae81ff">0&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">firstCard&lt;/span>.&lt;span style="color:#a6e22e">Red&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">sign&lt;/span> = &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// count them
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">sequences&lt;/span> []&lt;span style="color:#66d9ef">uint32&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">prevIndex&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">index&lt;/span>, &lt;span style="color:#a6e22e">card&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">d&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">index&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span> { &lt;span style="color:#75715e">// First count, nothing to compare with
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">sequences&lt;/span> = append(&lt;span style="color:#a6e22e">sequences&lt;/span>, &lt;span style="color:#ae81ff">1&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">continue&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// Compare with previous card
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">prevCard&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> (&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">d&lt;/span>)[&lt;span style="color:#a6e22e">index&lt;/span>&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// If the color is the same, increment the count
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">card&lt;/span>.&lt;span style="color:#a6e22e">Color&lt;/span>() &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#a6e22e">prevCard&lt;/span>.&lt;span style="color:#a6e22e">Color&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">sequences&lt;/span>[&lt;span style="color:#a6e22e">prevIndex&lt;/span>] &lt;span style="color:#f92672">+=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">continue&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// add a new count
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">sequences&lt;/span> = append(&lt;span style="color:#a6e22e">sequences&lt;/span>, &lt;span style="color:#ae81ff">1&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">prevIndex&lt;/span> &lt;span style="color:#f92672">+=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">sign&lt;/span>, &lt;span style="color:#a6e22e">sequences&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>In this implementation, the &lt;code>sequences&lt;/code> array is storing &lt;code>int32&lt;/code> for each tally,
+so 4 bytes per each count. That&amp;rsquo;s too much!&lt;/p>
+&lt;p>The maximum number of cards of the same color that can be in a sequence is 26 (e.g. if all the Spades and all the Clubs are in the same sequence).
+I don&amp;rsquo;t need more than 5 bits to store the number &lt;code>26&lt;/code> so using &lt;code>int32&lt;/code> for these is an overkill; I&amp;rsquo;m wasting precious bits that
+I could be using to store more valuable data.
+So, instead of using 4 bytes to store each tally, I&amp;rsquo;m going to do some bitwise magic and store
+multiple, different tallies in the same &lt;code>int32&lt;/code>.&lt;/p>
+&lt;p>Since all sequence lengths are not wider than 5 bits, I can store up to 6 of them in the same &lt;code>int32&lt;/code>, like this:&lt;/p>
+&lt;img src="/images/20230131/bits2.png" class="center" style="border-radius: 8px;" />
+&lt;p>The 2 Most Significant Bits I am not using (yet), and the rest of the bits of
+the int32 are storing the sequence lengths, sort of multiplexed (for lack of a better word):&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">cardistry&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">type&lt;/span> &lt;span style="color:#a6e22e">ColorSeq&lt;/span> &lt;span style="color:#66d9ef">struct&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Sign&lt;/span> &lt;span style="color:#66d9ef">bool&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Frame&lt;/span> []&lt;span style="color:#66d9ef">uint32&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// Creates new ColorSeq from a deck
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// @param sign: the sign of the deck
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// @param arr: array of sequence lengths
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// @return ColorSeq: the compressed sequence
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">NewColorSeq&lt;/span>(&lt;span style="color:#a6e22e">sign&lt;/span> &lt;span style="color:#66d9ef">bool&lt;/span>, &lt;span style="color:#a6e22e">arr&lt;/span> []&lt;span style="color:#66d9ef">int32&lt;/span>) &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">ColorSeq&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">frame&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> make([]&lt;span style="color:#66d9ef">uint32&lt;/span>, len(&lt;span style="color:#a6e22e">arr&lt;/span>)&lt;span style="color:#f92672">/&lt;/span>&lt;span style="color:#ae81ff">6&lt;/span>&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">robin&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">frameIdx&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">bigboi&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> uint32(&lt;span style="color:#ae81ff">0&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">num&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">arr&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">bigboi&lt;/span> = &lt;span style="color:#a6e22e">bigboi&lt;/span> | uint32(&lt;span style="color:#a6e22e">num&lt;/span>)&lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span>(&lt;span style="color:#a6e22e">robin&lt;/span>&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#ae81ff">5&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">robin&lt;/span>&lt;span style="color:#f92672">++&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">robin&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">6&lt;/span> { &lt;span style="color:#75715e">// reset robin and bigboi
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">frame&lt;/span>[&lt;span style="color:#a6e22e">frameIdx&lt;/span>] = &lt;span style="color:#a6e22e">bigboi&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">robin&lt;/span> = &lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">bigboi&lt;/span> = &lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">frameIdx&lt;/span>&lt;span style="color:#f92672">++&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">frame&lt;/span>[&lt;span style="color:#a6e22e">frameIdx&lt;/span>] = &lt;span style="color:#a6e22e">bigboi&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">ColorSeq&lt;/span>{&lt;span style="color:#a6e22e">Sign&lt;/span>: &lt;span style="color:#a6e22e">sign&lt;/span>, &lt;span style="color:#a6e22e">Frame&lt;/span>: &lt;span style="color:#a6e22e">frame&lt;/span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// Convert from a ColorSeq to a sign and a tally
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">func&lt;/span> (&lt;span style="color:#a6e22e">cs&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">ColorSeq&lt;/span>) &lt;span style="color:#a6e22e">Decompress&lt;/span>() &lt;span style="color:#66d9ef">string&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">s&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">cs&lt;/span>.&lt;span style="color:#a6e22e">Sign&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">s&lt;/span> &lt;span style="color:#f92672">+=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;R &amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> } &lt;span style="color:#66d9ef">else&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">s&lt;/span> &lt;span style="color:#f92672">+=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;B &amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">num&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">cs&lt;/span>.&lt;span style="color:#a6e22e">Frame&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// num needs to be and&amp;#39;d with 0x1F to get the last 5 bits
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">i&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; &lt;span style="color:#a6e22e">i&lt;/span> &amp;lt; &lt;span style="color:#ae81ff">6&lt;/span>; &lt;span style="color:#a6e22e">i&lt;/span>&lt;span style="color:#f92672">++&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">s&lt;/span> &lt;span style="color:#f92672">+=&lt;/span> &lt;span style="color:#a6e22e">strconv&lt;/span>.&lt;span style="color:#a6e22e">Itoa&lt;/span>(int(&lt;span style="color:#a6e22e">num&lt;/span>&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#ae81ff">0x1F&lt;/span>)) &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#e6db74">&amp;#34; &amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">num&lt;/span> = &lt;span style="color:#a6e22e">num&lt;/span> &lt;span style="color:#f92672">&amp;gt;&amp;gt;&lt;/span> &lt;span style="color:#ae81ff">5&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">s&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You can see the bitwise wizardry in action here. In the &lt;code>NewColorSeq()&lt;/code> method
+I&amp;rsquo;m using a variable called &lt;code>robin&lt;/code> to sorta &amp;ldquo;round-robin&amp;rdquo;-ify in which position
+(Seq1 through Seq6) should the color sequence be put. I&amp;rsquo;m also using a
+&lt;code>bigboi&lt;/code> variable to accumulate these Seq1 through Seq6 values into a single &lt;code>int32&lt;/code>.&lt;/p>
+&lt;p>When &lt;code>Decompress&lt;/code>ing, which is the opposite of compressing tallies into a single &lt;code>int32&lt;/code>,
+I&amp;rsquo;m AND-ing the &amp;ldquo;bigboi&amp;rdquo; &lt;code>int32&lt;/code> with 0x1F (11111 in binary) and shifting it 5 bits to the right,
+so I can continue getting the values Seq1 through Seq6.&lt;/p>
+&lt;p>Putting it all together:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> (
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;aziflaj/cardcompress/cardistry&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">deck&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">cardistry&lt;/span>.&lt;span style="color:#a6e22e">NewDeck&lt;/span>()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">deck&lt;/span>.&lt;span style="color:#a6e22e">Shuffle&lt;/span>()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">deck&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">sign&lt;/span>, &lt;span style="color:#a6e22e">tally&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">deck&lt;/span>.&lt;span style="color:#a6e22e">Compress&lt;/span>()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">tally&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">matrix&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">cardistry&lt;/span>.&lt;span style="color:#a6e22e">NewColorSeq&lt;/span>(&lt;span style="color:#a6e22e">sign&lt;/span>, &lt;span style="color:#a6e22e">tally&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">matrix&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">matrix&lt;/span>.&lt;span style="color:#a6e22e">Decompress&lt;/span>())
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And a sample output:&lt;/p>
+&lt;img src="/images/20230131/compressed.png" class="center" style="border-radius: 8px;" />
+&lt;h2 id="what-about-sizes">What about sizes?&lt;/h2>
+&lt;p>I don&amp;rsquo;t know yet if this &lt;em>cOmPrEsSiOn AlGoRiThM&lt;/em> actually does any good. So I&amp;rsquo;m dumping everything in files
+and see if there&amp;rsquo;s some difference in file size before and after applying this compression. Specifically,
+I want to compare the file size of 3 binary files:&lt;/p>
+&lt;ul>
+&lt;li>The file of int32 tallies&lt;/li>
+&lt;li>The file of int32 ColorSeq Frames&lt;/li>
+&lt;li>The file of uint8 tallies&lt;/li>
+&lt;/ul>
+&lt;p>So, to update the code, I added a &lt;code>writeToFile&lt;/code> function to simplify dumping arrays into a binary file:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">writeToFile&lt;/span>(&lt;span style="color:#a6e22e">filename&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">data&lt;/span> &lt;span style="color:#a6e22e">any&lt;/span>) &lt;span style="color:#66d9ef">error&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">file&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">Create&lt;/span>(&lt;span style="color:#a6e22e">filename&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">defer&lt;/span> &lt;span style="color:#a6e22e">file&lt;/span>.&lt;span style="color:#a6e22e">Close&lt;/span>()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">buf&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> new(&lt;span style="color:#a6e22e">bytes&lt;/span>.&lt;span style="color:#a6e22e">Buffer&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">binary&lt;/span>.&lt;span style="color:#a6e22e">Write&lt;/span>(&lt;span style="color:#a6e22e">file&lt;/span>, &lt;span style="color:#a6e22e">binary&lt;/span>.&lt;span style="color:#a6e22e">LittleEndian&lt;/span>, &lt;span style="color:#a6e22e">data&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">file&lt;/span>.&lt;span style="color:#a6e22e">Write&lt;/span>(&lt;span style="color:#a6e22e">buf&lt;/span>.&lt;span style="color:#a6e22e">Bytes&lt;/span>())
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// ...
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">sign&lt;/span>, &lt;span style="color:#a6e22e">tally&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">deck&lt;/span>.&lt;span style="color:#a6e22e">Compress&lt;/span>()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">writeToFile&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;tally.bin&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">tally&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">matrix&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">cardistry&lt;/span>.&lt;span style="color:#a6e22e">NewColorSeq&lt;/span>(&lt;span style="color:#a6e22e">sign&lt;/span>, &lt;span style="color:#a6e22e">tally&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">writeToFile&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;matrix.bin&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">matrix&lt;/span>.&lt;span style="color:#a6e22e">Frame&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// ...
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Then, to see the difference in file size:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>➜ go run main.go; ls -h -l tally.bin matrix.bin
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 8♥️ K♠️ Q♠️ A♠️ 7♠️ 3♦️
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 7♣️ J♣️ A♥️ K♣️ Q♦️ 6♦️
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> K♦️ 5♥️ 5♦️ 4♦️ A♣️ 6♠️
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 3♥️ 9♣️ 3♣️ 9♦️ A♦️ 2♥️
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 9♥️ J♦️ K♥️ 6♥️ 5♠️ 6♣️
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>10♠️ J♥️ 4♣️ 8♠️ 2♦️ 10♥️
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 7♥️ 8♦️ 10♦️ Q♥️ 5♣️ 3♠️
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 4♥️ 2♣️ 4♠️ 2♠️ 10♣️ 9♠️
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> J♠️ Q♣️ 7♦️ 8♣️
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#ae81ff">4&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#ae81ff">6&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#ae81ff">7&lt;/span> &lt;span style="color:#ae81ff">3&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#ae81ff">6&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#ae81ff">7&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span> 1&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ColorSeq: &lt;span style="color:#f92672">{&lt;/span>Sign: R; Frame: &lt;span style="color:#f92672">[&lt;/span>0x2110481 0x6710446 0xe111841 0x21&lt;span style="color:#f92672">]}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>R &lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#ae81ff">4&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#ae81ff">6&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#ae81ff">7&lt;/span> &lt;span style="color:#ae81ff">3&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#ae81ff">6&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#ae81ff">7&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>-rw-r--r-- &lt;span style="color:#ae81ff">1&lt;/span> aldo staff 16B Jan &lt;span style="color:#ae81ff">29&lt;/span> 22:15 matrix.bin
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>-rw-r--r-- &lt;span style="color:#ae81ff">1&lt;/span> aldo staff 80B Jan &lt;span style="color:#ae81ff">29&lt;/span> 22:15 tally.bin
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The compressed &lt;code>matrix.bin&lt;/code> file is taking 16Bytes, as opposed to 80Bytes that are required to store the
+array of sequence lengths. If I also compare hexdumps between the binary files, I get the following:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>➜ hexdump -C tally.bin
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">00000000&lt;/span> &lt;span style="color:#ae81ff">01&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">04&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">01&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">02&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> |................|
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">00000010&lt;/span> &lt;span style="color:#ae81ff">01&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">01&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">06&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">02&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> |................|
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">00000020&lt;/span> &lt;span style="color:#ae81ff">01&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">02&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">07&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">03&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> |................|
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">00000030&lt;/span> &lt;span style="color:#ae81ff">01&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">02&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">06&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">02&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> |................|
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">00000040&lt;/span> &lt;span style="color:#ae81ff">01&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">07&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">01&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">01&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> |................|
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">00000050&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>➜ hexdump -C matrix.bin
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">00000000&lt;/span> &lt;span style="color:#ae81ff">81&lt;/span> &lt;span style="color:#ae81ff">04&lt;/span> &lt;span style="color:#ae81ff">11&lt;/span> &lt;span style="color:#ae81ff">02&lt;/span> &lt;span style="color:#ae81ff">46&lt;/span> &lt;span style="color:#ae81ff">04&lt;/span> &lt;span style="color:#ae81ff">71&lt;/span> &lt;span style="color:#ae81ff">06&lt;/span> &lt;span style="color:#ae81ff">41&lt;/span> &lt;span style="color:#ae81ff">18&lt;/span> &lt;span style="color:#ae81ff">11&lt;/span> 0e &lt;span style="color:#ae81ff">21&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> |....F.q.A...!...|
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">00000010&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>It&amp;rsquo;s a bit more difficult to understand what&amp;rsquo;s in the &lt;code>matrix.bin&lt;/code> file, given the
+values are multiplexed into bytes, but it&amp;rsquo;s quite easy to
+read &lt;code>tally.bin&lt;/code>. The first &lt;code>01 00 00 00&lt;/code> is the same &lt;code>1&lt;/code> that shows up in the beginning
+of the sequence; the &lt;code>1&lt;/code> that means &amp;ldquo;One red card&amp;rdquo; in the beginning of the sequence,
+and it&amp;rsquo;s written as &lt;code>01 00 00 00&lt;/code> instead of &lt;code>00 00 00 01&lt;/code> because of the
+little endian-ness.&lt;/p>
+&lt;p>Now, to see how much of a difference it would make if instead of using &lt;code>int32&lt;/code> for Card faces,
+I&amp;rsquo;d use &lt;code>uint8&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">type&lt;/span> &lt;span style="color:#a6e22e">Card&lt;/span> &lt;span style="color:#66d9ef">struct&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">-&lt;/span> &lt;span style="color:#a6e22e">Number&lt;/span> &lt;span style="color:#66d9ef">int32&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#a6e22e">Number&lt;/span> &lt;span style="color:#66d9ef">uint8&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Suit&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>After updating all the places where this &lt;code>uint8&lt;/code> is now used, I get the following
+file sizes from the same program:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>-rw-r--r-- &lt;span style="color:#ae81ff">1&lt;/span> aldo staff 16B Jan &lt;span style="color:#ae81ff">29&lt;/span> 22:26 matrix.bin
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>-rw-r--r-- &lt;span style="color:#ae81ff">1&lt;/span> aldo staff 20B Jan &lt;span style="color:#ae81ff">29&lt;/span> 22:26 tally.bin
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>and &lt;code>hexdump&lt;/code>ed:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>➜ hexdump -C matrix.bin
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">00000000&lt;/span> &lt;span style="color:#ae81ff">81&lt;/span> &lt;span style="color:#ae81ff">04&lt;/span> &lt;span style="color:#ae81ff">11&lt;/span> &lt;span style="color:#ae81ff">02&lt;/span> &lt;span style="color:#ae81ff">46&lt;/span> &lt;span style="color:#ae81ff">04&lt;/span> &lt;span style="color:#ae81ff">71&lt;/span> &lt;span style="color:#ae81ff">06&lt;/span> &lt;span style="color:#ae81ff">41&lt;/span> &lt;span style="color:#ae81ff">18&lt;/span> &lt;span style="color:#ae81ff">11&lt;/span> 0e &lt;span style="color:#ae81ff">21&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> &lt;span style="color:#ae81ff">00&lt;/span> |....F.q.A...!...|
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">00000010&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>➜ hexdump -C tally.bin
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">00000000&lt;/span> &lt;span style="color:#ae81ff">01&lt;/span> &lt;span style="color:#ae81ff">04&lt;/span> &lt;span style="color:#ae81ff">01&lt;/span> &lt;span style="color:#ae81ff">02&lt;/span> &lt;span style="color:#ae81ff">01&lt;/span> &lt;span style="color:#ae81ff">01&lt;/span> &lt;span style="color:#ae81ff">06&lt;/span> &lt;span style="color:#ae81ff">02&lt;/span> &lt;span style="color:#ae81ff">01&lt;/span> &lt;span style="color:#ae81ff">02&lt;/span> &lt;span style="color:#ae81ff">07&lt;/span> &lt;span style="color:#ae81ff">03&lt;/span> &lt;span style="color:#ae81ff">01&lt;/span> &lt;span style="color:#ae81ff">02&lt;/span> &lt;span style="color:#ae81ff">06&lt;/span> &lt;span style="color:#ae81ff">02&lt;/span> |................|
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">00000010&lt;/span> &lt;span style="color:#ae81ff">01&lt;/span> &lt;span style="color:#ae81ff">07&lt;/span> &lt;span style="color:#ae81ff">01&lt;/span> &lt;span style="color:#ae81ff">01&lt;/span> |....|
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">00000014&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Compared to the hexdump from above, &lt;code>uint8&lt;/code> requires less bytes that &lt;code>int32&lt;/code>, but
+it&amp;rsquo;s still more than the &amp;ldquo;very compressed&amp;rdquo; compressed approach.&lt;/p>
+&lt;p>Run-Length Encoding is a simple and naive approach to compression. It was initially used
+during the late 60s in analog TV transmissions and fax machines. Even though mostly
+replaced with newer, better compression techniques, RLE still finds usage
+in DEFLATE, the algorithm behind the ZIP file format, as well as in PDF and GIF file formats.&lt;/p></content></item><item><title>The No-Bullshit Guide into Building Software</title><link>/posts/2022-06-17-nobseng/</link><pubDate>Fri, 17 Jun 2022 00:00:00 +0000</pubDate><guid>/posts/2022-06-17-nobseng/</guid><description>Yesterday I did a presentation titled &amp;ldquo;The No Bullshit Guide into Building Software&amp;rdquo;, as a way to share my experience in the industry regarding what I&amp;rsquo;ve seen is a good approach when building, or helping engineers build better software. This blogpost is created by reusing the notes I wrote before the presentation, and what was said during the event doesn&amp;rsquo;t go far away from what is written here. You can find the slides here</description><content>&lt;blockquote>
 &lt;p>Yesterday I did a presentation titled &amp;ldquo;The No Bullshit Guide into Building
 Software&amp;rdquo;, as a way to share my experience in the industry regarding what
 I&amp;rsquo;ve seen is a good approach when building, or helping engineers build better
