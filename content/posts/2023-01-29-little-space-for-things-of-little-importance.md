@@ -10,7 +10,7 @@ Red and Black cards. And I was thinking, "this is a good example to explain
 how compression works".
 
 A compression algorithm can either be a lossless or a lossy algorithm. A compression algorithm
-is consideres lossless when there is no information reduction after compressing; these kind of algorithms
+is considered lossless when there is no information reduction after compressing; these kind of algorithms
 work by reducing statistical redundancy, e.g. by back-referencing repeated portions of the data.
 The ZIP format implements lossless compression.
 On the other hand, the lossy algorithms remove unnecessary data or noise from the
