@@ -1,4 +1,67 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Friendly Neighborhood Softwaredude</title><link>/</link><description>Recent content on Friendly Neighborhood Softwaredude</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 29 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml"/><item><title>Little Space for Things of Little Importance - Tinkering with Compression</title><link>/posts/2023-01-29-little-space-for-things-of-little-importance/</link><pubDate>Sun, 29 Jan 2023 00:00:00 +0000</pubDate><guid>/posts/2023-01-29-little-space-for-things-of-little-importance/</guid><description>I was watching this video from Numberphile where Zoe Griffiths tries to memorize the sequence of Red and Black cards. And I was thinking, &amp;ldquo;this is a good example to explain how compression works&amp;rdquo;.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Friendly Neighborhood Softwaredude</title><link>/</link><description>Recent content on Friendly Neighborhood Softwaredude</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 15 Apr 2023 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml"/><item><title>The Curious Case of Port 6000: A Comedy of Errors and Chromium's Shenanigans</title><link>/posts/2023-04-15-curious-case-port-6000/</link><pubDate>Sat, 15 Apr 2023 00:00:00 +0000</pubDate><guid>/posts/2023-04-15-curious-case-port-6000/</guid><description>Some time ago I started working on a side project, mainly to experiment with some technologies I don&amp;rsquo;t use on a daily basis. I had been working on a REST API for a while, had it running on a container on port 3000, as you usually do; there&amp;rsquo;s a nice ring to 3000. It works for Andre 3000, why wouldn&amp;rsquo;t it work for me? I also had it tested, both with automated testing and some manual testing via Insomnia, and when things started looking good, I moved to the frontend.</description><content>&lt;p>Some time ago I started working on a side project, mainly to experiment with some
+technologies I don&amp;rsquo;t use on a daily basis. I had been working on a REST API for
+a while, had it running on a container on port &lt;code>3000&lt;/code>, as you usually do;
+there&amp;rsquo;s a nice ring to 3000. It works for &lt;a href="https://open.spotify.com/artist/74V3dE1a51skRkdII8y2C6?autoplay=true">Andre 3000&lt;/a>,
+why wouldn&amp;rsquo;t it work for me? I also had it tested, both with automated testing and some manual testing via Insomnia, and when
+things started looking good, I moved to the frontend.&lt;/p>
+&lt;p>At this point, all I know is React and jQuery.
+I don&amp;rsquo;t know how the cool kids are building frontend stuff now but my go-to tool has
+always been React (for the past 7 years anyway), so I again went with React. For the first time decided to use a
+framework, because I was too lazy to start installing way too many React libraries.
+So I started with a new Dockerfile, installed this newfangled thing called &lt;a href="https://remix.run/">Remix&lt;/a>, set it up to
+run on port &lt;code>6000&lt;/code> (because 3000 times 2 &amp;hellip; dunno, reasons), and then ran all my containers
+to see whether they started on the right order.&lt;/p>
+&lt;p>They did. &lt;em>&amp;ldquo;Good&amp;rdquo;&lt;/em> I thought &amp;hellip; but it was all but good. The container was running, &lt;code>docker ps&lt;/code>
+showed it there occupying the right port, along with the rest. I visit http://localhost:6000, I see nothing &amp;hellip;&lt;/p>
+&lt;p>&lt;em>&amp;ldquo;Odd&amp;rdquo;&lt;/em>, - I thought, - &lt;em>&amp;ldquo;is my server down?&amp;rdquo;&lt;/em> It wasn&amp;rsquo;t. I hit refresh, then hard refresh,
+then desperately opened incognito, maybe some weird caching issue &amp;hellip;&lt;/p>
+&lt;p>Nothing changed.&lt;/p>
+&lt;img src="/images/20230415/unreachable.png" class="center" style="border-radius: 8px;" />
+&lt;p>At that point I just didn&amp;rsquo;t give it much thought. It was late anyway, I was tired.&lt;/p>
+&lt;hr>
+&lt;p>2 or 3 months later, I found some free time to get back to the same project. I spawned the
+containers up again, visited the same localhost:6000 and &amp;hellip; nothing.&lt;/p>
+&lt;p>&lt;em>&amp;ldquo;Is the frontend process even running?&amp;rdquo;&lt;/em> I thought. So I get into the running container,
+and indeed the &lt;code>npm run dev&lt;/code> was there, running. Remix was working just fine, but I didn&amp;rsquo;t see it in the browser.&lt;/p>
+&lt;p>&lt;em>&amp;ldquo;Maybe some weird host resolution issue?&amp;rdquo;&lt;/em> I check my &lt;code>/etc/hosts&lt;/code> but again, nothing interesting.&lt;/p>
+&lt;p>&lt;em>&amp;ldquo;Maybe another service running at the same port?&amp;rdquo;&lt;/em> &amp;hellip; yeah, dumb thought, how can 2 processes bind on the same port?
+Either way, I did &lt;code>lsof -i :6000&lt;/code> and &amp;hellip; it was the frontend container.&lt;/p>
+&lt;p>But then, a sign of hope. Innocently, I ran the poor man&amp;rsquo;s browser:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>$ curl localhost:6000
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And lo and behold, HTML in my terminal!&lt;/p>
+&lt;p>&lt;em>&amp;ldquo;Something fucky is at play here!&amp;rdquo;&lt;/em>&lt;/p>
+&lt;p>No obvious reason for this to happen. So I Googled &lt;code>curl works but browser does not&lt;/code> and started checking
+different StackExchange results, but didn&amp;rsquo;t find anything that would explain this. I even found someone that blamed it on &lt;a href="https://superuser.com/questions/924950/site-displays-with-curl-but-not-within-the-browser">DNS&lt;/a>.
+But we all know it is never DNS (unless it&amp;rsquo;s DNS, but this wasn&amp;rsquo;t the case). Or even &lt;a href="https://stackoverflow.com/questions/38689350/for-what-reason-i-can-access-the-resources-by-curl-but-not-in-the-browser">CORS&lt;/a>,
+but no, this was surely not a CORS issue. Out of desperation, I switched to port 3001 and &amp;hellip; it worked. It finally worked!&lt;/p>
+&lt;p>But that wasn&amp;rsquo;t important anymore.&lt;/p>
+&lt;p>I didn&amp;rsquo;t care that it was fixed, I needed to know why it was broken!
+Why would it not work for port 6000? I knew that ports up to 1023 are system ports and a no-go,
+so nothing should stop me from using port 6000 &amp;hellip; unless Chromium has other plans.
+And I accidentally found a file on Chromium&amp;rsquo;s codebase that explains the fuckiness at play.&lt;/p>
+&lt;p>&lt;a href="https://chromium.googlesource.com/chromium/src.git/+/refs/heads/master/net/base/port_util.cc#99">https://chromium.googlesource.com/chromium/src.git/+/refs/heads/master/net/base/port_util.cc#99&lt;/a>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// The general list of blocked ports. Will be blocked unless a specific
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// protocol overrides it. (Ex: ftp can use port 21)
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// When adding a port to the list, consider also adding it to kAllowablePorts,
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// below.
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> kRestrictedPorts[] &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#75715e">// tcpmux
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#ae81ff">7&lt;/span>, &lt;span style="color:#75715e">// echo
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#ae81ff">9&lt;/span>, &lt;span style="color:#75715e">// discard
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#ae81ff">11&lt;/span>, &lt;span style="color:#75715e">// systat
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#ae81ff">13&lt;/span>, &lt;span style="color:#75715e">// daytime
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#ae81ff">15&lt;/span>, &lt;span style="color:#75715e">// netstat
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#75715e">// ...
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#ae81ff">6000&lt;/span>, &lt;span style="color:#75715e">// X11
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#75715e">// ...
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>};
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Damn X11! Who&amp;rsquo;d&amp;rsquo;ve thunk?! Apparently, browsers restrict access on some ports due to security concerns and potential vulnerabilities.
+Chromium, and later I learned &lt;a href="https://www.reddit.com/r/firefox/comments/ttms50/since_when_was_this_a_thing_in_firefox_trying_to/">Firefox&lt;/a>
+as well, blocks access to some ports, 6000 included, and unless you specifically tinker with the settings to allow access on these ports, the browser
+just won&amp;rsquo;t let you.&lt;/p>
+&lt;p>And now I can sleep in peace that the issue knowing that it wasn&amp;rsquo;t me being too dumb to set up a simple
+container running a simple command building a simple frontend app. The issue was me being ignorant about
+X11 reserved ports, a window system that &lt;a href="https://www.phoronix.com/news/XServer-2022-Development-Pace">hit a two decade low on development pace during 2022&lt;/a> &amp;hellip;&lt;/p></content></item><item><title>Little Space for Things of Little Importance - Tinkering with Compression</title><link>/posts/2023-01-29-little-space-for-things-of-little-importance/</link><pubDate>Sun, 29 Jan 2023 00:00:00 +0000</pubDate><guid>/posts/2023-01-29-little-space-for-things-of-little-importance/</guid><description>I was watching this video from Numberphile where Zoe Griffiths tries to memorize the sequence of Red and Black cards. And I was thinking, &amp;ldquo;this is a good example to explain how compression works&amp;rdquo;.
 A compression algorithm can either be a lossless or a lossy algorithm. A compression algorithm is considered lossless when there is no information reduction after compressing; these kind of algorithms work by reducing statistical redundancy, e.g. by back-referencing repeated portions of the data.</description><content>&lt;p>I was watching &lt;a href="https://www.youtube.com/watch?v=tSuCa8zN4mo">this video&lt;/a> from Numberphile
 where &lt;a href="https://zoelgriffiths.co.uk/">Zoe Griffiths&lt;/a> tries to memorize the sequence of
 Red and Black cards. And I was thinking, &amp;ldquo;this is a good example to explain
