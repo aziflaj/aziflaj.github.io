@@ -6,7 +6,7 @@ hideComments: true
 
 The name is Ziflaj, Aldo Ziflaj (cue the Bond music)...
 
-I am a Software Engineer @ [Leadfeeder](https://www.leadfeeder.com/) working out of Tirana, [Albania](https://www.google.com/search?q=reasons+to+visit+Albania).
+I am a Software Engineer @ [Dealfront](https://www.dealfront.com/) working out of Tirana, [Albania](https://www.google.com/search?q=reasons+to+visit+Albania).
 
 My hobby in computers sparked in 2008, coincidentally during the [Financial crisis of 2007-2008](https://en.wikipedia.org/wiki/Financial_crisis_of_2007%E2%80%932008). They say coincidences don't really exist and some people are still feeling the consequences of the crisis, so my lawyer advises me to say I am not in any way to accept responsibility about it.
 
