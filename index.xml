@@ -32,7 +32,7 @@ Algorithms and Data Structures course!&lt;/p>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">3&lt;/span>, &lt;span style="color:#ae81ff">2&lt;/span>, &lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">3&lt;/span>, &lt;span style="color:#ae81ff">2&lt;/span>, &lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">4&lt;/span>},
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {&lt;span style="color:#ae81ff">4&lt;/span>, &lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">2&lt;/span>, &lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">3&lt;/span>, &lt;span style="color:#ae81ff">2&lt;/span>},
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>But it&amp;rsquo;s actually easier to not think of it as a 2D array of &lt;em>numbers&lt;/em>.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>But it&amp;rsquo;s also easier to not think of it as a 2D array of &lt;em>numbers&lt;/em>.
 I have to think about cells, and visited cells, and cell coordinates in the
 puzzle, and it&amp;rsquo;s easer to think of the solution as an &lt;em>array of Cells&lt;/em> (in the same
 order as you&amp;rsquo;d walk through them) and of the puzzle as a &lt;em>2D array of Cells&lt;/em>.
