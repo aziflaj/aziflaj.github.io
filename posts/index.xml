@@ -21,7 +21,7 @@ because you can&amp;rsquo;t step twice on the same tile), you should start back-
 and follow a different path. Maybe it is not that obvious, but this 2D Array of numbers
 is actually a graph, and this &lt;del>task&lt;/del> children&amp;rsquo;s puzzle screams Depth-First Search.&lt;/p>
 &lt;p>So, I wrote a simple Go program to solve it because unlike Habsburgs, I didn&amp;rsquo;t fail my
-Algorithms and Data Structures subject!&lt;/p>
+Algorithms and Data Structures course!&lt;/p>
 &lt;img src="/images/20230905/nodiff.png" class="center" style="border-radius: 8px;" />
 &lt;h3 id="go-ifying-this-puzzle">Go-ifying this puzzle&lt;/h3>
 &lt;p>I will not bother with the graph representation of this, thinking in 2D arrays is easier:&lt;/p>
