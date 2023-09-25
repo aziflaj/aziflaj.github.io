@@ -254,5 +254,7 @@ And the solution to the Schönbrunn Palace is:
 (0* @ {2, 2}) -> 
 ```
 
+{{< image src="/images/20230905/solved.jpeg" position="center" style="border-radius: 8px;" >}}
+
 In just 17 steps, you can go from that 1 cell at `{4, 2}` to that 0 cell at `{2, 2}`! And you can find the full source code (a single file) [in this Gist](https://gist.github.com/aziflaj/f10ee305e3c0fe96650f9592ac65e1fc). 
 
