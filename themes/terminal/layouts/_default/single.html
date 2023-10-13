@@ -45,7 +45,9 @@
     {{- end -}}
   </div>
 
+  {{ if not (.Params.hideComments | default false) }}
   {{ partial "rlfo.html" }}
+  {{ end }}
 
   {{ if eq .Type $.Site.Params.contentTypeName }}
   {{ partial "posts_pagination.html" . }}
