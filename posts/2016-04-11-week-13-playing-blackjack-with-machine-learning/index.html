@@ -1,153 +1,153 @@
-<!doctype html><html lang=en><head><title>Week #13: Playing Blackjack with Machine Learning :: Friendly Neighborhood Softwaredude</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="A (very dumb) probability model deciding whether you should draw another card or not to win at Blackjack."><meta name=keywords content><meta name=robots content="noodp"><link rel=canonical href=/posts/2016-04-11-week-13-playing-blackjack-with-machine-learning/><script async src="https://www.googletagmanager.com/gtag/js?id=G-ZMWD0LX3M8"></script>
-<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-ZMWD0LX3M8",{anonymize_ip:!1})}</script><link rel=stylesheet href=/assets/style.css><link rel=stylesheet href=/assets/blue.css><link rel=stylesheet href=/style.css><link rel=apple-touch-icon href=/img/apple-touch-icon-192x192.png><link rel="shortcut icon" href=/img/favicon/blue.png><meta name=twitter:card content="summary"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="og:title" content="Week #13: Playing Blackjack with Machine Learning"><meta property="og:description" content="A (very dumb) probability model deciding whether you should draw another card or not to win at Blackjack."><meta property="og:url" content="/posts/2016-04-11-week-13-playing-blackjack-with-machine-learning/"><meta property="og:site_name" content="Friendly Neighborhood Softwaredude"><meta property="og:image" content="/img/favicon/blue.png"><meta property="og:image:width" content="2048"><meta property="og:image:height" content="1024"><meta property="article:published_time" content="2016-04-11 00:00:00 +0000 UTC"></head><body class=blue><div class="container center headings--one-size"><header class=header><div class=header__inner><div class=header__logo><a href=/><div class=logo>Friendly Neighborhood Softwaredude</div></a></div><div class=menu-trigger>menu</div></div><nav class=menu><ul class="menu__inner menu__inner--desktop"><li><a href=/about>About</a></li><li><a href=/contact>Contact</a></li></ul><ul class="menu__inner menu__inner--mobile"><li><a href=/about>About</a></li><li><a href=/contact>Contact</a></li></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=/posts/2016-04-11-week-13-playing-blackjack-with-machine-learning/>Week #13: Playing Blackjack with Machine Learning</a></h1><div class=post-meta><span class=post-date>2016-04-11</span>
-<span class=post-reading-time>:: 7 min read (1459 words)</span></div><div class=post-content><div><p>It has been almost a month since the last blogpost, and I&rsquo;ve been too busy to keep it up with my Project 52. This is my last semester as a Computer Engineering undergraduate and usually is the heaviest semester of all. That&rsquo;s why I&rsquo;ve been so silent for the last month and didn&rsquo;t even have too much time to focus on this project.</p><p>For the last months I&rsquo;ve been reading a lot about machine learning, AI and some related topics. I&rsquo;ve read online articles, papers and doctorates from well-known (and also from not so well-known) people in the AI field, and I&rsquo;ve gathered plenty of information about the field in general. I&rsquo;ve grown up to be a great fan of neural nets since the first OCR I trained (<a href=http://yann.lecun.com/exdb/mnist/>MNIST</a>). Anyway, this &ldquo;week&rdquo; I&rsquo;ve been working on something I&rsquo;d like to call &ldquo;a probability model for playing Blackjack&rdquo;. If that intrigued you, please keep reading.</p><h2 id=what-is-this-probability-model>What is this probability model?<a href=#what-is-this-probability-model class=hanchor arialabel=Anchor>&#8983;</a></h2><p>There are a couple of approaches to Machine Learning (ML), like decision trees, Support Vector Machines (SVM), neural nets, probabilistic models, etc., each of them with their use cases (which sometimes can overlap). A probabilistic model is some kind of model that makes decisions based on a given probability. Examples of these are <a href=https://en.wikipedia.org/wiki/Hidden_Markov_model>Markov Models</a> used for speech recognition, <a href=https://en.wikipedia.org/wiki/Naive_Bayes_classifier>Naive Bayes classifier</a> for classifying (e.g. spam or ham), etc.</p><blockquote><p>I may have been mistaking &lsquo;probabilistic model&rsquo; for &lsquo;statistical model&rsquo;. If so, please let me know in the comment section.</p></blockquote><p>For this challenge, I built a simple probabilistic model that answers a simple question about <a href=http://wizardofodds.com/games/blackjack/basics/>Blackjack</a>: <strong>&ldquo;What&rsquo;s the probability that by hitting (i.e. drawing another card) the player will still be in the game and won&rsquo;t lose?&rdquo;</strong> The simulation I ran was a one-player game of Blackjack, which initially played to gain experience and calculated the probability of still being part of the game if the player drawed another card from the deck.</p><h2 id=the-simulation>The simulation<a href=#the-simulation class=hanchor arialabel=Anchor>&#8983;</a></h2><p>I wrote the simulation program in Java because I am more familiar with the language, and it was simpler for me to create the deck of cards in Java. I started by writing this code, modelling a playing card in Java:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>package</span> com.aziflaj.ventuno<span style=color:#f92672>;</span>
+<!doctype html><html lang=en><head><title>Week #13: Playing Blackjack with Machine Learning :: Friendly Neighborhood Softwaredude</title>
+<meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="A (very dumb) probability model deciding whether you should draw another card or not to win at Blackjack."><meta name=keywords content><meta name=robots content="noodp"><link rel=canonical href=/posts/2016-04-11-week-13-playing-blackjack-with-machine-learning/><script async src="https://www.googletagmanager.com/gtag/js?id=G-ZMWD0LX3M8"></script><script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-ZMWD0LX3M8",{anonymize_ip:!1})}</script><link rel=stylesheet href=/assets/style.css><link rel=stylesheet href=/assets/blue.css><link rel=stylesheet href=/style.css><link rel=apple-touch-icon href=/img/apple-touch-icon-192x192.png><link rel="shortcut icon" href=/img/favicon/blue.png><meta name=twitter:card content="summary"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="og:title" content="Week #13: Playing Blackjack with Machine Learning"><meta property="og:description" content="A (very dumb) probability model deciding whether you should draw another card or not to win at Blackjack."><meta property="og:url" content="/posts/2016-04-11-week-13-playing-blackjack-with-machine-learning/"><meta property="og:site_name" content="Friendly Neighborhood Softwaredude"><meta property="og:image" content="/img/favicon/blue.png"><meta property="og:image:width" content="2048"><meta property="og:image:height" content="1024"><meta property="article:published_time" content="2016-04-11 00:00:00 +0000 UTC"></head><body class=blue><div class="container center headings--one-size"><header class=header><div class=header__inner><div class=header__logo><a href=/><div class=logo>Friendly Neighborhood Softwaredude</div></a></div><div class=menu-trigger>menu</div></div><nav class=menu><ul class="menu__inner menu__inner--desktop"><li><a href=/about>About</a></li><li><a href=/contact>Contact</a></li></ul><ul class="menu__inner menu__inner--mobile"><li><a href=/about>About</a></li><li><a href=/contact>Contact</a></li></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=/posts/2016-04-11-week-13-playing-blackjack-with-machine-learning/>Week #13: Playing Blackjack with Machine Learning</a></h1><div class=post-meta><span class=post-date>2016-04-11
+</span><span class=post-reading-time>:: 7 min read (1459 words)</span></div><div class=post-content><div><p>It has been almost a month since the last blogpost, and I&rsquo;ve been too busy to keep it up with my Project 52. This is my last semester as a Computer Engineering undergraduate and usually is the heaviest semester of all. That&rsquo;s why I&rsquo;ve been so silent for the last month and didn&rsquo;t even have too much time to focus on this project.</p><p>For the last months I&rsquo;ve been reading a lot about machine learning, AI and some related topics. I&rsquo;ve read online articles, papers and doctorates from well-known (and also from not so well-known) people in the AI field, and I&rsquo;ve gathered plenty of information about the field in general. I&rsquo;ve grown up to be a great fan of neural nets since the first OCR I trained (<a href=http://yann.lecun.com/exdb/mnist/>MNIST</a>). Anyway, this &ldquo;week&rdquo; I&rsquo;ve been working on something I&rsquo;d like to call &ldquo;a probability model for playing Blackjack&rdquo;. If that intrigued you, please keep reading.</p><h2 id=what-is-this-probability-model>What is this probability model?<a href=#what-is-this-probability-model class=hanchor arialabel=Anchor>&#8983;</a></h2><p>There are a couple of approaches to Machine Learning (ML), like decision trees, Support Vector Machines (SVM), neural nets, probabilistic models, etc., each of them with their use cases (which sometimes can overlap). A probabilistic model is some kind of model that makes decisions based on a given probability. Examples of these are <a href=https://en.wikipedia.org/wiki/Hidden_Markov_model>Markov Models</a> used for speech recognition, <a href=https://en.wikipedia.org/wiki/Naive_Bayes_classifier>Naive Bayes classifier</a> for classifying (e.g. spam or ham), etc.</p><blockquote><p>I may have been mistaking &lsquo;probabilistic model&rsquo; for &lsquo;statistical model&rsquo;. If so, please let me know in the comment section.</p></blockquote><p>For this challenge, I built a simple probabilistic model that answers a simple question about <a href=http://wizardofodds.com/games/blackjack/basics/>Blackjack</a>: <strong>&ldquo;What&rsquo;s the probability that by hitting (i.e. drawing another card) the player will still be in the game and won&rsquo;t lose?&rdquo;</strong> The simulation I ran was a one-player game of Blackjack, which initially played to gain experience and calculated the probability of still being part of the game if the player drawed another card from the deck.</p><h2 id=the-simulation>The simulation<a href=#the-simulation class=hanchor arialabel=Anchor>&#8983;</a></h2><p>I wrote the simulation program in Java because I am more familiar with the language, and it was simpler for me to create the deck of cards in Java. I started by writing this code, modelling a playing card in Java:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>package</span> com.aziflaj.ventuno;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.util.Random<span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.util.Random;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Card</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> Face mFace<span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> Suit mSuit<span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Card</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> Face mFace;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> Suit mSuit;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#a6e22e>Card</span><span style=color:#f92672>(</span>Face face<span style=color:#f92672>,</span> Suit suit<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>        mFace <span style=color:#f92672>=</span> face<span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>        mSuit <span style=color:#f92672>=</span> suit<span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#a6e22e>Card</span>(Face face, Suit suit) {
+</span></span><span style=display:flex><span>        mFace <span style=color:#f92672>=</span> face;
+</span></span><span style=display:flex><span>        mSuit <span style=color:#f92672>=</span> suit;
+</span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> Card <span style=color:#a6e22e>generateRandomCard</span><span style=color:#f92672>()</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>        Random rnd <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> Random<span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>        Face<span style=color:#f92672>[]</span> faces <span style=color:#f92672>=</span> Face<span style=color:#f92672>.</span><span style=color:#a6e22e>values</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>        Suit<span style=color:#f92672>[]</span> suits <span style=color:#f92672>=</span> Suit<span style=color:#f92672>.</span><span style=color:#a6e22e>values</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>new</span> Card<span style=color:#f92672>(</span>faces<span style=color:#f92672>[</span>rnd<span style=color:#f92672>.</span><span style=color:#a6e22e>nextInt</span><span style=color:#f92672>(</span>faces<span style=color:#f92672>.</span><span style=color:#a6e22e>length</span><span style=color:#f92672>)],</span> suits<span style=color:#f92672>[</span>rnd<span style=color:#f92672>.</span><span style=color:#a6e22e>nextInt</span><span style=color:#f92672>(</span>suits<span style=color:#f92672>.</span><span style=color:#a6e22e>length</span><span style=color:#f92672>)]);</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> Card <span style=color:#a6e22e>generateRandomCard</span>() {
+</span></span><span style=display:flex><span>        Random rnd <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> Random();
+</span></span><span style=display:flex><span>        Face<span style=color:#f92672>[]</span> faces <span style=color:#f92672>=</span> Face.<span style=color:#a6e22e>values</span>();
+</span></span><span style=display:flex><span>        Suit<span style=color:#f92672>[]</span> suits <span style=color:#f92672>=</span> Suit.<span style=color:#a6e22e>values</span>();
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>new</span> Card(faces<span style=color:#f92672>[</span>rnd.<span style=color:#a6e22e>nextInt</span>(faces.<span style=color:#a6e22e>length</span>)<span style=color:#f92672>]</span>, suits<span style=color:#f92672>[</span>rnd.<span style=color:#a6e22e>nextInt</span>(suits.<span style=color:#a6e22e>length</span>)<span style=color:#f92672>]</span>);
+</span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>getPoints</span><span style=color:#f92672>()</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> mFace<span style=color:#f92672>.</span><span style=color:#a6e22e>asInt</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>getPoints</span>() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> mFace.<span style=color:#a6e22e>asInt</span>();
+</span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> Face <span style=color:#a6e22e>getFace</span><span style=color:#f92672>()</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> mFace<span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Override</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>toString</span><span style=color:#f92672>()</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> String<span style=color:#f92672>.</span><span style=color:#a6e22e>format</span><span style=color:#f92672>(</span><span style=color:#e6db74>&#34;%c, %c&#34;</span><span style=color:#f92672>,</span> mFace<span style=color:#f92672>.</span><span style=color:#a6e22e>asChar</span><span style=color:#f92672>(),</span> mSuit<span style=color:#f92672>.</span><span style=color:#a6e22e>asChar</span><span style=color:#f92672>());</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> Face <span style=color:#a6e22e>getFace</span>() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> mFace;
+</span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Override</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>boolean</span> <span style=color:#a6e22e>equals</span><span style=color:#f92672>(</span>Object obj<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> obj <span style=color:#66d9ef>instanceof</span> Card <span style=color:#f92672>&amp;&amp;</span>  mFace <span style=color:#f92672>==</span> <span style=color:#f92672>((</span>Card<span style=color:#f92672>)</span> obj<span style=color:#f92672>).</span><span style=color:#a6e22e>mFace</span> <span style=color:#f92672>&amp;&amp;</span> mSuit <span style=color:#f92672>==</span> <span style=color:#f92672>((</span>Card<span style=color:#f92672>)</span> obj<span style=color:#f92672>).</span><span style=color:#a6e22e>mSuit</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>toString</span>() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> String.<span style=color:#a6e22e>format</span>(<span style=color:#e6db74>&#34;%c, %c&#34;</span>, mFace.<span style=color:#a6e22e>asChar</span>(), mSuit.<span style=color:#a6e22e>asChar</span>());
+</span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>enum</span> Face <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>        ACE<span style=color:#f92672>,</span> TWO<span style=color:#f92672>,</span> THREE<span style=color:#f92672>,</span> FOUR<span style=color:#f92672>,</span> FIVE<span style=color:#f92672>,</span>
-</span></span><span style=display:flex><span>        SIX<span style=color:#f92672>,</span> SEVEN<span style=color:#f92672>,</span> EIGHT<span style=color:#f92672>,</span> NINE<span style=color:#f92672>,</span>
-</span></span><span style=display:flex><span>        TEN<span style=color:#f92672>,</span> JACK<span style=color:#f92672>,</span> QUEEN<span style=color:#f92672>,</span> KING<span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Override</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>boolean</span> <span style=color:#a6e22e>equals</span>(Object obj) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> obj <span style=color:#66d9ef>instanceof</span> Card <span style=color:#f92672>&amp;&amp;</span>  mFace <span style=color:#f92672>==</span> ((Card) obj).<span style=color:#a6e22e>mFace</span> <span style=color:#f92672>&amp;&amp;</span> mSuit <span style=color:#f92672>==</span> ((Card) obj).<span style=color:#a6e22e>mSuit</span>;
+</span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>asInt</span><span style=color:#f92672>()</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>            <span style=color:#66d9ef>switch</span> <span style=color:#f92672>(</span><span style=color:#66d9ef>this</span><span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> ACE<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>1</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> TWO<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>2</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> THREE<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>3</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> FOUR<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>4</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> FIVE<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>5</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> SIX<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>6</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> SEVEN<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>7</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> EIGHT<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>8</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> NINE<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>9</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> TEN<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>10</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> JACK<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>10</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> QUEEN<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>10</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> KING<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>10</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>default</span><span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>            <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>enum</span> Face {
+</span></span><span style=display:flex><span>        ACE, TWO, THREE, FOUR, FIVE,
+</span></span><span style=display:flex><span>        SIX, SEVEN, EIGHT, NINE,
+</span></span><span style=display:flex><span>        TEN, JACK, QUEEN, KING;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>char</span> <span style=color:#a6e22e>asChar</span><span style=color:#f92672>()</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>            <span style=color:#66d9ef>switch</span> <span style=color:#f92672>(</span><span style=color:#66d9ef>this</span><span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> ACE<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;A&#39;</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> TWO<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;2&#39;</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> THREE<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;3&#39;</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> FOUR<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;4&#39;</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> FIVE<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;5&#39;</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> SIX<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;6&#39;</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> SEVEN<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;7&#39;</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> EIGHT<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;8&#39;</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> NINE<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;9&#39;</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> TEN<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;T&#39;</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> JACK<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;J&#39;</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> QUEEN<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;Q&#39;</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> KING<span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;K&#39;</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>default</span><span style=color:#f92672>:</span>
-</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;0&#39;</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>            <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>asInt</span>() {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>switch</span> (<span style=color:#66d9ef>this</span>) {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> ACE:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> 1;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> TWO:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> 2;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> THREE:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> 3;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> FOUR:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> 4;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> FIVE:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> 5;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> SIX:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> 6;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> SEVEN:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> 7;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> EIGHT:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> 8;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> NINE:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> 9;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> TEN:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> 10;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> JACK:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> 10;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> QUEEN:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> 10;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> KING:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> 10;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>default</span>:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> 0;
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>enum</span> Suit <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>        HEARTS<span style=color:#f92672>,</span> DIAMONDS<span style=color:#f92672>,</span> CLUBS<span style=color:#f92672>,</span> SPADES<span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>char</span> <span style=color:#a6e22e>asChar</span>() {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>switch</span> (<span style=color:#66d9ef>this</span>) {
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> ACE:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;A&#39;</span>;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> TWO:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;2&#39;</span>;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> THREE:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;3&#39;</span>;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> FOUR:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;4&#39;</span>;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> FIVE:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;5&#39;</span>;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> SIX:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;6&#39;</span>;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> SEVEN:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;7&#39;</span>;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> EIGHT:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;8&#39;</span>;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> NINE:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;9&#39;</span>;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> TEN:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;T&#39;</span>;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> JACK:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;J&#39;</span>;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> QUEEN:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;Q&#39;</span>;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>case</span> KING:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;K&#39;</span>;
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>default</span>:
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;0&#39;</span>;
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>char</span> <span style=color:#a6e22e>asChar</span><span style=color:#f92672>()</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> name<span style=color:#f92672>().</span><span style=color:#a6e22e>charAt</span><span style=color:#f92672>(</span><span style=color:#ae81ff>0</span><span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
-</span></span></code></pre></div><p>Initially, I thought of building a model that takes in consideration <strong>the cards</strong> the player is holding in the hand instead of the sum of the cards. It would work as a big search tree, with the initial node being the first card drawn and the probability of drawing that; its nodes would be the probabilities of still being in the game if one of the other cards was drawn. By knowning these probabilities, the model would decide if it would draw or stop there. Knowing how many possible combinations of cards are there in the wild, this would be a really big and complicated. But then I figured out (wasn&rsquo;t really that hard) that the suit of the card is not at all important for the game, and not even the order the cards were drawn (call it <em>&ldquo;feature engineering&rdquo;</em>). That&rsquo;s why that model would be an overkill for the task.</p><p>The implementation of the deck is this simple:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>package</span> com.aziflaj.ventuno<span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>enum</span> Suit {
+</span></span><span style=display:flex><span>        HEARTS, DIAMONDS, CLUBS, SPADES;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.util.Stack<span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>char</span> <span style=color:#a6e22e>asChar</span>() {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> name().<span style=color:#a6e22e>charAt</span>(0);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Initially, I thought of building a model that takes in consideration <strong>the cards</strong> the player is holding in the hand instead of the sum of the cards. It would work as a big search tree, with the initial node being the first card drawn and the probability of drawing that; its nodes would be the probabilities of still being in the game if one of the other cards was drawn. By knowning these probabilities, the model would decide if it would draw or stop there. Knowing how many possible combinations of cards are there in the wild, this would be a really big and complicated. But then I figured out (wasn&rsquo;t really that hard) that the suit of the card is not at all important for the game, and not even the order the cards were drawn (call it <em>&ldquo;feature engineering&rdquo;</em>). That&rsquo;s why that model would be an overkill for the task.</p><p>The implementation of the deck is this simple:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>package</span> com.aziflaj.ventuno;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>CardDeck</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> Stack<span style=color:#f92672>&lt;</span>Card<span style=color:#f92672>&gt;</span> deck<span style=color:#f92672>;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.util.Stack;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#a6e22e>CardDeck</span><span style=color:#f92672>()</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>        deck <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> Stack<span style=color:#f92672>&lt;&gt;();</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>while</span> <span style=color:#f92672>(</span>i <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>52</span><span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>            Card card <span style=color:#f92672>=</span> Card<span style=color:#f92672>.</span><span style=color:#a6e22e>generateRandomCard</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> <span style=color:#f92672>(!</span>cardDuplicate<span style=color:#f92672>(</span>card<span style=color:#f92672>))</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>                deck<span style=color:#f92672>.</span><span style=color:#a6e22e>push</span><span style=color:#f92672>(</span>card<span style=color:#f92672>);</span>
-</span></span><span style=display:flex><span>                i<span style=color:#f92672>++;</span>
-</span></span><span style=display:flex><span>            <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>CardDeck</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> Stack<span style=color:#f92672>&lt;</span>Card<span style=color:#f92672>&gt;</span> deck;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> Card <span style=color:#a6e22e>drawCard</span><span style=color:#f92672>()</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> deck<span style=color:#f92672>.</span><span style=color:#a6e22e>pop</span><span style=color:#f92672>();</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#a6e22e>CardDeck</span>() {
+</span></span><span style=display:flex><span>        deck <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> Stack<span style=color:#f92672>&lt;&gt;</span>();
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> 0;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>while</span> (i <span style=color:#f92672>&lt;</span> 52) {
+</span></span><span style=display:flex><span>            Card card <span style=color:#f92672>=</span> Card.<span style=color:#a6e22e>generateRandomCard</span>();
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (<span style=color:#f92672>!</span>cardDuplicate(card)) {
+</span></span><span style=display:flex><span>                deck.<span style=color:#a6e22e>push</span>(card);
+</span></span><span style=display:flex><span>                i<span style=color:#f92672>++</span>;
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>boolean</span> <span style=color:#a6e22e>cardDuplicate</span><span style=color:#f92672>(</span>Card card<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> <span style=color:#f92672>(</span>Card c <span style=color:#f92672>:</span> deck<span style=color:#f92672>)</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> <span style=color:#f92672>(</span>c<span style=color:#f92672>.</span><span style=color:#a6e22e>equals</span><span style=color:#f92672>(</span>card<span style=color:#f92672>))</span> <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>true</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span><span style=color:#f92672>;</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> Card <span style=color:#a6e22e>drawCard</span>() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> deck.<span style=color:#a6e22e>pop</span>();
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>boolean</span> <span style=color:#a6e22e>cardDuplicate</span>(Card card) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> (Card c : deck) {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (c.<span style=color:#a6e22e>equals</span>(card)) <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>true</span>;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>As you can see, I&rsquo;m generating random cards and putting them in the deck (a stack) if the card is not already there. This is a fairly naive implementation, since the algorithm tries more than once to insert some cards because of collisions (duplicated cards).</p><h2 id=the-probability-map>The probability map<a href=#the-probability-map class=hanchor arialabel=Anchor>&#8983;</a></h2><p>So I changed the model to consider only the sum of the cards drawn by the player. Initially, with no probability model implemented and a greedy player that wants only to draw cards, the player was winning in 16% - 18% of the games. The probability for each sum was:</p><pre tabindex=0><code>2 =&gt; 1.000000
 3 =&gt; 1.000000
 4 =&gt; 1.000000
@@ -185,9 +185,7 @@ and Computer Craftsmanship.
 Subscribe to
 <a href=https://rlfo.substack.com/ target=_blank>Random Links Found Online</a>
 and get the latest issue delivered straight to your inbox.</p></blockquote></div><div class=pagination><div class=pagination__title><span class=pagination__title-h>Read other posts</span><hr></div><div class=pagination__buttons><span class="button previous"><a href=/posts/2016-07-11-week-24-fast-forward-9-weeks/><span class=button__icon>←</span>
-<span class=button__text>Week #24: Fast forward 9 weeks</span></a></span>
-<span class="button next"><a href=/posts/2016-03-13-week-12-uber-and-flappy-bird/><span class=button__text>Week #12: Uber and Flappy Bird</span>
+<span class=button__text>Week #24: Fast forward 9 weeks</span>
+</a></span><span class="button next"><a href=/posts/2016-03-13-week-12-uber-and-flappy-bird/><span class=button__text>Week #12: Uber and Flappy Bird</span>
 <span class=button__icon>→</span></a></span></div></div><div id=disqus_thread></div><script type=application/javascript>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//aldoziflaj.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2023 Aldo Ziflaj</span>
-<span>:: Powered by <a href=https://gohugo.io/ target=_blank>Hugo</a></span></div></div></footer><script src=/assets/main.js></script>
-<script src=/assets/prism.js></script>
-<script data-name=BMC-Widget data-cfasync=false src=https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js data-id=aziflaj data-description="Support me!" data-message="What you're reading is fueled by beer and love. Buy me one and I'll keep spreading the good word" data-color=#61AFEF data-position=Right data-x_margin=18 data-y_margin=18></script></div></body></html>
+<span>:: Powered by <a href=https://gohugo.io/ target=_blank>Hugo</a></span></div></div></footer><script src=/assets/main.js></script><script src=/assets/prism.js></script><script data-name=BMC-Widget data-cfasync=false src=https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js data-id=aziflaj data-description="Support me!" data-message="What you're reading is fueled by beer and love. Buy me one and I'll keep spreading the good word" data-color=#61AFEF data-position=Right data-x_margin=18 data-y_margin=18></script></div></body></html>
