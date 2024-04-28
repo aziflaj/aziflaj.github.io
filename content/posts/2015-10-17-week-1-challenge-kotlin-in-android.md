@@ -1,14 +1,7 @@
 ---
 layout:     post
 title:      "Week #1 challenge: Kotlin in Android"
-date:       2015-10-17
-comments:   true
-summary:    In the first week of my Project52, I migrated an old Android application, from Java to Kotlin
-category:
-    - project52
-    - java
-    - kotlin
-    - android
+date:       '2015-10-17'
 ---
 
 More or less one week ago, I announced my **52 weeks, 52 projects** challenge. In the first week, I tried native Android development in a language called [Kotlin](http://kotlinlang.org/). If you have seen what Apple is doing with Swift, JetBrains (the team behind IntelliJ and Kotlin) is doing the same thing for Android developers: giving developers a simpler way of developing applications.
