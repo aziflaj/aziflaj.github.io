@@ -1,4 +1,106 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Friendly Neighborhood Softwaredude</title><link>/posts/</link><description>Recent content in Posts on Friendly Neighborhood Softwaredude</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 29 Apr 2024 00:00:00 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Caboose: a Redis-compliant Afternoon's Work of Genius</title><link>/posts/2023-11-30-caboose-redis-compliant-afternoon-work/</link><pubDate>Thu, 30 Nov 2023 00:00:00 +0000</pubDate><guid>/posts/2023-11-30-caboose-redis-compliant-afternoon-work/</guid><description>TL;DR: I built an In-Memory, Redis-compliant (to some extent, don&amp;rsquo;t get your hopes high) Key-Value Data Store. It took me a bit over 2 hours, but it works and it sucks at the same time. You can find it in my GitHub: aziflaj/caboose
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Friendly Neighborhood Softwaredude</title><link>/posts/</link><description>Recent content in Posts on Friendly Neighborhood Softwaredude</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 29 Apr 2024 00:00:00 +0000</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Meet PinguL: A Programming Language I created</title><link>/posts/2024-04-29-meet-pingul-a-programming-lang-i-created/</link><pubDate>Mon, 29 Apr 2024 00:00:00 +0000</pubDate><guid>/posts/2024-04-29-meet-pingul-a-programming-lang-i-created/</guid><description>I took a Compiler Design course during my Masters. We were tasked to create a compiler for a subset of Java, they called it &amp;ldquo;MiniJava&amp;rdquo;. It&amp;rsquo;s somewhat of a &amp;ldquo;rite of passage&amp;rdquo; and funnily enough, for a lot of my peers, the course was their introduction to Finite State Automata and Regular Expressions. I was already a skilled RegEx craftsman at that point, and reading RegEx on a whiteboard was never something I appreciated&amp;hellip; Suffice to say I skipped most of the classes.</description><content>&lt;p>I took a Compiler Design course during my Masters. We were tasked to create a compiler for a subset of Java, they called it &amp;ldquo;MiniJava&amp;rdquo;. It&amp;rsquo;s somewhat of a &amp;ldquo;rite of passage&amp;rdquo;
+and funnily enough, for a lot of my peers, the course was their introduction to Finite State Automata and Regular Expressions. I was already a skilled RegEx craftsman at that point,
+and reading RegEx on a whiteboard was never something I appreciated&amp;hellip; Suffice to say I skipped most of the classes. I remember understanding the idea of a Lexer,
+then dosing off during the Parsing lectures, and never being present for the AST part. So I did what the student version of me did best:
+I traded some other course&amp;rsquo;s project for the Compiler Design project, never learned a thing, got a passing grade, and moved on with my life.&lt;/p>
+&lt;hr>
+&lt;p>That was a bit of a lie, mostly for shock value. Though I really found the course extremely dull, I remember reading about the Ruby VM and how the AST is built and evaluated. I even tried to read the Ruby source code, but I understood nothing. Either way, stealing bits and pieces here and there from lectures and the internet,
+I built a mental image of the whole Lexer -&amp;gt; Parser -&amp;gt; AST pipeline. And last week, I finished writing a programming language that makes JavaScript look like
+it was written by a genius. And I didn&amp;rsquo;t use any lexer or parser generator. I could have; after all lexing and parsing are both two very studied and very much solved problems by now. But, where&amp;rsquo;s the fun in that? No, this was all from scratch, madman style.&lt;/p>
+&lt;h2 id="wat-is-this-abomination">Wat is this abomination?&lt;/h2>
+&lt;p>The language is called PinguL and it&amp;rsquo;s &lt;a href="https://github.com/aziflaj/pingul">freely available on GitHub&lt;/a> for everyone to ridicule. It is a Dynamically Typed, Garbage-Collected, somewhat Functional, Interpreted programming language. Its syntax is inspired by JavaScript,
+with some hints of Python and Ruby, and some C-style boolean evaluations. Unlike JavaScript, it wasn&amp;rsquo;t written in 10 days, but it has a few of the same quirks &amp;ndash; &lt;em>more on that later&lt;/em>. It has a REPL, it supports
+Integers, Booleans, Strings and Lists, but not Floating Point numbers. It has support for first-class functions, meaning you can pass functions as arguments to other functions.
+It has a Garbage Collector &lt;em>by accident&lt;/em>; since the language is written in Go and it is interpreted by the Go runtime, it incidentally profits from Go&amp;rsquo;s GC.&lt;/p>
+&lt;p>But this article is not about the language itself, you can read more about it in the &lt;a href="https://github.com/aziflaj/pingul">GitHub repository&lt;/a>. We are here to talk shit about it. And shit we shall talk&amp;hellip;&lt;/p>
+&lt;h2 id="shit-talking-session">Shit Talking Session&lt;/h2>
+&lt;p>PinguL has some limitations, as it usually is the case with languages you write for fun. It doesn&amp;rsquo;t have an extensive standard library, it has like 6 &lt;del>built-in&lt;/del> intrinsic functions.
+It doesn&amp;rsquo;t have a module system, you can&amp;rsquo;t import code from other files. It doesn&amp;rsquo;t even have support for loops. But what it has, is a lot of heart. And a handful of issues&amp;hellip;&lt;/p>
+&lt;h3 id="issue-1-boolean-tomfoolery">Issue #1: Boolean Tomfoolery&lt;/h3>
+&lt;p>Check this out:&lt;/p>
+&lt;img src="/images/20240429/bools.png" class="center" style="border-radius: 8px;" />
+&lt;p>There are a few values that PinguL evaluates to &lt;code>true&lt;/code> in some cases, even though they aren&amp;rsquo;t booleans. A non-empty string, a non-empty list, and a non-zero integer are all evaluated to &lt;code>true&lt;/code> when used as conditionals. So
+the following code, for example, will print &lt;code>STRING(true)&lt;/code> for all three cases:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#e6db74">&amp;#34;non-empty string&amp;#34;&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">print&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> ([&lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#ae81ff">2&lt;/span>, &lt;span style="color:#ae81ff">3&lt;/span>]) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">print&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#ae81ff">42&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">print&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Similarly, an empty string, an empty list, and &lt;code>0&lt;/code> are all evaluated to &lt;code>false&lt;/code>, and these print &lt;code>STRING(false)&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">print&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>} &lt;span style="color:#66d9ef">else&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">print&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;false&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> ([]) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">print&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>} &lt;span style="color:#66d9ef">else&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">print&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;false&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#ae81ff">0&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">print&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>} &lt;span style="color:#66d9ef">else&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">print&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;false&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If you&amp;rsquo;re wondering what&amp;rsquo;s that &amp;ldquo;string&amp;rdquo; thing you&amp;rsquo;re seeing in &lt;code>STRING(true)&lt;/code>, that&amp;rsquo;s the data type. Because that&amp;rsquo;s how I decided to stringify these expressions for debugging purposes, deal with it 🤷‍♂️&lt;/p>
+&lt;h3 id="issue-2-parentheses-break-math">Issue #2: Parentheses break Math&lt;/h3>
+&lt;p>I don&amp;rsquo;t know where I went wrong with parentheses, but they don&amp;rsquo;t work as expected. I only found out about this when I was writing the readme, and never looked into it. I&amp;rsquo;m sure it&amp;rsquo;s an easy fix that will never happen.&lt;/p>
+&lt;p>Parentheses work fine when you write if statements and when you write or call functions, but when you
+try to do math with them, they break. Check this out:&lt;/p>
+&lt;img src="/images/20240429/parens.png" class="center" style="border-radius: 8px;" />
+&lt;p>It doesn&amp;rsquo;t seem to be an issue with parentheses in general, &lt;code>if&lt;/code>s and &lt;code>func&lt;/code>s seem to work. Nor is it an issue with negative numbers, &lt;code>-4 * 3&lt;/code> is evaluated properly. But when you
+add parentheses to the mix, it all goes sideways. Seems like everything before the last &lt;code>)&lt;/code> is ignored, as both these expressions get evaluated to &lt;code>6&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#a6e22e">pingul&lt;/span>)&lt;span style="color:#f92672">&amp;gt;&amp;gt;&lt;/span> (&lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#f92672">+&lt;/span> (&lt;span style="color:#ae81ff">3&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#ae81ff">4&lt;/span>) &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">5&lt;/span>) &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">6&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">INT&lt;/span>(&lt;span style="color:#ae81ff">6&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>(&lt;span style="color:#a6e22e">pingul&lt;/span>)&lt;span style="color:#f92672">&amp;gt;&amp;gt;&lt;/span> (&lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#f92672">+&lt;/span> (&lt;span style="color:#ae81ff">3&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#ae81ff">4&lt;/span>) &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">5&lt;/span>) &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#ae81ff">6&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">INT&lt;/span>(&lt;span style="color:#ae81ff">6&lt;/span>)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Is it fixable? Yeah, I&amp;rsquo;ll have to double check how these expressions are parsed and if that&amp;rsquo;s fine, how they are evaluated.&lt;/p>
+&lt;p>Will I fix it? &amp;#x1f642; It&amp;rsquo;s not a bug, it&amp;rsquo;s a feature to stop you from using PinguL in production.&lt;/p>
+&lt;h3 id="issue-3-functions-are-quirky">Issue #3: Functions are&amp;hellip; quirky&lt;/h3>
+&lt;p>There are a few interesting things about functions in PinguL. Firstly, they&amp;rsquo;re first-class citizens. You can pass them as arguments to other functions, you can return them from functions,
+you can even do IIFE (Immediately Invoked Function Expressions) with them. This is valid PinguL code:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">square&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">func&lt;/span>(&lt;span style="color:#a6e22e">x&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">x&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#a6e22e">x&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">sq3&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">func&lt;/span>(&lt;span style="color:#a6e22e">f&lt;/span>, &lt;span style="color:#a6e22e">val&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">f&lt;/span>(&lt;span style="color:#a6e22e">val&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}(&lt;span style="color:#a6e22e">square&lt;/span>, &lt;span style="color:#ae81ff">3&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">print&lt;/span>(&lt;span style="color:#a6e22e">sq3&lt;/span>);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This will print &lt;code>INT(9)&lt;/code>, as expected. IIFEs and function passing work as expected, just like in JavaScript.&lt;/p>
+&lt;p>The issue arises when you try and use function-based encapsulation. You can define a function inside another function, but the inner function doesn&amp;rsquo;t have access to the outer function&amp;rsquo;s scope.
+So the following code will not work as expected:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">outer&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">func&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">x&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">42&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">func&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">x&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> };
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">i&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">outer&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">print&lt;/span>(&lt;span style="color:#a6e22e">i&lt;/span>());
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>It will only print &lt;code>NIL&lt;/code>, since the inner (returned) function doesn&amp;rsquo;t have access to the outer-scoped &lt;code>x&lt;/code> variable.&lt;/p>
+&lt;h3 id="issue-4-no-loops">Issue #4: No Loops&lt;/h3>
+&lt;p>What the title says. PinguL doesn&amp;rsquo;t have loops. You can&amp;rsquo;t write &lt;code>for&lt;/code> loops, you can&amp;rsquo;t do &lt;code>while&lt;/code> loops, you can&amp;rsquo;t even &lt;code>do-while&lt;/code> loops.&lt;/p>
+&lt;p>But you can recurse, and you can Map and Reduce over lists, so why even bother with loops? I&amp;rsquo;m not gonna show you how to do that,
+but there&amp;rsquo;s a whole section in &lt;a href="https://github.com/aziflaj/pingul/?tab=readme-ov-file#loops">the README&lt;/a> about it.&lt;/p>
+&lt;h2 id="conclusion">Conclusion&lt;/h2>
+&lt;p>Now that I&amp;rsquo;ve written a programming language, I can finally say I&amp;rsquo;ve done it all.&lt;/p>
+&lt;p>I&amp;rsquo;ve written a Version Control System, &lt;a href="https://github.com/aziflaj/gogot">Gogot&lt;/a>.
+I&amp;rsquo;ve written a Database, &lt;a href="https://github.com/aziflaj/caboose/">Caboose&lt;/a>.
+And now, I&amp;rsquo;ve written a Programming Language, &lt;a href="https://github.com/aziflaj/pingul/">PinguL&lt;/a>.&lt;/p>
+&lt;p>Bold claims and a lot of asterisks.&lt;/p></content></item><item><title>Caboose: a Redis-compliant Afternoon's Work of Genius</title><link>/posts/2023-11-30-caboose-redis-compliant-afternoon-work/</link><pubDate>Thu, 30 Nov 2023 00:00:00 +0000</pubDate><guid>/posts/2023-11-30-caboose-redis-compliant-afternoon-work/</guid><description>TL;DR: I built an In-Memory, Redis-compliant (to some extent, don&amp;rsquo;t get your hopes high) Key-Value Data Store. It took me a bit over 2 hours, but it works and it sucks at the same time. You can find it in my GitHub: aziflaj/caboose
 Obligatory Backstory My experience with badly written databases goes way back to 2012, when I wanted to develop a social network in C++ (however crazy that sounds). I had no idea SQL was a thing, so I implemented the persistence layer myself in binary files and spaghetti code &amp;ndash; you might even call it an &amp;ldquo;Object-Oriented DataBase Management System&amp;rdquo;, an OODBMS.</description><content>&lt;p>TL;DR: I built an &lt;strong>In-Memory, Redis-compliant&lt;/strong> (&lt;em>to some extent, don&amp;rsquo;t get your hopes high&lt;/em>) &lt;strong>Key-Value Data Store&lt;/strong>.
 It took me a bit over 2 hours, but it works and it sucks at the same time.
 You can find it in my GitHub: &lt;a href="https://github.com/aziflaj/caboose">aziflaj/caboose&lt;/a>&lt;/p>
