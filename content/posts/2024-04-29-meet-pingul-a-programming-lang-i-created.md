@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "I created a Programming Language"
+title: "Meet PinguL: A Programming Language I created"
 date: '2024-04-29'
 ---
 
