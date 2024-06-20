@@ -158,7 +158,7 @@ hook to restart the server when you push to the staging branch&lt;/li>
 &lt;li>Profit!&lt;/li>
 &lt;/ol>
 &lt;p>And if Staging doesn&amp;rsquo;t cut it for you and you need Feature Branch Deployments
-because you&amp;rsquo;re a masochist, you can use this bash script:&lt;/p>
+because you&amp;rsquo;re a masochist, save this bash script as a &lt;code>deplfb&lt;/code> and use it to deploy feature branches at will:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/bin/bash
 &lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>branch&lt;span style="color:#f92672">=&lt;/span>$1
@@ -166,11 +166,12 @@ because you&amp;rsquo;re a masochist, you can use this bash script:&lt;/p>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Which branch bruh?! And which port?!&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#f92672">[&lt;/span> -z &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$branch&lt;span style="color:#e6db74">&amp;#34;&lt;/span> &lt;span style="color:#f92672">]&lt;/span>; &lt;span style="color:#66d9ef">then&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;Usage: &lt;/span>$0&lt;span style="color:#e6db74"> &amp;lt;branch-name&amp;gt; &amp;lt;port&amp;gt;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo &lt;span style="color:#e6db74">&amp;#34;Usage: deplfb &amp;lt;branch-name&amp;gt; &amp;lt;port&amp;gt;&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> exit &lt;span style="color:#ae81ff">1&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">fi&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># add a new worktree for the branch&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>mkdir -p /path/to/feat
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git worktree add /path/to/feat/$branch $branch
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Add new Nginx config for the feature branch&lt;/span>
@@ -186,8 +187,8 @@ because you&amp;rsquo;re a masochist, you can use this bash script:&lt;/p>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cd /path/to/feat/$branch
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># TODO: run the dev server with code reloading on $port&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># TODO: restart nginx to apply the new config&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Just address the TODOs and you&amp;rsquo;re good to go. I&amp;rsquo;m leaving out some environment
-variables, and for those you can either use &lt;code>.env&lt;/code> files or something like
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Just address the &lt;code>TODO&lt;/code>s and you&amp;rsquo;re good to go. I&amp;rsquo;m skipping the environment
+variables, but for those you can either use &lt;code>.env&lt;/code> files or something like
 &lt;a href="https://direnv.net/">direnv&lt;/a>.&lt;/p>
 &lt;h2 id="conclusion">Conclusion&lt;/h2>
 &lt;p>Next time your peers feel like &amp;ldquo;It works on my machine&amp;rdquo; is not a valid excuse,
