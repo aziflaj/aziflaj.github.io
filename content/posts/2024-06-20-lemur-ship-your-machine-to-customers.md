@@ -198,7 +198,7 @@ Environment to your LeMuR setup:
 
 
 And if Staging doesn't cut it for you and you need Feature Branch Deployments
-because you're a masochist, you can use this bash script:
+because you're a masochist, save this bash script as a `deplfb` and use it to deploy feature branches at will:
 
 ```bash
 #!/bin/bash
@@ -208,11 +208,12 @@ port=$2
 
 # Which branch bruh?! And which port?!
 if [ -z "$branch" ]; then
-  echo "Usage: $0 <branch-name> <port>"
+  echo "Usage: deplfb <branch-name> <port>"
   exit 1
 fi
 
 # add a new worktree for the branch
+mkdir -p /path/to/feat
 git worktree add /path/to/feat/$branch $branch
 
 # Add new Nginx config for the feature branch
@@ -230,8 +231,8 @@ cd /path/to/feat/$branch
 # TODO: restart nginx to apply the new config
 ```
 
-Just address the TODOs and you're good to go. I'm leaving out some environment
-variables, and for those you can either use `.env` files or something like 
+Just address the `TODO`s and you're good to go. I'm skipping the environment
+variables, but for those you can either use `.env` files or something like 
 [direnv](https://direnv.net/).
 
 ## Conclusion
