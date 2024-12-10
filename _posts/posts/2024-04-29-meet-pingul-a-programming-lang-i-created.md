@@ -34,7 +34,7 @@ It doesn't have a module system, you can't import code from other files. It does
 
 Check this out:
 
-![](assets/images/20240429/bools.png)
+![](https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20240429/bools.png?raw=true)
 
 There are a few values that PinguL evaluates to `true` in some cases, even though they aren't booleans. A non-empty string, a non-empty list, and a non-zero integer are all evaluated to `true` when used as conditionals. So
 the following code, for example, will print `STRING(true)` for all three cases:
@@ -84,7 +84,7 @@ I don't know where I went wrong with parentheses, but they don't work as expecte
 Parentheses work fine when you write if statements and when you write or call functions, but when you
 try to do math with them, they break. Check this out:
 
-![](assets/images/20240429/parens.png)
+![](https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20240429/parens.png?raw=true)
 
 It doesn't seem to be an issue with parentheses in general, `if`s and `func`s seem to work. Nor is it an issue with negative numbers, `-4 * 3` is evaluated properly. But when you
 add parentheses to the mix, it all goes sideways. Seems like everything before the last `)` is ignored, as both these expressions get evaluated to `6`:

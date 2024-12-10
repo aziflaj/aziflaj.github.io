@@ -22,17 +22,17 @@ Earlier this month I started building a [Git clone in Go](https://github.com/azi
 
 So to make it a bit fancier, I'm using a Dockerfile to build Gogot inside a Go container, and then I'm "installing" the compiled 'gogot' onto a new Ruby container which contains only the test code, where I'm finally running all the tests through the 'rspec' command. I added a shell script that will build the container and will run the tests, and if everything goes right the whole output should fit inside a terminal's screen :D
 
-![light-side-better-than-dark-side](/images/20210328/tests.png)
+![light-side-better-than-dark-side](https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20210328/tests.png?raw=true)
 
 
 For a closer look at the tests, here's writing the scenario "Adding files without a path prints usage information" in code, following the good practices of [Better Specs](https://www.betterspecs.org/). The commands inside the backticks are executed "for real", and I have to make sure to clean up after every example (test) that I run. Since this is executed inside a container, the world outside it in not affected.
 
-![testing](/images/20210328/spec.png)
+![testing](https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20210328/spec.png?raw=true)
 
 
 Besides all that testing suite and connecting it to Travis CI, I have been working on a 'status' command that looks like this (ignore the "nothing to commit message" at the end, it's still work in progress):
 
-![gogot status](/images/20210328/status.jpeg)
+![gogot status](https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20210328/status.jpeg?raw=true)
 
 
 Looking at the languages section of the Github repo, I'm thinking this is one language away of becoming a chimera of bad code in more languages than you need, but I feel this approach is better for testing it as a real tool. Writing the tests this way helped me find more than enough issues in the code and also refactor here and there.

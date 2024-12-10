@@ -2,6 +2,9 @@
 layout: post
 title: How do I Vim
 date: '2022-05-05'
+tags: [vim, editor, neovim, ide]
+image:
+  path: https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20220502/vimvside.jpeg?raw=true
 ---
 
 My first editor was Notepad. Not [the ++
@@ -28,7 +31,7 @@ or they think it's just a Notepad that's too hard to get out of, so not worth
 using. But there's a reason your code editor and IDE of choice comes with a Vim mode,
 so without further ado, allow me to introduce you to the Vim goodness.
 
-![chadvim](/images/20220502/vimvside.jpeg)
+
 
 ## Modal editing
 
@@ -49,7 +52,7 @@ switch modes from **Normal** to **Insert**. This means that
 now, instead of changing (editing) the content, you're inserting new stuff in
 the file. Pressing `ESC` gets you back to Normal mode.
 
-![replace](/images/20220502/replace.gif)
+![replace](https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20220502/replace.gif?raw=true)
 
 In the gif you can see how replacing is done in Vim. Writing `:%s/vim/Vim/g` while on Normal mode changes
 all `vim` occurrences into `Vim`; those of you with
@@ -94,7 +97,7 @@ supports:
 - `Ctrl + p` to open a file
 - Code completion suggestions as in every other IDE or Code editor.
 
-![code completion](/images/20220502/completion.gif)
+![code completion](https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20220502/completion.gif?raw=true)
 
 The hackable thing about Vim is that the above commands are not set in stone.
 Here are a couple of lines from my `init.vim`:
@@ -129,7 +132,7 @@ terminal-based editor doesn't seem that crazy. _"But wait"_, -- you say, -- _"ev
 my Fancy Schmancy IDE has a built-in terminal"_. It sure does, but mine is
 floating in the middle of the screen.
 
-![floaterm](/images/20220502/floaterm.png)
+![floaterm](https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20220502/floaterm.png?raw=true)
 
 Plus I can fire up a new terminal window by doing `⌘ + T` and move around with
 `⌘ + number` or `⌘ + left` and `⌘ + right`; using the keyboard is faster than
@@ -139,7 +142,7 @@ reaching for the mouse.
 
 Here how a normal day of work might look [like](https://github.com/aziflaj/gogot):
 
-![gogot](/images/20220502/workdir.png)
+![gogot](https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20220502/workdir.png?raw=true)
 
 There might be a few files opened side-by-side, a terminal window open to run some
 commands, and so on. Moving between opened files is as easy as `Ctrl + h/j/k/l`

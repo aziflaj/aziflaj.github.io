@@ -2,6 +2,10 @@
 layout: post
 title: "Solving the Schönbrunn Puzzle using Depth-First Search"
 date: '2023-09-05'
+tags: [go, algorithms, graph-theory]
+image:
+  path: https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20230905/puzzle.jpeg?raw=true
+  alt: Schönbrunn Palace Maze Puzzle
 ---
 
 During my Eurotrip this July, I visited a few cities around Central Europe.
@@ -9,11 +13,7 @@ One of my destinations was Vienna and as any other boring tourist, I decided to 
 stroll at the Schönbrunn Palace, Habsburgs' summer residence. I will spare you the
 touristy mumbo jumbo and tell you about this nice little puzzle I found in their maze garden.
 
-It's a little math puzzle that looks like this:
-
-![](assets/images/20230905/puzzle.jpeg)
-
-And the rules are simple: you start at 1 -- the middle tile of the bottom row --
+It's a little math puzzle that looks like the pic you see above. And the rules are simple: you start at 1 -- the middle tile of the bottom row --
 and you walk around the board as many cells as the number says (ignoring the sign), without stepping twice on a tile, until you reach
 the middle tile. That's the easy version. The hard version is the same, but you also
 keep count of the sum of the tiles you're stepping on (not ignoring the sign), and when you reach the
@@ -21,7 +21,7 @@ middle tile your total should be zero.
 
 I spent 2 minutes looking at it and came up with a solution, which is neither the solution of the easy version, nor that of the hard version. It looks like this, and I call it "The dumb solution", because my German is broken and I didn't quite understand what I was reading:
 
-![](assets/images/20230905/dumb-solution.jpg)
+![](https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20230905/dumb-solution.jpg?raw=true)
 
 It is somewhat of a solution, the tiles on the path sum up to 0 and you still reach the center: `1 -3 +2 -4 +3 -2 +3 -1 +3 -2 = 0`
 
@@ -35,7 +35,7 @@ is actually a graph, and this ~~task~~ children's puzzle screams Depth-First Sea
 So, I wrote a simple Go program to solve it because unlike Habsburgs, I didn't fail my
 Algorithms and Data Structures course!
 
-![](assets/images/20230905/nodiff.png)
+![](https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20230905/nodiff.png?raw=true)
 
 
 ### Go-ifying this puzzle
@@ -254,7 +254,7 @@ And the solution to the Schönbrunn Palace is:
 (0* @ {2, 2}) -> 
 ```
 
-![](assets/images/20230905/solved.jpeg)
+![](https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20230905/solved.jpeg?raw=true)
 
 In just 17 steps, you can go from that 1 cell at `{4, 2}` to that 0 cell at `{2, 2}`! And you can find the full source code (a single file) [in this Gist](https://gist.github.com/aziflaj/f10ee305e3c0fe96650f9592ac65e1fc). 
 

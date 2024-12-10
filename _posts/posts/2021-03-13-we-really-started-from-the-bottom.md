@@ -12,7 +12,7 @@ I think I wrote my first program at some point between 8th and 9th grade, and it
 
 This morning I woke up by an email; a random internet person had commented on a forgotten Gist I had published some 5 years ago. It was a calculator I wrote in C++. The date said "01-01-13 12:01" but I highly doubt I did this on New Year's Eve. I believe I wrote this somewhere around October or November 2012, back when I was learning C++ but before I learned anything about OOP. My set up at the time was a 2002-built Compaq Evo laptop running the latest Windows XP (32bit) on a Pentium 4, rocking on 512MB of RAM. I had tried different code editors, from Notepad to Notepad++, but I had decided to use a real IDE and not some lame text pad. Meet Turbo-C++, the blue kid on the block:
 
-![blue-dabade-dabada](/images/20210313/turboc.png)
+![blue-dabade-dabada](https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20210313/turboc.png?raw=true)
 
 Probably the reason I have to wear glasses now, I can't remember how many hours I spent in front of this blue screen (there was only a full-screen option), stroking my then-yet-to-grow beard in attempts of debugging, squeezing my brainjuice and thinking "I now can speak to machines".
 
@@ -147,6 +147,6 @@ Anyway, it still works. Here's the link if you wanna try for yourself:
 
 https://gist.github.com/aziflaj/68813816ef298a03cd4b
 
-![white-iterm-dont-care](/images/20210313/output.png)
+![white-iterm-dont-care](https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20210313/output.png?raw=true)
 
 Try calculating 11 factorial and see if you can fix it :)

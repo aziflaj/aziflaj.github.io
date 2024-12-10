@@ -54,6 +54,6 @@ clock();
 
 This simple script gets the hours, minutes and seconds, adds them a trailing 0 if the number is only with one digit and sets the background color to this value every second. Nothing special, is it?
 
-![clockjs in action](/images/20150422/clock.gif)
+![clockjs in action](https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20150422/clock.gif?raw=true)
 
 You can find the source code on [this GitHub repository](https://github.com/aziflaj/jsClock). Feel free to fork it and change it as you wish.

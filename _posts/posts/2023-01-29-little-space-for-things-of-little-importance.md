@@ -2,6 +2,12 @@
 layout: post
 title: Little Space for Things of Little Importance - Tinkering with Compression
 date: '2023-01-29'
+tags:
+    - compression
+    - go
+    - rle
+image:
+  path: https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20230131/cards1.png?raw=true
 ---
 
 I was watching [this video](https://www.youtube.com/watch?v=tSuCa8zN4mo) from Numberphile
@@ -76,7 +82,7 @@ Since I only care about the color of the cards, one way to compress them is to k
 how many cards of the same color are in a sequence, and store the sequences lengths (tallies) in an array. I also
 need to know the color of the first card. E.g., for the following deck:
 
-![](/images/20230131/cards1.png)
+![](https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20230131/cards1.png?raw=true)
 
 I only need need to store the starting color (Red) as well as the tallies:
 
@@ -136,7 +142,7 @@ multiple, different tallies in the same `int32`.
 
 Since all sequence lengths are not wider than 5 bits, I can store up to 6 of them in the same `int32`, like this:
 
-![](/images/20230131/bits2.png)
+![](https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20230131/bits2.png?raw=true)
 
 The 2 Most Significant Bits I am not using (yet), and the rest of the bits of
 the int32 are storing the sequence lengths, sort of multiplexed (for lack of a better word):
@@ -233,7 +239,7 @@ func main() {
 
 And a sample output:
 
-![](/images/20230131/compressed.png)
+![](https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20230131/compressed.png?raw=true)
 
 ## What about sizes?
 

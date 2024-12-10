@@ -2,9 +2,11 @@
 layout: post
 title: "Deploying Go with Kamal via GitHub Actions"
 date: '2024-12-08'
+tags: ["go", "kamal", "github-actions", "devops"]
+image:
+  path: https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20241208/3way.png?raw=true
+  alt: "Three-way handshake"
 ---
-
-![](assets/images/20241208/3way.png)
 
 Deployments, the last mile of delivering software projects. It's not surprising
 most developers don't know how to do deployments, let alone do them properly. 

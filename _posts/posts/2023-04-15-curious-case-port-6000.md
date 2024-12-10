@@ -27,7 +27,7 @@ then desperately opened incognito, maybe some weird caching issue ...
 
 Nothing changed.
 
-![](/images/20230415/unreachable.png)
+![](https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20230415/unreachable.png?raw=true)
 
 At that point I just didn't give it much thought. It was late anyway, I was tired.
 

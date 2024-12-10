@@ -16,7 +16,7 @@ You've probably heard before that it is possible to use JavaScript on the server
 
 Using Sails it's not the only way to develop Node.js applications. In fact, there's a full-stack JavaScript solution called **MEAN**, which stands for Mongo, Express.js, [Angular.js](http://angularjs.org/) and Node.js. Since MongoDB actually stores data in the BSON (Binary JSON) format, you can say that the MEAN stack is a way of using JavaScript for (almost) everything in your web applictation. This week's project is not a MEAN application: it doesn't have the Angular part (yet). But since Sails uses Express.js under the cover and I used MongoDB, we can agree that it is a MEN application (I hope there isn't any feminist unfollowing me for that).
 
-![sails lift](/images/20151108/sails-lift.png)
+![](https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20151108/sails-lift.png?raw=true)
 
 During this week I created a demo API using Sails. It is not something very special to be done during a week, but I didn't really work too much on it. During the past weeks I used to work 3 hours/day on the projects, but this week wasn't the best. One or two days I couldn't work at all on this. Anyway, it gives the basic idea of building a simple API in Sails. It handles five routes, all sharing the base `api/v1/ship` route:
 

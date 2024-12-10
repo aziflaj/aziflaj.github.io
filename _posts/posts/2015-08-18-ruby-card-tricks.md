@@ -15,7 +15,7 @@ Most of the card tricks I know are based on doing something without the other gu
 The trick is rather simple. It is done using 21 playing cards. With the cards facing down, you ask the other guy to pick one, see it, and put it with the other cards. Then, you start putting the cards in 3 stacks, one after the other, and in the end ask the other guy to point to the stack that contains the card (without pointing the card, of course). You put this stack between the other two, and repeat this process another 2 times (3 times in total). In the end, the other guy's card will be the 11th card in the big pile of cards.
 
 Simple, _"magical"_ and mathematical. I couldn't stop myself from picking a pen and a paper and asking myself _"Why does this happen?"_. Some basic mathematical calculations later, it was obvious that after doing that kind of shuffling 3 times, the only possible position for the card is the 11th one. Think of the cards as an array of 21 cards, from 0 to 20. They are divided in 3 groups, named **G0**, **G1** and **G2**. A random card with a given index `i` will end up in the group with index `i mod 3` and its index inside that group will be `floor(i/3)`. In every shuffle, 7 is added to the group index, since that group goes in between two other groups. Finally, a (not so) complicated, three-floor equation will be raised:
-![three-floor equation](/images/20150818/equation.png)
+![three-floor equation](https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20150818/equation.png?raw=true)
 
 > The result is 10 and not 11 because I am using 0-based counting
 

@@ -18,7 +18,7 @@ Firstly, I'm proud to say that I've changed my Github longest streak from 10 day
 ## Model View Presenter implemented in Balut
 If you can recall [from my last blogpost](http://aziflaj.github.io/week-9-java-nodejs-android/), I had to build a Yahtzee game in Java. Since I didn't know the game was actually called Yahtzee, I named the repository Balut ([aziflaj/Balut](http://github.com/aziflaj/Balut)). You can find how to build and run the game using Gradle in the readme of the repository (please read it, it's not that hard).
 
-![Balut](/images/20160122/balut.png)
+![Balut]((https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20160122/balut.png?raw=true)
 
 The task was just to develop the game but I thought the game itself wasn't hard enough, so I decided to experiment with implementing a Model-View-Presenter pattern. The MVP pattern is a derivative of Model-View-Controller, where the Presenter layer defines the presentation logic of the application (e.g. what happens when a button is clicked). The game is now finished, using SQLite for storing all the records of the game and also uses JUnit for Unit Testing the scoring class. But there is a small issue now: I don't like the MVP I implemented, I could do it better:
 
@@ -61,7 +61,7 @@ ParseUser.logInInBackground(username, password, new LogInCallback() {
 });
 ```
 
-![Exchangeagram](/images/20160122/exchangeagram.jpeg)
+![Exchangeagram]((https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20160122/exchangeagram.jpeg?raw=true)
 
 After this one, the next app is an Uber clone, where I will have to use Parse SDK and its Location-oriented functionality. 
 

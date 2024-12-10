@@ -53,7 +53,7 @@ What was left to do, was the UI. I could use the really-helpful drag-and-drop UI
 
 I managed to build the game, and started to play it. I figured out that the coefficients for multiplying the bet were too damn high, but I didn't care as long as I knew that the game worked. 
 
-![My helpful screenshot]({{ site.url }}/images/slots-screenshots/snapshot.bmp)
+![My helpful screenshot](https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/slots-screenshots/snapshot.bmp?raw=true)
 
 ## My bad practices
 As you can see, the <a href="https://github.com/aziflaj/slots" target="_blank">source code</a> of this simple game is in only one file. This is something that I don't like to do anymore. A better way to do it is by making the code as modular as it can be. By building small modular elements, dividing the UI from the logic of the application, you help yourself during the testing and debugging phase. So the first thing that I would like to change, is dividing the whole <code>class Slots extends JFrame</code> from the class that calls it. 

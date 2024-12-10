@@ -9,7 +9,7 @@ Those of you who know me must be surprised I'm even considering writing about UX
 
 If you are in the same field as me, you most likely heard people throwing terms like UI and UX when it comes to designing graphical interfaces and defining users interactions with the product they're building. I want to extend the interface definition beyond graphical, the interaction definition beyond clicking on a screen, and the user definition to include code monkeys, programming primates and software simians (so, most of my audience). When talking about you as a user of a computer, your interface is your keyboard (and your mouse, if you're one of those people), and it's designed by someone who never saw human hands.
 
-![staggered kb](assets/images/20211228/staggered.jpeg)
+![staggered kb]((https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20211228/staggered.jpeg?raw=true)
 
 Normal (a.k.a. staggered) keyboard designers had the impression people have diagonally moving fingers of the same length but also, they thought the fingers on the right hand are longer than the ones on the left. That's why the distance between Y and J is almost double the distance between T and F.
 
@@ -36,7 +36,7 @@ That's why I decided to build my own keyboard, with blackjack and hoo... I mean,
 
 
 
-![nasty narwhal](assets/images/20211228/keymap.png)
+![nasty narwhal]((https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20211228/keymap.png?raw=true)
 
 Aight, this is the keymap's base layer , not the keyboard itself; the keyboard is the one on the pic on top. It's a 4-row, orthogonal, split keyboard with a few changes when compared to your normal one. Firstly, the number row is what I like to call "shift-inverted" (or schwifted): pressing the keys will give you the symbols, and holding on to "shift" will give you the numbers. Along with that, I swapped the behaviour of the minus, quotes and semicolon keys since I use underscores, double quotes and colons (the punctuation, getyomindoutofthegutter) more than minuses, single quotes and semicolons. The long spacebar is no longer that long, and it's only on the left side. The arrow keys aren't there anymore but they can be accessed via RAISE + H/J/K/L (courtesy of Vim). I also have a rotary encoder on the right side of the keyboard which I can use as a mouse scroll wheel and to control the volume.
 

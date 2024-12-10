@@ -6,11 +6,12 @@ comments:   true
 summary:    I want to develop a small to medium scale project every week for the next 52 weeks (52 weeks = 1 year), and put it online in the weekend.
 category:
     - project52
+image:
+    path: https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20151007/00-resolution.jpeg?raw=true
 ---
 
 I am late on this one. New Year's eve happened long time ago, and the next New Year's eve is happening two and a half months later. But I can't wait until then, and I shouldn't wait until then. My New Year's resolution is: **52 weeks, 52 projects**. I want to develop a small to medium scale project every week for the next 52 weeks (52 weeks = 1 year), and put it online in the weekend.
 
-![October Resolution](/images/20151007/00-resolution.jpeg)
 
 ## Why now?
 I was wandering around in [SpeackerDeck](https://speakerdeck.com/) and found [a nice presentation](https://speakerdeck.com/jeffersonlam/reflections-from-52-weeks-52-projects), where this guy called [Jefferson Lam](http://jefferson.im/) was presenting his result. I liked the presentation and thought: _"Why don't I do the same? It will make me a better developer, a better blogger and probably more professional as a Software Developer."_ So I decided to start this thing and see where it goes. 

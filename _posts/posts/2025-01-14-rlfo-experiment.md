@@ -3,7 +3,7 @@ layout: post
 title: "The experiment that was RLFO"
 date: '2025-01-14'
 image:
-  path: "assets/images/20250114/rlfo.png"
+  path: "https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20250114/rlfo.png"
   alt: "RLFO"
 ---
 
@@ -13,8 +13,6 @@ If not, RLFO (Ralph-o) was my **Random Links Found Online** newsletter;
 a newsletter on software and engineering and everything
 related to it, comprised of articles I found during my usual online scrolling on
 different platforms, read, and found interesting enough to share with others.
-
-![](assets/images/20250114/rlfo.png)
 
 ## obligatory backstory
 
