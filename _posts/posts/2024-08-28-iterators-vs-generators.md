@@ -3,7 +3,7 @@ layout: post
 title: "Iterators VS Generators: Go's latest YAGNI feature"
 date: '2024-08-28'
 image:
-  path: /images/20240828/iterators.jpg
+  path: https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20240828/iterators.jpg?raw=true
 ---
 
 The new release of Go v1.23 brought us this new feature called "iterators", or 

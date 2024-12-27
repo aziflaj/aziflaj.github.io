@@ -2,6 +2,8 @@
 layout: post
 title: "LeMuR: a way to \"ship your machine to customers\""
 date: '2024-06-20'
+image:
+  path: https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20240620/lemur.png?raw=true
 ---
 
 When someone says _"It works on my machine"_, the consensus achieved by the
@@ -12,7 +14,7 @@ I am here to tell you that yes, we can ship your machine to the client. We've
 had that technology for years! And no, I'm not talking about containers, this
 tech is even older!
 
-{{< image src="/images/20240620/lemur.png" position="center" style="border-radius: 8px;" >}}
+![](https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20240620/lemur.png?raw=true)
 
 ## The (not-so) good ol' times
 
