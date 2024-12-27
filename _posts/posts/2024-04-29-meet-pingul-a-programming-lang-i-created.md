@@ -4,6 +4,7 @@ title: "Meet PinguL: A Programming Language I created"
 date: '2024-04-29'
 image:
   path: https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20240429/pingul.jpg?raw=true
+  alt: "PinguL"
 ---
 
 

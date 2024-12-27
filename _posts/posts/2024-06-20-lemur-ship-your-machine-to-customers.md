@@ -4,6 +4,7 @@ title: "LeMuR: a way to \"ship your machine to customers\""
 date: '2024-06-20'
 image:
   path: https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20240620/lemur.png?raw=true
+  alt: "LeMuR"
 ---
 
 When someone says _"It works on my machine"_, the consensus achieved by the

@@ -2,6 +2,9 @@
 layout: post
 title: "Caboose: a Redis-compliant Afternoon's Work of Genius"
 date: '2023-11-30'
+image:
+  path: https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20231130/caboose.jpg?raw=true
+  alt: "Caboose"
 ---
 
 TL;DR: I built an **In-Memory, Redis-compliant** (_to some extent, don't get your hopes high_) **Key-Value Data Store**.
