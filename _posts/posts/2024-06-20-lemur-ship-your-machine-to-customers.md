@@ -12,6 +12,8 @@ I am here to tell you that yes, we can ship your machine to the client. We've
 had that technology for years! And no, I'm not talking about containers, this
 tech is even older!
 
+{{< image src="/images/20240620/lemur.png" position="center" style="border-radius: 8px;" >}}
+
 ## The (not-so) good ol' times
 
 Before the Cloud and DevOps as we know it, we the back-end generalists had to

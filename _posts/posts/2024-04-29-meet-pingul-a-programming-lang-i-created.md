@@ -4,13 +4,14 @@ title: "Meet PinguL: A Programming Language I created"
 date: '2024-04-29'
 ---
 
+
 I took a Compiler Design course during my Masters. We were tasked to create a compiler for a subset of Java, they called it "MiniJava". It's somewhat of a "rite of passage"
 and funnily enough, for a lot of my peers, the course was their introduction to Finite State Automata and Regular Expressions. I was already a skilled RegEx craftsman at that point,
 and reading RegEx on a whiteboard was never something I appreciated... Suffice to say I skipped most of the classes. I remember understanding the idea of a Lexer,
 then dosing off during the Parsing lectures, and never being present for the AST part. So I did what the student version of me did best: 
 I traded some other course's project for the Compiler Design project, never learned a thing, got a passing grade, and moved on with my life.
 
-***
+{{< image src="/images/20240429/pingul.jpg" position="center" style="border-radius: 8px;" >}}
 
 That was a bit of a lie, mostly for shock value. Though I really found the course extremely dull, I remember reading about the Ruby VM and how the AST is built and evaluated. I even tried to read the Ruby source code, but I understood nothing. Either way, stealing bits and pieces here and there from lectures and the internet,
 I built a mental image of the whole Lexer -> Parser -> AST pipeline. And last week, I finished writing a programming language that makes JavaScript look like
