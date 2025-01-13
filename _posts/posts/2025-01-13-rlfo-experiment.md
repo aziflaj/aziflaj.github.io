@@ -3,7 +3,7 @@ layout: post
 title: "The experiment that was RLFO"
 date: '2025-01-13'
 image:
-  path: "https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20250114/rlfo.png"
+  path: "https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20250114/rlfo.png?raw=true"
   alt: "RLFO"
 ---
 
