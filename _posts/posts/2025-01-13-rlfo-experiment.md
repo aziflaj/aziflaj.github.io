@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "The experiment that was RLFO"
-date: '2025-01-14'
+date: '2025-01-13'
 image:
   path: "https://github.com/aziflaj/aziflaj.github.io/blob/main/assets/images/20250114/rlfo.png"
   alt: "RLFO"
@@ -12,7 +12,7 @@ this, you are familiar with [my RLFO newsletter](https://rlfo.substack.com/).
 If not, RLFO (Ralph-o) was my **Random Links Found Online** newsletter;
 a newsletter on software and engineering and everything
 related to it, comprised of articles I found during my usual online scrolling on
-different platforms, read, and found interesting enough to share with others.
+different platforms, read, and considered interesting enough to share with others.
 
 ## obligatory backstory
 
@@ -28,8 +28,7 @@ On September 2023 I decided to formalize it into the RLFO newsletter: a weekly c
 of 5 links, one meme, and a few words of wisdom by yours truly, to make the newsletter
 funnier and a lighter read. I even set up
 [an Instagram page](https://www.instagram.com/random.links.found.online) for it,
-which I kept
-for 12 weeks and then decided to stop (more on that later).
+which I kept for 12 weeks and then decided to stop (more on that later).
 
 The newsletter was written on Substack, scheduled as an email a month in advance,
 and also scheduled via Publer to be published on LinkedIn.
@@ -40,8 +39,8 @@ Substack sends you an email, LinkedIn sends you a notification on new articles.
 Since my main audience was on LinkedIn, that seemed like a good idea.
 
 It wasn't too much work to manage all of it, and I got generally good feedback on
-RLFO. I even reached 82 subscribers on Substack, over 500 on LinkedIn, and I don't
-remember (nor care) how many Instagram followers. 
+RLFO. I even reached 85 subscribers on Substack, about 600 on LinkedIn, and I don't
+remember (nor care tbh) how many Instagram followers. 
 
 Now, on September 2024 -- _which is not the current date for you, but it is for me taking
 the decision and writing this_ -- I decided The Big RLFO Experiment is going to end.
@@ -57,19 +56,19 @@ interesting and once 3-4 of them seemed related to the same topic, I'd put them
 in the same RLFO issue.
 
 Instagram was a bit too much work: once the RLFO issue was written, I had to 
-create posts on Canva and make sure the wording wasn't too long for the image 
-to be unreadable. Then I had to remember to share it as a story...
+create posts on Canva and make sure the wording wasn't too long, so the image 
+was readable. Then I had to remember to share it as a story, which more often than not, I forgot.
 Social Media Manager BS, I'm not cut for it. The feedback on Instagram was
-lagging. A friend of mine told me that Instagram is not the right platform for the RLFO:
+lagging. A friend of mine told me that Instagram is not the right platform for RLFO:
 the audience is either too inexperienced for that kind of content, or they're not
 interested in it. I agreed with her, so I decided to ditch Instagram. For a while I
 even considered Reddit, but the Reddit rules were too uptight to fit my schedule.
 
-So I was left with Substack and LinkedIn. And initially, the LinkedIn reach
+I was left with Substack and LinkedIn. And initially, the LinkedIn reach
 and feedback was good. People seemed to be reading the newsletter but they weren't
 clickling on the links, which was the whole point of the newsletter. I wanted to
 share interesting articles with people, not just write a newsletter for the sake
-of writing a newsletter. I wanted to spark discussions, but there were none.
+of writing a newsletter. I wanted to spark discussions, and there were none.
 
 I noticed a similar pattern with offline meetups: either the meetups disappeared
 and weren't being organized anymore, or the audience on the meetups weren't interested
@@ -79,10 +78,10 @@ nor the enthusiasm to do it after that. Maybe the audience is not
 interested in these topics, or maybe the topics are too niche and/or
 advanced for most people.
 
-So to conclude, I think the reasons why the RLFO is ending are:
+To conclude, the reasons why the RLFO is ending are:
 
 - RLFO and it's readers have **skewed interests**: The good ol'
-`Apples vs Orangutans` problem. Links I'm sharing are niche, 
+`Apples vs Orangutans` problem. Links I'm sharing are too niche, 
 or require too specific skills, or they don't 
 show you how to use the newest/fanciest/shiniest JS framework to build a To-Do app.
 - The **medium is not the right one**: Substack asks for your email, which most people don't
@@ -97,7 +96,7 @@ and satisfaction, and RLFO is not that thing anymore.
 ## now what
 
 Nothing. I'm not going to delete Substack, it's still gonna be out there for you to read
-or me to reference. I will probably not write to it anymore, there's no items in an
+or me to reference. I will probably not post on it anymore, there are no items in an
 array after the -1th index. I might write a blog post once in a while, and
 that's going to be in this blog you're reading right now.
 I'm probably not going to stop reading articles, I have a long backlog of interesting links.
