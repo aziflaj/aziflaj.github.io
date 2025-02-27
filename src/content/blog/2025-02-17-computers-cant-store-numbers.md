@@ -66,8 +66,8 @@ they had to invent more numbers...
 Real numbers are split into two categories: rational and irrational numbers.
 Rationals, which also encompass integers, are numbers that can be expressed
 as fractions. We already have a way to represent them with IEEE-754, as long as we
-can represent the fraction as $$ \left( 2 + \sum_{i=1}^{23}\frac{b_i}{2^i} \right) \cdot 2^{e} $$,
-where $$ b_i \in \left\{ 0, 1 \right\} $$ is the _i_-th bit, and
+can represent the fraction as $$ \left( 2 + \sum_{i=1}^{23}\frac{b_i}{2^i} \right) \cdot 2^{e} $$
+where $$ b_i \in \lbrace 0, 1 \rbrace $$ is the _i_-th bit, and
 $$ e \in \mathrm{N},  -126 \leqslant e\leqslant 127 $$ is the exponent.
 
 Now, there are 2 problems here. Firstly, IEEE-754 represents the same amount of numbers between two power of two's.
@@ -113,9 +113,9 @@ And uncountable infinities are a lot heavier than countable infinities.
 
 **Computers can't store numbers**.
 
-When it comes to irrationals, like $$ \pi $$ or $$ e $$ or $$ \sqrt{2} $$, we can only store approximations. We can store a
-rational number that is close to 10e-100 to $$ \pi $$, but it won't be $$ \pi $$. We know more than 100 trillion digits of $$ \pi $$,
-but for most practical purposes, `3.14159` is enough. It's said that NASA only uses the first 15 digits of $$ \pi $$ for their calculations.
+When it comes to irrationals, like _π_ or _e_ or _sqrt(2)_, we can only store approximations. We can store a
+rational number that is close to 10e-100 to _π_, but it won't be _π_. We know more than 100 trillion digits of _π_,
+but for most practical purposes, `3.14159` is enough. It's said that NASA only uses the first 15 digits of _π_ for their calculations.
 And that's the trade-off we have to make: precision for performance.
 
 As with everything in computer science, it's all about trade-offs. **Computers can't store _most_ numbers**, but they can store enough numbers to be useful, to some extent.
