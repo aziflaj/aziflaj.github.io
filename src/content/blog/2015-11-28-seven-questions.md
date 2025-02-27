@@ -1,5 +1,5 @@
 ---
-layout:     post
+
 title:      "Week #7: 7 questions answered"
 pubDatetime:       2015-11-28
 comments:   true

@@ -1,5 +1,4 @@
 ---
-layout:     post
 title:      New Year's resolution... in October
 pubDatetime:       2015-10-07
 comments:   true

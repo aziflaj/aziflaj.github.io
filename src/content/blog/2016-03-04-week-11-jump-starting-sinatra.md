@@ -1,5 +1,5 @@
 ---
-layout:     post
+
 title:      "Week #11: Jump Starting Sinatra"
 pubDatetime:       2016-03-04
 comments:   true

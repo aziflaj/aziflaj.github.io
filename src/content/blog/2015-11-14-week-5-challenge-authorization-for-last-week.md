@@ -1,5 +1,5 @@
 ---
-layout:     post
+
 title:      "Week #5 challenge: Authorization for the Last Week Project"
 pubDatetime:       2015-11-14
 comments:   true

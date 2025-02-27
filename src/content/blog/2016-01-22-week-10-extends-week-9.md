@@ -1,5 +1,5 @@
 ---
-layout:     post
+
 title:      "Week #10 extends Week #9"
 pubDatetime:       2016-01-22
 comments:   true

@@ -1,5 +1,5 @@
 ---
-layout:     post
+
 title:      "Week #2 report: AngularJS + Gulp"
 pubDatetime:       2015-10-24
 comments:   true

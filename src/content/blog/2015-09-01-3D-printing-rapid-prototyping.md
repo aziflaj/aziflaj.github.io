@@ -1,5 +1,5 @@
 ---
-layout:     post
+
 title:      3D printing and Rapid Prototyping
 pubDatetime:       2015-09-01
 comments:   true

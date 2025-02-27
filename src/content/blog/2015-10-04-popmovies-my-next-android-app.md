@@ -1,5 +1,5 @@
 ---
-layout:     post
+
 title:      PopMovies - my next Android app
 pubDatetime:       2015-10-04
 comments:   true

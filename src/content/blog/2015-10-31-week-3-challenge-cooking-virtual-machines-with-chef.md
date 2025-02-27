@@ -1,5 +1,5 @@
 ---
-layout:     post
+
 title:      "Week #3 challenge: Cooking Virtual Machines with Chef"
 pubDatetime:       2015-10-31
 comments:   true

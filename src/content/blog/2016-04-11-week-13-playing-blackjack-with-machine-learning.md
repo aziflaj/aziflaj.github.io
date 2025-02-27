@@ -1,5 +1,5 @@
 ---
-layout:     post
+
 title:      "Week #13: Playing Blackjack with Machine Learning"
 pubDatetime:       2016-04-11
 description:    A (very dumb) probability model deciding whether you should draw another card or not to win at Blackjack.

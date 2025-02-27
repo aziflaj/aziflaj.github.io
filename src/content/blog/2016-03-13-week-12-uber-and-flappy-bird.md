@@ -1,5 +1,5 @@
 ---
-layout:     post
+
 title:      "Week #12: Uber and Flappy Bird"
 pubDatetime:       2016-03-05
 summary:    My experience working with Parse Geolocation API and libGDX

@@ -1,5 +1,5 @@
 ---
-layout:     post
+
 title:      Bulding my first website with HTML and CSS
 pubDatetime:       2015-02-17
 comments:   true

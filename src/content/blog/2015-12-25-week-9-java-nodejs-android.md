@@ -1,5 +1,5 @@
 ---
-layout:     post
+
 title:      "Week #9: Java, Node.js and Android"
 pubDatetime:       2015-12-25
 comments:   true

@@ -1,5 +1,5 @@
 ---
-layout:     post
+
 title:      "Week #6: An IRC-like Application in Java"
 pubDatetime:       2015-11-21
 comments:   true

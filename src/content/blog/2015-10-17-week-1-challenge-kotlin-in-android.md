@@ -1,5 +1,5 @@
 ---
-layout:     post
+
 title:      "Week #1 challenge: Kotlin in Android"
 pubDatetime:       2015-10-17
 description: "More or less one week ago, I announced my \"52 weeks, 52 projects\" challenge. In the first week, I tried native Android development in a language called Kotlin. If you have seen what Apple is doing with Swift, JetBrains (the team behind IntelliJ and Kotlin) is doing the same thing for Android developers: giving developers a simpler way of developing applications."

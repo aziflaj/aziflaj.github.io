@@ -1,5 +1,5 @@
 ---
-layout:     post
+
 title:      V for Vagrant
 pubDatetime:       2015-02-15
 comments:   true

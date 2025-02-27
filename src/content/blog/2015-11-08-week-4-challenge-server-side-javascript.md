@@ -1,5 +1,5 @@
 ---
-layout:     post
+
 title:      "Week #4 challenge: Server-side JavaScript"
 pubDatetime:       2015-11-08
 comments:   true

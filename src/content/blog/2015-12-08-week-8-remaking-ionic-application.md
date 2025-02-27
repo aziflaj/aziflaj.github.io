@@ -1,5 +1,5 @@
 ---
-layout:     post
+
 title:      "Week #8: Remaking an Ionic Application"
 pubDatetime:       2015-12-08
 comments:   true

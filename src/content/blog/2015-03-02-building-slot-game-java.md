@@ -1,5 +1,5 @@
 ---
-layout:     post
+
 title:      Building a Slot Game in Java
 pubDatetime:       2015-03-02
 comments:   true
