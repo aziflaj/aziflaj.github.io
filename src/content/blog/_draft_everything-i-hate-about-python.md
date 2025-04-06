@@ -47,3 +47,14 @@ Besides the public, _private, __protected bs...
 
 - 79 char line limit... why not 80, for historical purposes?!
 - 4 Spaces vs 1 tab... I have a `tabstop=2` on my Vim config so if I'd use tabs I wouldn't get horizontally inclined lines of code. But we can't have nice things in this world.
+
+## Loops are stupid
+Why is scope so dumb?
+
+```py
+arr = ["foo", "bar", "baz"]
+for i, item in enumerate(arr):
+    # do stuff
+
+print(i) # => It print's 2, even though `i` is out of scope
+```
