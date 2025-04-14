@@ -95,19 +95,19 @@ I understand where this comes from though. In good ol' C, we used to write "clas
 
 ```c
 typedef struct {
-    char* hotel;
+    char* _hotel;
 } Stupid;
 
-Stupid* init() {
+Stupid* stupid_init() {
     Stupid* s = malloc(sizeof(Stupid));
     if (s == NULL) return NULL;
 
-    s->hotel = strdup("trivago");
+    s->_hotel = strdup("trivago");
     return s;
 }
 
 char* stupid_hotel(Stupid* self) {
-    return self->hotel;
+    return self->_hotel;
 }
 ```
 
