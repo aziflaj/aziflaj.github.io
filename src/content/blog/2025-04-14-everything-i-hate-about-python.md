@@ -1,7 +1,6 @@
 ---
 title: "Everything I hate about Python"
 pubDatetime: 2025-04-14
-draft: true
 description: "A lighthearted, brutally honest rant about Python from the perspective of an old timer who’s dabbled in too many languages to count. From tuple weirdness to PEP8 gripes, this post pokes fun at Python’s quirks while offering a cautionary tale for those new to the language — or just wondering why their loop variables won’t go out of scope."
 slug: everything-i-hate-about-python
 tags: ["python", "rant", "language-design", "pep8"]
