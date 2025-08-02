@@ -22,7 +22,7 @@ Runbook is now a **Cloud-Native**, **Event-Driven**, and **Infrastructure-Agnost
 🧠 Built for multi-tenancy, fault-tolerance, and high-concurrency execution. _IT SCALES!_ </br>
 🛡️ Security by design: containerized, sandboxed, demure </br>
 🗒️ Designed around declarative YAML workflows </br>
-🚀 Zero lock-in. Born to be ~~wild~~ run anywhere
+🚀 Zero lock-in. Born to ~~be wild~~ run anywhere
 
 _It’s not just orchestration. It’s orchestration done right™️_
 
@@ -106,9 +106,9 @@ if err := decoder.Decode(&runbook); err != nil {
 }
 ```
 
-The next day, while doing some routine tests, I noticed all steps were kicking off at once: the step dependencies weren't being taken into consideration. **The workflow orchestrator was broken.** Kind of a big deal, when all you have is a workflow orchestrator, right? So I started reading the code again, putting logs and breakpoints for everything.
+The next day, while doing some routine tests, I noticed all steps were kicking off at once: the step dependencies weren't being taken into consideration. **The workflow orchestrator was broken.** Kind of a big deal, when all you have is a workflow orchestrator, right? So I started debugging the orchestration logic, putting logs and breakpoints for everything.
 
-After spending almost half an hour debugging, I decided to log the steps themselves as they were parsed before starting their execution. And lo and behold, here's what I see:
+After spending almost half an hour debugging, I thought of logging the steps themselves as they were parsed, right before the orchestrator picked them up for execution. And lo and behold, here's what I see:
 
 ``` go
 { Name: "Step A", DependsOn: [], Command: "printenv" }
@@ -116,7 +116,7 @@ After spending almost half an hour debugging, I decided to log the steps themsel
 { Name: "C", DependsOn: [], Command: "echo \"Step with dependencies\"" }
 ```
 
-No dependencies on step C?! Who'd've thunk the K8s YAML parser would mess up parsing arrays... I reverted to the original parser, ran everything again, and I saw my dependencies being loaded correctly. Great success!
+No dependencies on step C?! Who'd've thunk the K8s YAML parser would mess up parsing arrays... I reverted to the original parser, ran everything again, and I saw the dependencies being loaded correctly. Great success!
 
 Now I'm using 2 parsers: one for parsing my own Runbook definitions, the K8s one to parse K8s YAMLs, and praying the K8s parser can at least parse its own configs properly...
 
@@ -124,11 +124,11 @@ Now I'm using 2 parsers: one for parsing my own Runbook definitions, the K8s one
 
 ## Gains & Losses
 
-When I wrote the previous entry of these Runbook Notes, workflows were executed as Goroutines. It's easy controlling everything when nothing leaves the machine. But now that we're cloud native, properly distributed, and loaded with buzzwords... you gain some and you lose some.
+When I wrote the previous entry of these Runbook Notes, workflows were executed as Goroutines. It's easy to control everything when nothing leaves the machine. But now that we're cloud native, properly distributed, and loaded with buzzwords... you gain some and you lose some.
 
-Moving to K8s Jobs I lost the support for Go contexts: when a context is cancelled, which no longer translates into the pod shutting down. At least not auto<strong><em>magically</em></strong>.
+Moving to K8s Jobs I lost the support for Go contexts: a context getting cancelled doesn't translate into the pod shutting down. At least not auto<strong><em>magically</em></strong>. I had to build my own tooling for that kind of magic. 
 
-Another nice feature I lost was log streaming. With steps as goroutines, I could easily set up [`io.Pipe`](https://pkg.go.dev/io#Pipe)s and stream `$stdout` and `$stderr` independently. With K8s jobs, I can only read pod logs as a stream of text, and they don't come with `$stdout`/`$stderr` flavors. I have to build my own tooling for that sort of distinction.
+Another nice feature I lost was log streaming. With steps as goroutines, I could easily set up [`io.Pipe`](https://pkg.go.dev/io#Pipe)s and stream `$stdout` and `$stderr` independently. With K8s jobs, I can only read pod logs as a stream of text, and they don't come with `$stdout`/`$stderr` flavors. I had to build my own tooling for that sort of distinction.
 
 But I'm fine with losing this kind of functionality. You gain some, you lose some. Manual shutdowns and log sorting are the price to pay for a cloud-native, event-driven, and infrastructure-agnostic orchestrator for ephemeral, distributed workloads. The main product right now is the Orchestrator. For everything else, there's a GitHub issue and a work plan.
 
