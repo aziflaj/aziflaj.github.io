@@ -26,24 +26,25 @@ Runbook is now a **Cloud-Native**, **Event-Driven**, and **Infrastructure-Agnost
 
 _It’s not just orchestration. It’s orchestration done right™️_
 
-Of course, there's some jokes there, and a lot of flashy words that mean nothing to anyone with a gram of working brain. But they're definitely true. I did achieve all those, through meticulously planned and purposefully deferred decisions I mentioned in my previous note. And I learned a few things along the way.
-
+It surely reads like a buzzword checklist, but every box is checked for a reason. It’s been event-driven since day one; distributed by design; and runs stateless workloads that vanish when they're done: ephemeral by nature. Now it runs on Kubernetes, the epitome of Cloud Nativeness. This is the result of deferring decisions that didn’t need to be made yet, just like I mentioned in the previous note. And yeah, I learned (and broke) a few things along the way.
 
 <details>
 <summary>Anyway here's a sample workflow</summary>
 
 ```
-          ╭───╮
-╭───╮     │ C │
-│ A │ ╭───┼● ●┼╮
-│  ●┼─╯   ╰───╯│  ╭───╮
-│  ●┼─────╮    │  │ D │
-╰───╯     │    ╰──┼● ●┼╮
-╭───╮     ╰───────┼●  ││╭───╮
-│ B │             ╰───╯││ E │
-│  ●┼────────╮         ╰┼●  │
-╰───╯        ╰──────────┼●  │
-                        ╰───╯
+          ╭────╮
+      ╭──▶│  C │───╮
+      │   ╰────╯   │
+      │            ▼
+╭─────┴───╮     ╭───────╮
+│   A     ├────▶│   D   │
+╰─────────╯     └───────┘
+                   │
+                   ▼
+╭────────╮     ╭────────╮
+│   B    ├────▶│   E    │
+╰────────╯     └────────╯
+
 ```
 </details>
 
