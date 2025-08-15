@@ -4,6 +4,7 @@ pubDatetime: 2025-07-28
 description: "A design-first case study in software engineering, told through the process of building my workflow engine. This post explores how deferring decisions, starting from minimal constraints, and focusing on orchestration over tooling can lead to more adaptable systems."
 slug: notes-designing-workflow-engine
 tags: [
+  "runbook-notes",
   "software-engineering",
   "system-design",
   "architecture",
