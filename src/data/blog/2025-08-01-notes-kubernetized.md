@@ -4,6 +4,7 @@ pubDatetime: 2025-08-01
 description: "In this note, I dig into what changed when Runbook went Cloud-Native™: YAML parsers betrayed me, Go contexts stopped working, logs got messy, and yet... orchestration got real. Also, I'm pattenting the BORE acronym, and I still don’t have a database."
 slug: notes-kubernetized
 tags: [
+  "runbook-notes",
   "kubernetes",
   "workflow-engine",
   "cloud-native",
