@@ -2,8 +2,15 @@
 title: "Runbook Notes 003: New UI, Deadlocks, and AI Overengineering"
 pubDatetime: 2025-08-18
 description: "Goodbye juggling multiple terminals, hello frontend! In this update: workflow visualizations, over-engineered log deduplication, and the self-deadlock that stole an afternoon from me."
-slug: notes-frontend
+slug: notes-ui-deadlocks-overengineering
 tags: [
+"runbook",
+"workflow-engine",
+"frontend",
+"golang",
+"debugging",
+"build-in-public",
+"ai-fails"
 ]
 ---
 
