@@ -18,7 +18,7 @@ tags: [
 > - _001_ - [Designing my Workflow Engine](/posts/notes-designing-workflow-engine)
 > - _002_ - [Kubernetized](/posts/notes-kubernetized)
 
-Last time you read one of these notes, Runbook had to be demoed via a bunch of terminals running at the same time: one for orchestration logs, one for K8s pods, a third one for job logs, and a forth one to trigger workflows and run commands.
+Last time you read one of these notes, Runbook had to be demoed via a bunch of terminals running at the same time: one for orchestration logs, one for K8s pods, a third one for job logs, and a fourth one to trigger workflows and run commands.
 
 Though all that can be used to prove the workflows run as expected, it doesn't make for a sellable product that appeals to CEOs and CTOs who prefer a clickable UI.
 
@@ -32,7 +32,7 @@ One month after starting to work on Runbook, we now have a passable, working pro
 
 I'm not much of a front-end developer; I prefer to address myself as a Craftsman of Software Solutions (CSS for short, no relation to CSS) and when people can't figure out my interfaces, it's obviously their fault. But my lack of web development know-how doesn't translate to a lack of vision: I know how a workflow should look like.
 
-Instead of losing time and putting too much effort in researching JS libraries, learning how Vite works (I guess Webpack is not a thing anymore), picking between TypeScript ~~compilers~~ transpilers written in Rust and whatnot, I hacked together a frontend fast enough to demo, ugly enough to make it obvious it’s still early. The result is a work of art that mostly works, supervised by yours truly and artfully crafted by a language model that adds more bugs than it fixes, but it works.
+Instead of losing time and putting too much effort in researching JS libraries, learning how Vite works (I guess Webpack is not a thing anymore), picking between TypeScript ~~compilers~~ transpilers written in Rust and whatnot, I hacked together a frontend fast enough to demo, ugly enough to make it obvious it’s still early. The result is a work of art that mostly works, crafted with the help of a language model that adds as many bugs as it fixes.
 
 I am using [dagre](https://github.com/dagrejs/dagre) to calculate the positioning of the workflow graph nodes, and React Flow to make said nodes look useful. Each node represents a step of the workflow, with loading indicators to show progress, green and red colors to show successful/failure states, and when clicked, you are taken to a view which shows you the logs of the step you just clicked. These logs are polled in Near Real Time, because WebSockets are an overkill sometimes.
 
@@ -48,7 +48,7 @@ For context, my Log Entries are stored as (among other fields): `{ line_no: 42, 
 
 But, line numbers are... numbers. I don't start counting log lines from 0 but from 1, but that doesn't mean I can't use an array to store all these log lines. Instead of using a Set + Hash + whatever logic that was, I can simply use a dynamic array, use `line_no--` as the array index and store the `message` as the array value. And when a new batch of log lines is pulled, I just resize the array and add the new values where needed. No overcomplicated logic. Maybe our AI assistants aren't there yet and our jobs are safe.
 
-Either way, this wasn't a bug, but rather than a case of reasoning language models not reasoning properly. What was a bug, was this other thing that took me a full afternoon to debug, and it was me who wrote it, not AI.
+Either way, this wasn't a bug, but rather a case of reasoning language models not reasoning properly. What was a bug, was this other thing that took me a full afternoon to debug, and it was me who wrote it, not AI.
 
 ***
 
@@ -110,4 +110,4 @@ Just move the GetState call out of the region. And everyone lives happily ever a
 
 ***
 
-Runbook now has a usable UI and improved reactiveness to events. For now, it runs. And now, you can see it. But there's still more to do in order to start selling it as a product. Maybe Note #004 will come with something YOU can use. But let's see.
+Runbook now has a usable UI and improved responsiveness to events. For now, it runs. And now, you can see it. But there's still more to do in order to start selling it as a product. Maybe Note #004 will come with something YOU can use. But let's see.
