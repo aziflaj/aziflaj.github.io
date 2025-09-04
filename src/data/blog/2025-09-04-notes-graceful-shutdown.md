@@ -1,6 +1,6 @@
 ---
 title: "Runbook Notes 004: Cloud-Native Graceful Shutdowns"
-pubDatetime: 2025-09-05
+pubDatetime: 2025-09-04
 description: "Runbook finally supports graceful shutdowns. In this update: fixing the lost context cancellation from Note 002, using Go’s errgroup to propagate errors, and a neat state-management pattern with first-class functions. No more zombie pods when workflows fail or get cancelled."
 slug: notes-cloud-native-graceful-shutdowns
 tags: [
