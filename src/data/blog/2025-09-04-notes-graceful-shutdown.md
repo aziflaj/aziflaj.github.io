@@ -45,7 +45,7 @@ func SpawnJobs(ctx context.Context, workflow *Workflow) error {
 	g, gCtx := errgroup.WithContext(ctx)
 	for _, step := range workflow.Steps {
 		g.Go(func() error {
-      job, err := SpawnJobForStep(gCtx, step)
+			job, err := SpawnJobForStep(gCtx, step)
 			if err != nil {
 				return fmt.Errorf("something went wrong: %w", err)
 			}
