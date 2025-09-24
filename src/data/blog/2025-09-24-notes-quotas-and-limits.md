@@ -43,14 +43,14 @@ are expressed in minutes, similarly to what other CI/CD runners are doing (e.g. 
 of their quota, and they start a workflow that happens to run for 10 minutes. There are
 two possible outcomes:
 
-- **Stop the workflow after 5 minutes**. You get what you paid for, there's no free lunch. This is
-not impossible to implement, since I already have the infrastructure at place to stop workflows at any time,
+- **Stop the workflow after 5 minutes**. You get what you paid for; there's no free lunch. This is
+not impossible to implement, since I already have the infrastructure in place to stop workflows at any time,
 but imagine being the user. You have a production bug, you just pushed your fix, using Runbook to handle
-Continuous Integration and Deployment, 5 minutes later you get a **BIG NO-NO** from yours truly.
+Continuous Integration and Deployment, and 5 minutes later you get a **BIG NO-NO** from yours truly.
 
 - **Let the workflow finish**, and the user owes me 5 minutes of runtime. These can be deducted from
-the next payment, e.g. instead of starting the next month with 2000 run minutes, they start with 1995 minutes.
-Easy to implement, helpful for the user since they get their workflow to finish as expected.
+the next payment, e.g., instead of starting the next month with 2000 run minutes, they start with 1995 minutes.
+Easy to implement, helpful for the user since they get their workflow finished as expected.
 
 I obviously decided to go with the latter, after a [LinkedIn vote](https://www.linkedin.com/feed/update/urn:li:activity:7375901984702259200/).
 
