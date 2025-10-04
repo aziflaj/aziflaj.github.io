@@ -35,7 +35,7 @@ GitHub and GitLab login, along with the good ol' email/username and password, bu
 
 I first started with [markbates/goth](https://github.com/markbates/goth/), but then I saw how much it depends on session, and my app was using an auth token/refresh token approach, and I was too lazy to read through the documentation on how to make my approach goth-compatible, so I went _"I'll just implement OAuth myself, with blackjack, and [explicit]!"_. So I just rolled out my own OAuth handling logic based on [x/oauth2](https://cs.opensource.google/go/x/oauth2). I even added a contract to follow for future integrations:
 
-```go
+```go file=forge_service.go
 type ForgeService interface {
 	AuthCodeURL(state string) string
 	GetUserInfo(ctx context.Context, code string) (*models.OAuthUser, error)
@@ -88,7 +88,7 @@ _"But wait," - _you say,_ - "I want to run some `npm install` and some `npm run 
 
 So I created another executable in the same [BORE](https://aziflaj.github.io/posts/notes-kubernetized/#bore-build-once-run-everywhere) repo I have for Runbook, called `repo_cloner`. What it does, is that it uses the same JWT signer I was blabbering about in the previous section to clone the repository on behalf of the user who set up the Runbook installation. The recording you saw at the beginning of this blog was triggered by a barebones repository with a single `echo` bash script in it, and this `.runbook.yml` file:
 
-```yml filename=.runbook.yml
+```yml file=.runbook.yml
 name: "Default Runbook Workflow"
 
 steps:
