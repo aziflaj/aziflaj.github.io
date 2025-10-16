@@ -28,14 +28,14 @@ so here's a full blown blogpost to show what and how and why.
 
 ## Social OAuth
 
-The first time I was introduced to GitHub, I was told "It's a social platform for programmers" as if it's a Facebook for coders... But I do have some followers there, and I have followed some people over the years.
+The first time I was introduced to GitHub, I was told _"It's a social platform for programmers"_ as if it's a Facebook for coders... But I do have some followers there, and I have followed some people over the years.
 
 After a few weeks of trying to remember my password for Runbook, I decided to add OAuth to it. I'm currently supporting
 GitHub and GitLab login, along with the good ol' email/username and password, but that's something you can see from the video.
 
-I first started with [markbates/goth](https://github.com/markbates/goth/), but then I saw how much it depends on session, and my app was using an auth token/refresh token approach, and I was too lazy to read through the documentation on how to make my approach goth-compatible, so I went **I'll just implement OAuth myself, with blackjack, and [explicit]!**. So I just rolled out my own OAuth handling logic based on [x/oauth2](https://cs.opensource.google/go/x/oauth2). I even added a contract to follow for future integrations:
+I first started with [markbates/goth](https://github.com/markbates/goth/), but then I saw how much it depends on session, and my app was using an auth token/refresh token approach, and I was too lazy to read through the documentation on how to make my approach goth-compatible, so I went _"I'll just implement OAuth myself, with blackjack, and [explicit]!"_. So I just rolled out my own OAuth handling logic based on [x/oauth2](https://cs.opensource.google/go/x/oauth2). I even added a contract to follow for future integrations:
 
-```go
+```go file=forge_service.go
 type ForgeService interface {
 	AuthCodeURL(state string) string
 	GetUserInfo(ctx context.Context, code string) (*models.OAuthUser, error)
@@ -43,7 +43,7 @@ type ForgeService interface {
 }
 ```
 
-And it works well for both GitHub and GitLab! In order to add more OAuth Providers in the future, all I need to do now is just implement these 3 functions and everything works like a charm.
+And it works well for both GitHub and GitLab! In order to add more OAuth Providers in the future, all I need to do now is just implement these 3 functions and everything works like a charm. Liskov's Substitution in action.
 
 ***
 
@@ -64,11 +64,11 @@ GET https://api.github.com/app/installations/<installation-id>
 401 A JSON web token could not be decoded []
 ```
 
-**Why couldn't the damn JSon web token be decoded?!** I have the damn `.pem` file in place. I have the right App ID, trust me. I created and recreated the GitHub App twice, I replaced all the values properly. I quadruple checked the installation ID for my user and I hardcoded it in all the right places. _THIS THING SHOULD WORK!_
+**Why couldn't the damn JSON web token be decoded?!** I have the damn `.pem` file in place. I have the right App ID, trust me. I created and recreated the GitHub App twice, I replaced all the values properly. I quadruple checked the installation ID for my user and I hardcoded it in all the right places. _THIS THING SHOULD WORK!_
 
-Everything pointed to the JWT tokens not being signed correctly. After spending 2-3 afternoons testing and failing repeatedly, I gave up. I thought **I will sign the tokens myself, with blackjack, and [explicit]!**
+Everything pointed to the JWT tokens not being signed correctly. After spending 2-3 afternoons testing and failing repeatedly, I gave up. I thought _"I will sign the tokens myself, with blackjack, and [explicit]!"_
 
-So I rolled out a simple JWT signer, as per the GitHub documentation, based on [golang-jwt/jwt](https://github.com/golang-jwt/jwt/). And it worked... but why?! Why would my approach work and the ghinstallation wouldn't? According to the AI shenanigans, chats and whatnot, it was a conflict between the jwt/v4 that ghinstallation uses internally, and the jwt/v5 that I was using. After that many afternoons of undecodable JWT tokens, I coulnd't even care for it anymore. If it works, it works. Ship it first, then ask questions later.
+So I rolled out a simple JWT signer, as per the GitHub documentation, based on [golang-jwt/jwt](https://github.com/golang-jwt/jwt/). And it worked... **_but why?!_** Why would my approach work and the ghinstallation wouldn't? According to the AI shenanigans, chats and whatnot, it was a conflict between the `jwt/v4` that ghinstallation uses internally, and the `jwt/v5` that I was using. After that many afternoons of undecodable JWT tokens, I coulnd't even care for it anymore. If it works, it works. Ship it first, ask questions later.
 
 I did some extra testing, it seemed like my JWT signing was working properly as per the GitHub responses; I committed, and called it a day.
 
@@ -76,7 +76,7 @@ I did some extra testing, it seemed like my JWT signing was working properly as 
 
 ### Pulling Repos from GitHub
 
-After I got the Installation Tokens working properly, the next logical step would be to
+After I got the Installation Tokens working properly, the next logical steps would be to:
 
 1. Pull Runbook Definitions from the GitHub repo
 2. Schedule the workflows for execution
@@ -84,11 +84,11 @@ After I got the Installation Tokens working properly, the next logical step woul
 
 I almost forgot about that 3rd step, but we'll get back at it. Luckily, the first one was simple: the Go GitHub SDK already provides me with a [GetContents](https://pkg.go.dev/github.com/google/go-github/v75/github#RepositoriesService.GetContents) function to pull the Runbook definition, a single `.runbook.yml` in the root of the project. That's all I need to know in order to schedule a workflow for execution...
 
-_"But wait," - you say, - "I want to run some npm install and some npm run tests on my workflow!"_ Pulling a single file is not enough, I needed that 3rd hidden step.
+_"But wait," - _you say,_ - "I want to run some `npm install` and some `npm run tests` on my workflows!"_ Pulling a single file is not enough, I needed that 3rd hidden step.
 
 So I created another executable in the same [BORE](https://aziflaj.github.io/posts/notes-kubernetized/#bore-build-once-run-everywhere) repo I have for Runbook, called `repo_cloner`. What it does, is that it uses the same JWT signer I was blabbering about in the previous section to clone the repository on behalf of the user who set up the Runbook installation. The recording you saw at the beginning of this blog was triggered by a barebones repository with a single `echo` bash script in it, and this `.runbook.yml` file:
 
-```yml
+```yml file=.runbook.yml
 name: "Default Runbook Workflow"
 
 steps:
