@@ -23,7 +23,7 @@ History repeats itself, and while LLMs are great and intelligent and all that, f
 -   LLMs can be slow, and your requests can timeout
 -   LLM responses can fail, not necessarily due to your input
 -   The LLM can rate limit and/or throttle you
--   The LLM can go offline for whatever reason, and come back online whenever the it feels like
+-   The LLM can go offline for whatever reason, and come back online whenever it feels like
 
 Our goal here, as builders, is to build resilient systems that stay predictable under these circumstances.
 
@@ -31,11 +31,11 @@ Our goal here, as builders, is to build resilient systems that stay predictable 
 
 A few days ago, I posted on LinkedIn a [story](https://www.linkedin.com/feed/update/urn:li:activity:7454816827496460288/) of how being rate limited by an API role-playing as an LLM resulted in high error rates.
 
-The naive, perhaphs tempting solution might be to retry. But retries, even with backoff, can make things worse when the upstream is rate limiting you. A retry is not always recovery. Sometimes, it is unnecessary pressure.
+The naive, perhaps tempting solution might be to retry. But retries, even with backoff, can make things worse when the upstream is rate limiting you. A retry is not always recovery. Sometimes, it is unnecessary pressure.
 
 If every failed request immediately becomes another request, the system does not recover. It amplifies the problem. What it needs instead is **backpressure**.
 
-Luckily, for the use case we had, the service depending on the LLM didn't have a time constraint. Assume that air friction is 0 and that customers don't care how long the response takes to come back, as long as the result is useful.
+Luckily, for the use case we had, the service depending on the LLM didn't have a time constraint. Assume that air resistance is negligible and that customers don't care how long the response takes to come back, as long as the result is useful.
 
 To work around these limitations, the solution we can go for is a combination of two patterns, which probably the title gave away too soon:
 
@@ -205,10 +205,10 @@ breaker := NewCircuitBreaker(
 )
 ```
 
-With the modules we now have, we can implement a `ProcessPrompt` behavior that enables the worker to process a prompt or enqueue for later:
+With the modules we now have, we can implement a `ProcessJob` behavior that enables the worker to process a prompt or enqueue for later:
 
 ```go
-func (w *Worker) ProcessPrompt(ctx context.Context) error {
+func (w *Worker) ProcessJob(ctx context.Context) error {
   job, err := w.queue.ClaimNext(ctx)
   if err != nil {
     return err
