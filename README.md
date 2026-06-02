@@ -97,6 +97,8 @@ Documentation can be read in two formats\_ _markdown_ & _blog post_.
 
 ## 👨🏻‍💻 Running Locally
 
+Use the current Node.js LTS release, which is Node 24 at the time of writing.
+
 You can start using this project locally by running the following command in your desired directory:
 
 ```bash
@@ -149,6 +151,8 @@ PUBLIC_GOOGLE_SITE_VERIFICATION=your-google-site-verification-value
 All commands are run from the root of the project, from a terminal:
 
 > **_Note!_** For `Docker` commands we must have it [installed](https://docs.docker.com/engine/install/) in your machine.
+
+> **_Note!_** This project targets Node.js 24 LTS.
 
 | Command                              | Action                                                                                                                           |
 | :----------------------------------- | :------------------------------------------------------------------------------------------------------------------------------- |
