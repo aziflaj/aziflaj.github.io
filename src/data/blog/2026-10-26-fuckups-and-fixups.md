@@ -1,10 +1,9 @@
 ---
 title: "Fuckups and Fixups: Making Slow Software Fast"
 pubDatetime: 2026-10-26
-description: ""
-slug:
-tags: []
----
+description: "A 10-minute database transaction, memory-hungry Python workers, and painfully slow OCR. Three stories about making software faster by doing less."
+tags: [performance, software-engineering, orm, kubernetes, python
+]
 
 ---
 
